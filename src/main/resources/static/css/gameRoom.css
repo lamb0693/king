@@ -1,0 +1,55 @@
+.game_paddle{
+    position: absolute;
+    width : 100px;
+    height : 10px;
+    border-radius : 10%;
+    background-color: blue;
+}
+.game_ball{
+    position: absolute;
+    left : 300px;
+    top : 300px;
+    width : 20px;
+    height : 20px;
+    border-radius : 50%;
+    background-color: black;
+}
+.wall_upper{
+    position: absolute;
+    left : 10px;
+    top : 110px;
+    width : 400px;
+    height : 10px;
+    border-radius : 5%;
+    background-color: gray;
+}
+.wall_lower{
+    position: absolute;
+    left : 10px;
+    top : 610px;
+    width : 400px;
+    height : 10px;
+    border-radius : 5%;
+    background-color: gray;
+}
+.wall_left{
+    position: absolute;
+    left : 10px;
+    top : 110px;
+    width : 10px;
+    height : 500px;
+    border-radius : 5%;
+    background-color: gray;
+}
+.wall_right{
+    position: absolute;
+    left : 410px;
+    top : 110px;
+    width : 10px;
+    height : 510px;
+    border-radius : 5%;
+    background-color: gray;
+}
+.playerno{
+    background-color: lightgreen;
+}

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="/js/socket.io.min.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="/css/gameRoom.css">
+</head>
+<body>
+    <div id="divRoomName" th:text="${roomName}"></div>
+    <div id="divPlayerNo" th:text="${player}"></div>
+
+
+    <button id="start">start</button>
+    <button id="toLeft">Left</button>
+    <button id="toRight">Right</button>
+    <button id="stopGame">stop</button>
+    <span id="player_no" class="playerno"></span>
+    <div id="p0_game_paddle" class="game_paddle"></div>
+    <div id="p1_game_paddle" class="game_paddle"></div>
+    <div id="game_ball" class="game_ball"></div>
+    <div id="wall_upper" class="wall_upper"></div>
+    <div id="wall_lower" class="wall_lower"></div>
+    <div id="wall_left" class="wall_left"></div>
+    <div id="wall_right" class="wall_right"></div>
+
+    <script src="/js/gameRoom.js"></script>
+</body>
+</html>

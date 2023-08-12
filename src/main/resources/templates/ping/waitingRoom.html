@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Waiting Room</title>
+    <script src="/js/socket.io.min.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+</head>
+<body>
+<div class="container-md">
+    <div class="alert alert-dark" role="alert">
+        Waiting Room
+    </div>
+    <table class="table" id="roomListTable">
+        <thead>
+        <tr>
+            <th scope="col">개설자 id</th>
+            <th scope="col">참가인원</th>
+            <th scope="col">참가</th>
+        </tr>
+        </thead>
+        <tbody id="tbodyRoomListTable">
+        </tbody>
+    </table>
+
+    <div class="mb-3">
+        <label for="txtMakeRoomName" class="form-label">방 만들기</label>
+        <input type="text" class="form-control" id="txtMakeRoomName" placeholder="Name of room to Make">
+        <button id="btnMakeRoom" class="btn btn-primary">Make Room</button>
+    </div>
+
+</div>
+
+
+    <script src="/js/waitingRoom.js"></script>
+</body>
+</html>
