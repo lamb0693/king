@@ -1,11 +1,13 @@
-//const { io } = require("socket.io");
-const strRoomName = document.getElementById("divRoomName").textContent;
-const plyaerNo = document.getElementById("divPlayerNo").textContent;
-const p0_game_paddle = document.getElementById("p0_game_paddle");
-const p1_game_paddle = document.getElementById("p1_game_paddle");
-const game_ball = document.getElementById("game_ball");
-const btnStart = document.getElementById("start");
-let gameData = null;
+const strRoomName = document.getElementById("divRoomName").textContent
+const plyaerNo = document.getElementById("divPlayerNo").textContent
+
+const p0_game_paddle = document.getElementById("p0_game_paddle")
+const p1_game_paddle = document.getElementById("p1_game_paddle")
+const game_ball = document.getElementById("game_ball")
+const btnStart = document.getElementById("start")
+
+let gameData = null
+
 // // *******게임 데이타 관련 설정******
 // // ******* 접속시 바로 데이터 받는 것으로 고치자
 // let gameData = null
@@ -13,23 +15,24 @@ let gameData = null;
 //
 // // *******화면을 현재 gameData로 update ******
 const updateGameBoard = () => {
-    p0_game_paddle.style.left = gameData.p0_x + 'px';
-    p0_game_paddle.style.top = gameData.p0_y + 'px';
-    p1_game_paddle.style.left = gameData.p1_x + 'px';
-    p1_game_paddle.style.top = gameData.p1_y + 'px';
-    game_ball.style.left = gameData.ballX + 'px';
-    game_ball.style.top = gameData.ballY + 'px';
-};
+    // cknull(p0_game_paddle, "p0_game_paddle")
+    // cknull(p1_game_paddle, "p1_game_paddle")
+    // cknull(game_ball, "game_ball")
+    p0_game_paddle.style.left = gameData.p0_paddleX + 'px'
+    p0_game_paddle.style.top = gameData.p0_paddleY + 'px'
+    p1_game_paddle.style.left = gameData.p1_paddleX + 'px'
+    p1_game_paddle.style.top = gameData.p1_paddleY + 'px'
+    game_ball.style.left = gameData.ballX + 'px'
+    game_ball.style.top = gameData.ballY + 'px'
+}
+
 // // ******* start button 클릭하면 server로 전송  ******
 const onStartButtonClicked = (event) => {
-    event.preventDefault();
-    const param = {
-        roomName: strRoomName,
-        playerNo: plyaerNo
-    };
-    socket.emit('startGame', param);
-};
-btnStart.addEventListener('click', onStartButtonClicked);
+    event.preventDefault()
+    socket.emit('startGame', {'roomName' : strRoomName, 'plyaerNo' : plyaerNo})
+}
+
+btnStart.addEventListener('click', onStartButtonClicked)
 //
 // const onBtnLeftClikced = (event) => {
 //     event.preventDefault()
@@ -65,46 +68,50 @@ btnStart.addEventListener('click', onStartButtonClicked);
 // btnStop.addEventListener('click', onStopButtonClikced)
 //
 //
+
+
 // ******* 게임 서버 접속  ******
-const socket = io("http://localhost:3000/ping", { path: "/socket.io"
+const socket = io("http://localhost:3000/ping", {path :"/socket.io"
 });
+
 const makeRoomCallBack = (result, strRoomName) => {
-    console.log('makeRoomCallback 실행 : ', result);
-    if (result === 'success') {
-        alert(strRoomName + "방 생성 , 상대방을 기다립니다");
+    console.log('makeRoomCallback 실행 : ', result)
+    if(result === 'success') {
+        alert( strRoomName + "방 생성 , 상대방을 기다립니다")
         //******* game start 준비 **************//
         //******* game start 준비 **************//
+    } else {
+        alert(strRoomName + "방 생성 실패입니다")
     }
-    else {
-        alert(strRoomName + "방 생성 실패입니다");
-    }
-};
+}
+
 const joinRoomCallBack = (result, strRoomName) => {
-    console.log('joinRoomCallback 실행 : ', result);
-    if (result === 'success') {
-        alert(strRoomName + "방에 조인하였습니다");
+    console.log('joinRoomCallback 실행 : ', result)
+    if(result === 'success') {
+        alert(strRoomName + "방에 조인하였습니다")
+
         //******* game start 준비 **************//
         //******* game start 준비 **************//
+    } else if(result ==='full') {
+        alert(strRoomName + "방이 full입니다")
+    } else {
+        alert(strRoomName + "방 조인 실패입니다")
     }
-    else if (result === 'full') {
-        alert(strRoomName + "방이 full입니다");
-    }
-    else {
-        alert(strRoomName + "방 조인 실패입니다");
-    }
-};
+}
+
 // make room에서 왔으면
-if (plyaerNo === 'player0') {
+if(plyaerNo === 'player0'){
     // 이름의 방을 만든다
     socket.emit('ping_create_room', strRoomName, (result) => {
-        makeRoomCallBack(result, strRoomName);
-    });
+        makeRoomCallBack(result, strRoomName )
+    })
 }
+
 //join에서 왔으면 이름의 방에 join하고 server에서 prepareGame()
-if (plyaerNo === 'player1') {
+if(plyaerNo === 'player1'){
     socket.emit('ping_join_room_from_gameroom', strRoomName, (result) => {
-        joinRoomCallBack(result, strRoomName);
-    });
+        joinRoomCallBack(result, strRoomName)
+    })
 }
 //
 //
@@ -118,19 +125,20 @@ if (plyaerNo === 'player1') {
 //     alert(msg)
 // });
 //
-socket.on('prepareForStart', function (msg) {
-    console.log("game data in prepareForStart", msg);
-    gameData = msg;
-    updateGameBoard();
-    btnStart.removeAttribute('disabled');
+socket.on('prepareForStart', function(msg) {
+    console.log("game data in prepareForStart", msg)
+    gameData = msg
+    updateGameBoard()
+    btnStart.disabled = false
 });
+
+
 // // ******* 받은 gameData 처리 => 화면 updata  ******
-socket.on('gameData', function (msg) {
-    console.log("game data", msg);
-    gameData = msg;
-    updateGameBoard();
+socket.on('gameData', function(msg) {
+    console.log("game data", msg)
+    gameData = msg
+    updateGameBoard()
 });
-//export {};
 //
 // // ******* 받은 접속자 list  ******
 // socket.on('clients', function(msg) {
@@ -149,6 +157,7 @@ socket.on('gameData', function (msg) {
 //     else alert(" 패 배 ")
 //
 // })
+
 // *********** 다 정리 되었으면 게임 화면 update
 // ********* 초기 데이터를 서버에서 받는 것으로 고치자
 //*********인삿말 대신 받자
