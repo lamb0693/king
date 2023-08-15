@@ -9,15 +9,14 @@
     <link rel="stylesheet" href="/css/gameRoom.css">
 </head>
 <body>
-    <div id="divRoomName" th:text="${roomName}"></div>
-    <div id="divPlayerNo" th:text="${player}"></div>
-
-
-    <button id="start" disabled>start</button>
-    <button id="toLeft">Left</button>
-    <button id="toRight">Right</button>
-    <button id="stopGame" disabled>stop</button>
-    <span id="player_no" class="playerno"></span>
+    <div id="divRoomName" class="row" th:text="${roomName}"></div>
+    <div id="divPlayerNo" class="row" th:text="${player}"></div>
+    <div>
+        <button id="start" class="btn btn-primary mr-10" disabled>start</button>
+        <button id="stopGame" class="btn btn-danger" disabled>stop</button>
+        <button id="toLeft" class="btn btn-secondary">Left</button>
+        <button id="toRight" class="btn btn-secondary">Right</button>
+    </div>
     <div id="p0_game_paddle" class="game_paddle"></div>
     <div id="p1_game_paddle" class="game_paddle"></div>
     <div id="game_ball" class="game_ball"></div>
