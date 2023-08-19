@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <script src="/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <script src="/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -17,7 +17,6 @@
             <tr>
                 <th scope="col">id</th>
                 <th scope="col">nickname</th>
-                <th scope="col">password</th>
                 <th scope="col">joindate</th>
             </tr>
             </thead>
@@ -25,7 +24,6 @@
             <tr th:each="member : ${members}">
                 <td th:text="${member.id}"></td>
                 <td th:text="${member.nickname}"></td>
-                <td th:text="${member.password}"></td>
                 <td th:text="${member.joindate}"></td>
             </tr>
             </tbody>
