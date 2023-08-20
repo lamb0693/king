@@ -1,55 +1,79 @@
+ .game_ball{
+     left : 20px;
+     top : 200px;
+     width : 20px;
+     height : 20px;
+     border-radius : 50%;
+     background-color: black;
+ }
 .game_paddle{
-    position: absolute;
-    width : 100px;
-    height : 10px;
-    border-radius : 10%;
-    background-color: blue;
-}
-.game_ball{
-    position: absolute;
-    left : 300px;
-    top : 300px;
-    width : 20px;
+    width : 80px;
     height : 20px;
-    border-radius : 50%;
+    background-color: green;
+    left : 180px; /* 210-180 */
+    position :absolute;
+    border-radius: 20%;
+}
+/* paddle 충돌 체크
+    paddle_0 30  +- 10
+    paddye_1 470 +- 10
+    paddle_x n 정해주고   n+-paddle_width
+*/
+.player0_p_top{
+    top : 30px; /* 10 <->  30-50   pos=40  그릴때는 -10->+10*/
+}
+.player1_p_top{
+    top : 470px; /* 470-490 <-> 510 pos=480  그릴때는 -10->+10*   */
+}
+/*
+  벽 충돌 체크
+     js  const board_left  10  board_right=410
+        const board_upper 10  board_lower = 510
+*/
+.wall_horizontal{
+    left : 0px;
+    width : 420px;
+    height : 10px;
+    border-radius : 5%;
     background-color: black;
 }
-.wall_upper{
-    position: absolute;
-    left : 10px;
-    top : 110px;
-    width : 400px;
-    height : 10px;
+.wall_vertical{
+    top : 0px;
+    height : 520px;
+    width : 10px;
     border-radius : 5%;
-    background-color: gray;
-}
-.wall_lower{
-    position: absolute;
-    left : 10px;
-    top : 610px;
-    width : 400px;
-    height : 10px;
-    border-radius : 5%;
-    background-color: gray;
+    background-color: black;
 }
 .wall_left{
-    position: absolute;
-    left : 10px;
-    top : 110px;
-    width : 10px;
-    height : 500px;
-    border-radius : 5%;
-    background-color: gray;
+    left : 0px;
 }
 .wall_right{
-    position: absolute;
     left : 410px;
-    top : 110px;
-    width : 10px;
-    height : 510px;
-    border-radius : 5%;
-    background-color: gray;
 }
-.playerno{
-    background-color: lightgreen;
+.wall_upper{
+    top : 0px;
 }
+.wall_lower{
+    top : 510px;
+}
+
+html, body {
+    height: 100%;
+}
+.custom-container {
+    height: 100%;
+}
+.borad-height{
+    height: 520px;
+}
+.center-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+@media (max-width: 800px) {
+    #chat_area {
+        display: none;
+    }
+}
+

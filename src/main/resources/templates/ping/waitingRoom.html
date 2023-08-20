@@ -1,14 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Waiting Room</title>
-    <script src="/js/socket.io.min.js"></script>
-    <link href="/css/bootstrap.min.css" rel="stylesheet"  crossorigin="anonymous">
-    <script src="/js/bootstrap.bundle.min.js"  crossorigin="anonymous"></script>
-</head>
-<body>
-<div class="container-md">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+
+
+<div class="container" layout:fragment="content">
     <div class="alert alert-dark" role="alert">
         Waiting Room
     </div>
@@ -30,9 +26,8 @@
         <button id="btnMakeRoom" class="btn btn-primary">Make Room</button>
     </div>
 
+    <script src="/js/socket.io.min.js"></script>
+    <script src="/js/waitingRoom.js"></script>
 </div>
 
 
-    <script src="/js/waitingRoom.js"></script>
-</body>
-</html>

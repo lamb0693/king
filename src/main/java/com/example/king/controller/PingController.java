@@ -3,14 +3,15 @@ package com.example.king.controller;
 import org.springframework.ui.Model;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-public class HelloController {
+@RequestMapping("/ping")
+public class PingController {
 
-    @GetMapping("/")
-    public String waiting(){
+    @GetMapping("/waitingroom")
+    public String waitingRoom(){
         return "ping/waitingRoom.html";
     }
 
