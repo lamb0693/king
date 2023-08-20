@@ -15,5 +15,6 @@ import java.util.Date;
 public class MemberListDTO {
     private String id;
     private String nickname;
+    private String role;
     private LocalDateTime joindate;
 }

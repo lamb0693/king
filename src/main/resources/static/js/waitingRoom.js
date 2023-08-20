@@ -13,7 +13,7 @@ const makeRoomCallBack = (result, roomName) => {
     if(result === 'success') {
         //alert("방 생성 성공입니다")
         // Roomlist는 server에서 바꾸자
-        window.location.href=`/gameroom?roomName=${roomName}&player=player0`
+        window.location.href=`/ping/gameroom?roomName=${roomName}&player=player0`
     } else {
         alert("방 생성 실패입니다")
     }
@@ -36,7 +36,7 @@ const makeRoom = (event) => {
 const joinRoomCallBack = (result, roomName) => {
     console.log('joinRoomCallback 실행 : ', result)
     if(result === 'success') {
-        window.location.href=`/gameroom?roomName=${roomName}&player=player1`
+        window.location.href=`/ping/gameroom?roomName=${roomName}&player=player1`
         // Roomlist는 server에서 바꿈
     } else if(result ==='full') {
         alert("방이 full입니다")

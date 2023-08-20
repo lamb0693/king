@@ -1,12 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-    <link href="/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-    <script src="/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-</head>
-<body>
-    <a href="/ping/waitingroom">Ping 대기실</a>
-</body>
-</html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+
+<div class="container" layout:fragment="content">
+
+    <div class="row">
+        <div class="col-4 d-flex justify-content-center">
+            <div class="card" style="width: 18rem;">
+                <img src="/image/image1.jpg" class="card-img-top" alt="gameImage1">
+                <div class="card-body">
+                    <h5 class="card-title">Game1</h5>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">랭킹</th>
+                            <th scope="col">아이디</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>킹</td>
+                            <td>홍길동</td>
+                        </tr>
+                        <tr>
+                            <td>왕</td>
+                            <td>무명남</td>
+                        </tr>
+                        <tr>
+                            <td>짱</td>
+                            <td>무명녀</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <a th:href="@{/ping/waitingroom}" class="btn btn-primary">대기실</a>
+                </div> <!--/* end of class card body */-->
+            </div> <!--/* end of class card */-->
+        </div>  <!--/* end of class col-4 */-->
+        <div class="col-4  d-flex justify-content-center">
+            <div class="card" style="width: 18rem;">
+                <img src="/image/image1.jpg" class="card-img-top" alt="gameImage2">
+                <div class="card-body">
+                    <h5 class="card-title">Game1</h5>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">랭킹</th>
+                            <th scope="col">아이디</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>킹</td>
+                            <td>홍길동</td>
+                        </tr>
+                        <tr>
+                            <td>왕</td>
+                            <td>무명남</td>
+                        </tr>
+                        <tr>
+                            <td>짱</td>
+                            <td>무명녀</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <a th:href="@{/ping/waitingroom}" class="btn btn-primary">대기실</a>
+                </div>   <!--/* end of class card body */-->
+            </div> <!--/* end of class card */-->
+        </div> <!--/* end of class col-4 */-->
+        <div class="col-4  d-flex justify-content-center">
+            <div class="card" style="width: 18rem;">
+                <img src="/image/image1.jpg" class="card-img-top" alt="gameImage3">
+                <div class="card-body">
+                    <h5 class="card-title">상식 퀴즈 대전</h5>
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">랭킹</th>
+                            <th scope="col">아이디</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>킹</td>
+                            <td>홍길동</td>
+                        </tr>
+                        <tr>
+                            <td>왕</td>
+                            <td>무명남</td>
+                        </tr>
+                        <tr>
+                            <td>짱</td>
+                            <td>무명녀</td>
+                        </tr>
+                        </tbody>
+                    </table>
+
+                    <a th:href="@{/ping/waitingroom}" class="btn btn-primary">대기실</a>
+                </div> <!--/* end of class card body */-->
+            </div> <!--/* end of class card */-->
+        </div> <!--/* end of class col-4 */-->
+    </div> <!--/* end of class row */-->
+
+</div>

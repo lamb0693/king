@@ -4,6 +4,7 @@ import com.example.king.DTO.MemberCreateDTO;
 import com.example.king.DTO.MemberListDTO;
 import com.example.king.Entity.MemberEntity;
 import com.example.king.Repository.MemberRepository;
+import com.example.king.constant.Role;
 import com.example.king.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -34,6 +35,7 @@ public class MemberServiceImpl implements MemberService {
             MemberListDTO memberListDTO = new MemberListDTO();
             memberListDTO.setId(memberEntity.getId());
             memberListDTO.setNickname(memberEntity.getNickname());
+            memberListDTO.setRole(memberEntity.getRole().name());
             memberListDTO.setJoindate(memberEntity.getJoindate());
             memberDTOList.add(memberListDTO);
         }
@@ -50,6 +52,7 @@ public class MemberServiceImpl implements MemberService {
         memberEntity.setNickname(memberCreateDTO.getNickname());
         //** 나중 password Hash 추가 *//
         memberEntity.setPassword(memberCreateDTO.getPassword());
+        memberEntity.setRole(Role.USER);
 
         MemberEntity resultEntity = null;
         try{

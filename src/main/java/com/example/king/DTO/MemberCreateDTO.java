@@ -1,6 +1,7 @@
 package com.example.king.DTO;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.Getter;
 import lombok.NonNull;
@@ -15,6 +16,7 @@ import java.time.LocalDateTime;
 public class MemberCreateDTO {
     /* Validation 추가 해야 됨*/
     @NotEmpty
+    @Email
     private String id;
     @NotEmpty
     private String nickname;

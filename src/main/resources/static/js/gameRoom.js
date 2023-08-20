@@ -157,9 +157,12 @@ socket.on('gameData', function (msg) {
     updateGameBoard();
 });
 socket.on('winner', function (winner) {
-    if (playerNo === winner)
-        alert(" 승 리 ");
-    else
-        alert(" 패 배 ");
+    if (playerNo === winner) {
+        confirm(" 승 리 ");
+    }
+    else {
+        confirm(" 패 배 ");
+    }
+    window.location.href = "/ping/waitingroom";
 });
 //export {};

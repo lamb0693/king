@@ -16,6 +16,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -46,10 +47,11 @@ public class MemberController {
     }
 
     // Validation 추가
-    // Validation Error setting 되면 errors setting후 createForm return
+    // Errors 매개변수를 넣어주면 Validation Errors를 사용가능 ,setting 되면 errors setting후 createForm return
     // createForm에서 error 표시
     @PostMapping("/create")
-    public String createMember(@Valid @ModelAttribute MemberCreateDTO memberCreateDTO, Errors errors, Model model){
+    public String createMember(@Valid @ModelAttribute MemberCreateDTO memberCreateDTO, Errors errors,
+                               Model model, RedirectAttributes redirectAttributes){
         log.info(memberCreateDTO);
 
         if(errors.hasErrors()){
@@ -68,8 +70,11 @@ public class MemberController {
             return "/member/createMember.html";
         } else {
             if( memberService.saveMember(memberCreateDTO) == -1 ){
-                // 실패했을 때 어떻게 할지
+                //*********** 실패했을 때 어떻게 할지 나중에 추가
             };
+            //성공하면 "saveResult"를 redirectResult로 setting 후 member/list로 redirect한다
+            //***** 나중에 viewMembers.html에 처리 과정 추가 ****
+            redirectAttributes.addFlashAttribute("saveResult", "saveSuccess");
             return "redirect:/member/list";
         }
     }
