@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
@@ -39,8 +40,8 @@
                         </ul>
                     </div>
                     <div>
-                        Login Area
-                        <a th:href="@{/member/create}">회원가입</a>
+                        <span ><a th:href="@{/login}">로그인</a></span>
+                        <span><a th:href="@{/member/create}">회원가입</a></span>
                     </div>
                 </div>
             </nav>

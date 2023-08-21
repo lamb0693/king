@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
@@ -27,6 +28,7 @@ import java.util.List;
 public class MemberController {
 
     private MemberService memberService;
+    private PasswordEncoder passwordEncoder;
 
     @GetMapping("/list")
     public String viewMembers(Model model){
@@ -69,7 +71,7 @@ public class MemberController {
             model.addAttribute("previousValue", memberCreateDTO);
             return "/member/createMember.html";
         } else {
-            if( memberService.saveMember(memberCreateDTO) == -1 ){
+            if( memberService.saveMember(memberCreateDTO, passwordEncoder) == -1 ){
                 //*********** 실패했을 때 어떻게 할지 나중에 추가
             };
             //성공하면 "saveResult"를 redirectResult로 setting 후 member/list로 redirect한다
