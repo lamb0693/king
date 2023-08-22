@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -79,6 +80,20 @@ public class MemberController {
             redirectAttributes.addFlashAttribute("saveResult", "saveSuccess");
             return "redirect:/member/list";
         }
+    }
+
+    @GetMapping("/exist/id/{id}")
+    public ResponseEntity<Boolean> checkIdExist(@PathVariable String id){
+        //log.info(" ******** checkIdExist@LoginController return OK + :" +memberService.checkIdExist(id) );
+
+        return ResponseEntity.ok(memberService.checkIdExist(id));
+    }
+
+    @GetMapping("/exist/nickname/{nickname}")
+    public ResponseEntity<Boolean> checkNicknameExist(@PathVariable String nickname){
+        log.info(" ******** checkIdExist@LoginController return OK + :" +memberService.checkIdExist(nickname) );
+
+        return ResponseEntity.ok(memberService.checkNicknameExist(nickname));
     }
 
 }

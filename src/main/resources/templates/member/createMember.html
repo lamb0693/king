@@ -23,7 +23,7 @@
                            th:value="${previousValue != null ? previousValue.id : ''}">
                 </div>
                 <div class="col-3">
-                    <button class="btn btn-primary mb-3">사용 가능 확인</button>
+                    <button class="btn btn-primary mb-3" id="btnCheckExistId">사용 가능 확인</button>
                 </div>
             </div>
             <div th:if="${nickname}">
@@ -38,7 +38,7 @@
                            th:attr="value=${previousValue != null ? previousValue.nickname : ''}">
                 </div>
                 <div class="col-3">
-                    <button class="btn btn-primary mb-3">사용 가능 확인</button>
+                    <button class="btn btn-primary mb-3" id="btnCheckExistNickname">사용 가능 확인</button>
                 </div>
             </div>
             <div th:if="${password}">
@@ -62,5 +62,6 @@
     </form>
 
     <script src="/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="/js/createMember.js"></script>
 </div>
 

@@ -83,4 +83,14 @@ public class MemberServiceImpl implements MemberService {
             return null;
         }
     }
+
+    @Override
+    public Boolean checkIdExist(String id) {
+        return memberRepository.existsById(id);
+    }
+
+    @Override
+    public Boolean checkNicknameExist(String nickname) {
+        return memberRepository.existsByNickname(nickname);
+    }
 }

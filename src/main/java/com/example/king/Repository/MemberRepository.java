@@ -8,4 +8,5 @@ import java.util.List;
 public interface MemberRepository extends JpaRepository<MemberEntity, String> {
     public MemberEntity getMemberEntityById(String id);
 
+    Boolean existsByNickname(String nickname);
 }

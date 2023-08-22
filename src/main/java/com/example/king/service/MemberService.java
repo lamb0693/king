@@ -17,4 +17,8 @@ public interface MemberService {
     public int saveMember(MemberCreateDTO memberCreateDTO, PasswordEncoder passwordEncoder);
 
     public MemberAuthDTO getAuthDTO(String id);
+
+    Boolean checkIdExist(String id);
+
+    Boolean checkNicknameExist(String nickname);
 }
