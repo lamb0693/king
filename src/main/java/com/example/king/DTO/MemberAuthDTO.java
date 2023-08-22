@@ -15,4 +15,12 @@ public class MemberAuthDTO {
 
     @NotEmpty
     private String password;
+
+    @Override
+    public String toString() {
+        return "MemberAuthDTO{" +
+                "id='" + id + '\'' +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }

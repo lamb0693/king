@@ -1,5 +1,7 @@
 package com.example.king.config;
 
+import com.example.king.handler.CustomAuthenticationFailureHandler;
+import com.example.king.handler.CustomFormLoginSuccessHandler;
 import com.example.king.service.MemberUserDetail;
 import com.example.king.service.MemberUserDetailsService;
 import lombok.AllArgsConstructor;
@@ -13,6 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.util.matcher.AndRequestMatcher;
 
 @Configuration
 @EnableWebSecurity
@@ -26,14 +31,22 @@ public class SecurityConfig {
         http.authorizeHttpRequests( (request) -> {
             request.requestMatchers("/").permitAll()
                     .requestMatchers("/member/create").permitAll()
+                    .requestMatchers("/auth/login/error").permitAll()
+                    .requestMatchers("/auth/login").permitAll()
                     .anyRequest().authenticated();
         })
         .userDetailsService(memberUserDetailsService)
         .formLogin( (form) -> {
-            form.loginPage("/login").permitAll();
+            form.loginPage("/auth/login") //PostMappeing("/auth/login")으로 login 설정
+                .usernameParameter("id") // loadByUserName 의 parameter를 지정 default=username
+                .failureHandler(authenticationFailureHandler())
+                .successHandler(authenticationSuccessHandler());
         })
-        .logout(LogoutConfigurer::permitAll);
-
+        .logout((logout) -> {
+            logout.logoutUrl("/auth/logout")  //PostMappeing("/auth/logout")으로 logout 설정
+                .invalidateHttpSession(true).deleteCookies("JSESSIONID")
+                .logoutSuccessUrl("/");
+        });
 
 
         return http.build();
@@ -50,4 +63,13 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public AuthenticationSuccessHandler authenticationSuccessHandler(){
+        return new CustomFormLoginSuccessHandler();
+    }
+
+    @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler(){
+        return new CustomAuthenticationFailureHandler();
+    }
 }
