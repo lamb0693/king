@@ -5,14 +5,19 @@ import com.example.king.DTO.MemberListDTO;
 import com.example.king.Entity.MemberEntity;
 import com.example.king.Repository.MemberRepository;
 import com.example.king.service.MemberService;
+import com.example.king.service.MemberUserDetail;
 import com.example.king.serviceImpl.MemberServiceImpl;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -81,6 +86,21 @@ public class MemberController {
             redirectAttributes.addFlashAttribute("saveResult", "saveSuccess");
             return "redirect:/member/list";
         }
+    }
+
+    @GetMapping("/modify")
+    public String modifyInfo(){
+
+        return "/member/modifyInfo";
+    }
+
+    @PostMapping("/delete")
+    public String deleteMember(@AuthenticationPrincipal MemberUserDetail memberUserDetail, HttpServletRequest request){
+        log.info("deleteMember@MemberController memberUserDetail" + memberUserDetail.toString());
+
+        memberService.deleteById(memberUserDetail.getUsername());
+        request.getSession().invalidate();
+        return "redirect:/";
     }
 
     @GetMapping("/exist/id/{id}")
