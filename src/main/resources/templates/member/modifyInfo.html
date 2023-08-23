@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+
+<div class="container" layout:fragment="content">
+
+    <form action="#">
+        <div class="fs-5 mt-5 mb-2 text-primary">
+            비밀 번호 변경
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text" >새 비밀번호 입력</span>
+            <input type="text" class="form-control" id="txtPassword1" name="password1" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div class="input-group mb-3">
+            <span class="input-group-text">새 비밀번호 확인</span>
+            <input type="text" class="form-control" id="txtPassword2" name="password2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+        </div>
+        <div>
+            <Button class="btn btn-primary" id="changePassword">비밀번호 변경</Button>
+        </div>
+    </form>
+
+    <form id="withdrawForm" th:action="@{/member/delete}" method="post">
+        <div class="fs-5 mt-5 mb-2 text-danger">
+            회원 탈퇴
+        </div>
+        <div>
+            <Button class="btn btn-danger" id="btnWithdraw">회원 탈퇴</Button>
+        </div>
+    </form>
+
+    <script src="/js/modifyInfo.js"></script>
+
+</div>

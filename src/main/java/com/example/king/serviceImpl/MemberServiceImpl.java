@@ -1,5 +1,6 @@
 package com.example.king.serviceImpl;
 
+import com.example.king.DTO.MemberAuthDTO;
 import com.example.king.DTO.MemberCreateDTO;
 import com.example.king.DTO.MemberListDTO;
 import com.example.king.Entity.MemberEntity;
@@ -8,10 +9,13 @@ import com.example.king.constant.Role;
 import com.example.king.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -44,14 +48,14 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public int saveMember(MemberCreateDTO memberCreateDTO) {
+    public int saveMember(MemberCreateDTO memberCreateDTO, PasswordEncoder passwordEncoder) {
         log.info("setMember@MemberServiceImpl : memberCreateDTO" + memberCreateDTO.toString());
         MemberEntity memberEntity = new MemberEntity();
 
         memberEntity.setId(memberCreateDTO.getId());
         memberEntity.setNickname(memberCreateDTO.getNickname());
         //** 나중 password Hash 추가 *//
-        memberEntity.setPassword(memberCreateDTO.getPassword());
+        memberEntity.setPassword(passwordEncoder.encode( memberCreateDTO.getPassword() ));
         memberEntity.setRole(Role.USER);
 
         MemberEntity resultEntity = null;
@@ -63,5 +67,41 @@ public class MemberServiceImpl implements MemberService {
         }
 
         return 0; // success
+    }
+
+    @Override
+    public MemberAuthDTO getAuthDTO(String id) {
+        MemberAuthDTO memberAuthDTO = new MemberAuthDTO();
+
+        Optional<MemberEntity> member = memberRepository.findById(id);
+        if( member.isPresent() ){
+            memberAuthDTO.setId(member.get().getId());
+            memberAuthDTO.setPassword(member.get().getPassword());
+            memberAuthDTO.setNickname(member.get().getNickname());
+            return memberAuthDTO;
+        } else {
+            log.info("getAtuhDTO@MemberServiceImpl : no result");
+            return null;
+        }
+    }
+
+    @Override
+    public void deleteById(String id) throws IllegalArgumentException{
+        try{
+            memberRepository.deleteById(id);
+        } catch(Exception e){
+            log.error(e.getMessage()); 
+            // 이 후에  어떻게 할지 추가해야
+        }
+    }
+
+    @Override
+    public Boolean checkIdExist(String id) {
+        return memberRepository.existsById(id);
+    }
+
+    @Override
+    public Boolean checkNicknameExist(String nickname) {
+        return memberRepository.existsByNickname(nickname);
     }
 }
