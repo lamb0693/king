@@ -22,8 +22,8 @@
                     <input type="text" class="form-control" id="id" name="id" placeholder="id"
                            th:value="${previousValue != null ? previousValue.id : ''}">
                 </div>
-                <div class="col-3">
-                    <button class="btn btn-primary mb-3" id="btnCheckExistId">사용 가능 확인</button>
+                <div class="col-3 fs-5" id="divExistId">
+                    사용 불가능 Id
                 </div>
             </div>
             <div th:if="${nickname}">

@@ -11,6 +11,7 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -86,7 +87,7 @@ public class MemberController {
     public ResponseEntity<Boolean> checkIdExist(@PathVariable String id){
         //log.info(" ******** checkIdExist@LoginController return OK + :" +memberService.checkIdExist(id) );
 
-        return ResponseEntity.ok(memberService.checkIdExist(id));
+        return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(memberService.checkIdExist(id));
     }
 
     @GetMapping("/exist/nickname/{nickname}")
