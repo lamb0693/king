@@ -1,14 +1,14 @@
 let ping_room_list = null
 
-const txtMakeRoomName = document.getElementById("txtMakeRoomName")
-const txtJoinRoomName = document.getElementById("txtJoinRoomName")
+//const txtMakeRoomName = document.getElementById("txtMakeRoomName")
+//const txtJoinRoomName = document.getElementById("txtJoinRoomName")
 // const btnJoinRoom = document.getElementById("btnJoinRoom")
 const btnMakeRoom = document.getElementById("btnMakeRoom")
 
-const tblRoomListTable = document.getElementById("roomListTable")
+//const tblRoomListTable = document.getElementById("roomListTable")
 const tbodyRoomListTable = document.getElementById("tbodyRoomListTable")
 
-const userId = document.getElementById("userId")
+//const userId = document.getElementById("userId")
 const userNickname = document.getElementById("userNickname")
 
 const makeRoomCallBack = (result, roomName) => {

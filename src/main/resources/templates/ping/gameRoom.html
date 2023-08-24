@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/layout.html}">
 
 <th:block layout:fragment="cssFrag">
@@ -8,12 +9,12 @@
 </th:block>
 
 <div class="container custom-container text-center" layout:fragment="content">
+    <div class="d-none" sec:authentication="principal.username" id="userId"></div>
+    <div class="d-none" sec:authentication="principal.nickname" id="userNickname"></div>
     <div id="divRoomName" class="row fs-2 bg-warning center-text mb-2" th:text="${roomName}"></div>
     <div th:if="${player == 'player0'}" class="row mb-2">
         <div id="divPlayerNo0" class="col fs-2 center-text bg-success" th:text="${player}"></div>
-        <div class="col fs-2 center-text bg-success">
-            아이디 ldw
-        </div>
+        <div class="col fs-2 center-text text-bg-success" sec:authentication="principal.nickname"></div>
     </div>
     <!--/*
     <div class="row borad-height mb-2">
@@ -70,9 +71,7 @@
 
     <div th:if="${player == 'player1'}" class="row mb-2">
         <div id="divPlayerNo1" class="col fs-2 center-text bg-success" th:text="${player}"></div>
-        <div class="col fs-2 center-text bg-success">
-            아이디 ldw
-        </div>
+        <div class="col fs-2 center-text text-bg-success" sec:authentication="principal.nickname"></div>
     </div>
     <div class="mt-5 d-flex align-items-start">
         <button id="start" class="btn btn-primary" disabled>start</button>
