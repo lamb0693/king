@@ -8,6 +8,9 @@ const btnMakeRoom = document.getElementById("btnMakeRoom")
 const tblRoomListTable = document.getElementById("roomListTable")
 const tbodyRoomListTable = document.getElementById("tbodyRoomListTable")
 
+const userId = document.getElementById("userId")
+const userNickname = document.getElementById("userNickname")
+
 const makeRoomCallBack = (result, roomName) => {
     console.log('makeRoomCallback 실행 : ', result)
     if(result === 'success') {
@@ -23,7 +26,8 @@ const makeRoomCallBack = (result, roomName) => {
 // 이름의 방을 만든다
 const makeRoom = (event) => {
     event.preventDefault()
-    let roomName = txtMakeRoomName.value;
+    //let roomName = txtMakeRoomName.value;
+    let roomName = "" + userNickname.textContent
     if(roomName==='') {
         alert('방 이름이 없어요')
     } else {
@@ -48,7 +52,7 @@ const joinRoomCallBack = (result, roomName) => {
 // 이름의 방에 join한다
 const joinRoom = (event) => {
     event.preventDefault()
-    let strId = event.target.id
+    let strId = event.target.id //button의 id
     let strRoomName = strId.substring(4)
     console.log(strRoomName)
     socket.emit('ping_join_room', strRoomName, (result) => {
