@@ -91,15 +91,31 @@ public class MemberController {
     @GetMapping("/modify")
     public String modifyInfo(){
 
+
         return "/member/modifyInfo";
     }
 
+    @PostMapping("/modifyPasword")
+    public String modifyPassword(@AuthenticationPrincipal MemberUserDetail userDetail, @RequestParam String password1, HttpServletRequest request
+        ,RedirectAttributes redirectAttributes){
+
+        memberService.saveNewPassword(userDetail.getUsername(), passwordEncoder.encode(password1));
+        request.getSession().invalidate();
+
+        redirectAttributes.addFlashAttribute("passwordModified", "true");
+
+        return "redirect:/";
+    }
+
     @PostMapping("/delete")
-    public String deleteMember(@AuthenticationPrincipal MemberUserDetail memberUserDetail, HttpServletRequest request){
+    public String deleteMember(@AuthenticationPrincipal MemberUserDetail memberUserDetail, HttpServletRequest request
+            ,RedirectAttributes redirectAttributes){
         log.info("deleteMember@MemberController memberUserDetail" + memberUserDetail.toString());
 
         memberService.deleteById(memberUserDetail.getUsername());
         request.getSession().invalidate();
+        redirectAttributes.addFlashAttribute("withdrawn", "true");
+
         return "redirect:/";
     }
 

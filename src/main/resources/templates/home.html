@@ -105,4 +105,10 @@
         </div> <!--/* end of class col-4 */-->
     </div> <!--/* end of class row */-->
 
+    <script th:inline="javascript">
+        const passwordModified = [[${passwordModified}]];
+        if(passwordModified) alert("비밀 번호가 변경 되었습니다, 다시 로그인 하세요")
+        const withdrawn = [[${withdrawn}]];
+        if(withdrawn) alert("정상적으로 회원 탈퇴 되었습니다")
+    </script>
 </div>

@@ -26,7 +26,7 @@ public class MemberEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column
-    @CreationTimestamp
+    @Column(updatable = false)
+    @CreationTimestamp()
     private LocalDateTime joindate = LocalDateTime.now();
 }

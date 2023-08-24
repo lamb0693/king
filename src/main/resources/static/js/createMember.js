@@ -12,7 +12,7 @@ if (divExistNickname == null)
     console.log("****** Error : divExistID : null ******");
 const checkExistId = (event) => {
     event.preventDefault();
-    fetch("http://localhost:8080/member/exist/id/" + txtId.value)
+    fetch("http://10.100.203.29:8080/member/exist/id/" + txtId.value)
         .then((response) => {
         return response.text();
     })
@@ -32,7 +32,7 @@ const checkExistId = (event) => {
 txtId.addEventListener('input', checkExistId);
 const checkExistNickname = (event) => {
     event.preventDefault();
-    fetch("http://localhost:8080/member/exist/nickname/" + txtNickname.value)
+    fetch("http://10.100.203.29:8080/member/exist/nickname/" + txtNickname.value)
         .then((response) => {
         return response.text();
     })

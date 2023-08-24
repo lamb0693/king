@@ -3,6 +3,7 @@ package com.example.king.service;
 import com.example.king.DTO.MemberAuthDTO;
 import com.example.king.DTO.MemberCreateDTO;
 import com.example.king.DTO.MemberListDTO;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
@@ -20,4 +21,6 @@ public interface MemberService {
     Boolean checkIdExist(String id);
 
     Boolean checkNicknameExist(String nickname);
+
+    void saveNewPassword(String id, String password);
 }

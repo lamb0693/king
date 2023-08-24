@@ -7,11 +7,14 @@ import com.example.king.Entity.MemberEntity;
 import com.example.king.Repository.MemberRepository;
 import com.example.king.constant.Role;
 import com.example.king.service.MemberService;
+import com.example.king.service.MemberUserDetail;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.hibernate.dialect.lock.OptimisticEntityLockException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,5 +106,24 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public Boolean checkNicknameExist(String nickname) {
         return memberRepository.existsByNickname(nickname);
+    }
+
+    @Override
+    @Transactional
+    public void saveNewPassword(String id,  String password) throws IllegalArgumentException, OptimisticEntityLockException {
+        // joinat이 update 되지 않아야 한다  나중 확인
+        log.info("  ****** saveNewPassword@MemberServiceImpl id=" + id);
+        MemberCreateDTO dto = new MemberCreateDTO();
+        MemberEntity memberEntity = new MemberEntity();
+        Optional<MemberEntity> optional = memberRepository.findById(id);
+        if(optional.isPresent()){
+            memberEntity=optional.get();
+            memberEntity.setPassword(password);
+            memberRepository.save(memberEntity);
+            log.info(" *****   saveNewPassword@MemberServiceImpl saved new Password");
+        } else {
+            log.error("error saveNewPassword@MemberServiceImpl : no result ");
+        }
+
     }
 }
