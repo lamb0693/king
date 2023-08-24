@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
       layout:decorate="~{layout/layout.html}">
 
-
 <div class="container" layout:fragment="content">
+    <div class="d-none" sec:authentication="principal.username" id="userId"></div>
+    <div class="d-none" sec:authentication="principal.nickname" id="userNickname"></div>
     <div class="alert alert-dark" role="alert">
         Waiting Room
     </div>
@@ -20,10 +22,10 @@
         </tbody>
     </table>
 
-    <div class="mb-3">
-        <label for="txtMakeRoomName" class="form-label">방 만들기</label>
-        <input type="text" class="form-control" id="txtMakeRoomName" placeholder="Name of room to Make">
-        <button id="btnMakeRoom" class="btn btn-primary">Make Room</button>
+    <div class="mb-3 mt-5">
+        <!--/* label for="txtMakeRoomName" class="form-label">방 만들기</label */-->
+        <!--/* input type="text" class="form-control" id="txtMakeRoomName" placeholder="Name of room to Make" */-->
+        <button id="btnMakeRoom" class="btn btn-primary">새 방 만들기</button>
     </div>
 
     <script src="/js/socket.io.min.js"></script>
