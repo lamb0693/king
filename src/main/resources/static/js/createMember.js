@@ -34,17 +34,17 @@ const checkExistNickname = (event) => {
     event.preventDefault();
     fetch("http://localhost:8080/member/exist/nickname/" + txtNickname.value)
         .then((response) => {
-            return response.text();
-        })
+        return response.text();
+    })
         .then((data) => {
-            console.log(data);
-            if (data === 'true') {
-                divExistNickname.innerHTML = "다른 사용자가 사용중인 nickname입니다";
-            }
-            else {
-                divExistNickname.innerHTML = "사용할 수 있는 nickname 입니다";
-            }
-        })
+        console.log(data);
+        if (data === 'true') {
+            divExistNickname.innerHTML = "다른 사용자가 사용중인 nickname입니다";
+        }
+        else {
+            divExistNickname.innerHTML = "사용할 수 있는 nickname 입니다";
+        }
+    })
         .catch((error) => {
         console.log(error);
     });

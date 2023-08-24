@@ -5,17 +5,17 @@
 
 
 <div class="container" layout:fragment="content">
-    <div class="alert alert-secondary mb-3" role="alert">
+    <div class="alert alert-secondary mb-3 shadow-sm" role="alert">
         회원가입
     </div>
     <!--/*  아래와 같이 쓰면 csrf token을 자동으로 넣어줌  */-->
     <form th:action="@{/member/create}"  method="post">
-        <div style="background-color: #eeeeee; border-radius: 1%; box-shadow: 1px 1px">
-            <div th:if="${id}">
+        <div class="shadow-sm rounded-1" style="background-color: #eeeeee; border-radius: 1%;">
+            <div th:if="${id}">  <!--/* 설정된 error의 field */-->
                 <span th:text="${id}" class="text-danger fs-6  p-2"></span>
             </div>
-            <div class="row p-2 mb-2">
-                <div class="col-2">
+            <div class="row p-2 mb-2 align-items-center">
+                <div class="col-2 fs-6 text-center">
                     <label for="id" class="form-label">Id(Email)</label>
                 </div>
                 <div class="col-4">
@@ -26,11 +26,11 @@
                     Id 중복 확인
                 </div>
             </div>
-            <div th:if="${nickname}">
+            <div th:if="${nickname}">  <!--/* 설정된 error의 field */-->
                 <span th:text="${nickname}" class="text-danger fs-6 p-2"></span>
             </div>
-            <div class="row p-2 mb-2">
-                <div class="col-2">
+            <div class="row p-2 mb-2 align-items-center">
+                <div class="col-2 fs-6 text-center">
                     <label for="nickname" class="form-label">NickName</label>
                 </div>
                 <div class="col-4">
@@ -41,11 +41,11 @@
                     nickname 중복 확인
                 </div>
             </div>
-            <div th:if="${password}">
+            <div th:if="${password}">  <!--/* 설정된 error의 field */-->
                 <span th:text="${password}" class="text-danger fs-6 p-2"></span>
             </div>
-            <div class="row p-2 mb-2">
-                <div class="col-2">
+            <div class="row p-2 mb-2 align-items-center">
+                <div class="col-2 fs-6 text-center">
                     <label for="password" class="form-label">Password</label>
                 </div>
                 <div class="col-4">

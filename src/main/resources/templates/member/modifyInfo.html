@@ -5,20 +5,20 @@
 
 <div class="container" layout:fragment="content">
 
-    <form action="#">
+    <form action="#" id="changePasswordForm">
         <div class="fs-5 mt-5 mb-2 text-primary">
             비밀 번호 변경
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text" >새 비밀번호 입력</span>
-            <input type="text" class="form-control" id="txtPassword1" name="password1" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            <input type="password" autoComplete="off" class="form-control" id="txtPassword1" name="password1" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
         </div>
         <div class="input-group mb-3">
             <span class="input-group-text">새 비밀번호 확인</span>
-            <input type="text" class="form-control" id="txtPassword2" name="password2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+            <input type="password" autoComplete="off" class="form-control" id="txtPassword2" name="password2" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default" required>
         </div>
         <div>
-            <Button class="btn btn-primary" id="changePassword">비밀번호 변경</Button>
+            <Button class="btn btn-primary" id="btnChangePassword">비밀번호 변경</Button>
         </div>
     </form>
 
