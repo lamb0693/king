@@ -30,9 +30,9 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests( (request) -> {
             request.requestMatchers("/").permitAll()
+                    .requestMatchers("/result/create").permitAll()
                     .requestMatchers("/member/create").permitAll()
                     .requestMatchers("/auth/login/error").permitAll()
-
                     .requestMatchers("/auth/login").permitAll()
                     .requestMatchers("/member/exist/id/**").permitAll()
                     .requestMatchers("/member/exist/nickname/**").permitAll()

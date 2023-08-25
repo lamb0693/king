@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+
+<div class="container" layout:fragment="content">
+    <div class="alert alert-dark" role="alert">
+        Game Result Table
+    </div>
+
+    <form th:action="@{/result/list}" method="post">
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="input-group">
+                <span class="input-group-text" id="inputGroup-sizing-sm">ID</span>
+                <input type="text" class="form-control"  name="search_id" aria-label="Sizing example input"
+                       th:value="${search_id}" aria-describedby="inputGroup-sizing-sm">
+            </div>
+            <div class="input-group">
+                <select class="form-select" name="game_kind" aria-label="Default select example">
+                    <option selected value="not_selected">Game Kind</option>
+                    <option value="PING" th:selected="${game_kind=='PING'}">PING</option>
+                    <option value="LADDER" th:selected="${game_kind=='LADDER'}">LADDER</option>
+                    <option value="QUIZ" th:selected="${game_kind=='QUIZ'}">QUIZ</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary flex-shrink-0">검색</button>
+        </div>
+    </form>
+
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">game_id</th>
+            <th scope="col">종류</th>
+            <th scope="col">게임날자</th>
+            <th scope="col">승리</th>
+            <th scope="col">패배</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="dtoList : ${dtoList}">
+            <td th:text="${dtoList.game_id}"></td>
+            <td th:text="${dtoList.game_kind}"></td>
+            <td th:text="${dtoList.gamedate}"></td>
+            <td th:text="${dtoList.winner_id}"></td>
+            <td th:text="${dtoList.loser_id}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+
+</div>

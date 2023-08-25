@@ -4,6 +4,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Title</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -29,7 +31,7 @@
                                 <a class="nav-link active" aria-current="page" th:href="@{/}">메뉴0</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">메뉴1</a>
+                                <a class="nav-link" href="/result/list">게임성적검색</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/member/list">멤버관리</a>
