@@ -2,6 +2,7 @@ package com.example.king.service;
 
 import com.example.king.DTO.GameResultCreateDTO;
 import com.example.king.DTO.GameResultListDTO;
+import com.example.king.Entity.GameResultEntity;
 import org.springframework.ui.Model;
 
 import java.util.List;

@@ -15,14 +15,14 @@ public class GameResultCreateDTO {
 
     private String winner_id;
 
-    private String looser_id;
+    private String loser_id;
 
     @Override
     public String toString() {
         return "GameResultCreateDTO{" +
                 "game_kind='" + game_kind + '\'' +
                 ", winner_id='" + winner_id + '\'' +
-                ", looser_id='" + looser_id + '\'' +
+                ", looser_id='" + loser_id + '\'' +
                 '}';
     }
 }

@@ -87,9 +87,14 @@ public class GameResultServiceImpl implements GameResultService {
         entity.setWinner( memberEntity);
 
         memberEntity = new MemberEntity();
-        memberEntity.setId(gameResultCreateDTO.getLooser_id());
+        memberEntity.setId(gameResultCreateDTO.getLoser_id());
         entity.setLoser( memberEntity);
 
-        gameResultRepository.save(entity);
+        try{
+            gameResultRepository.save(entity);
+        } catch(Exception e){
+            log.error("createGameResult@GamerResultServiceImpl : " + e.getMessage() + entity.getGameKind() + entity.getWinner().getId() + entity.getLoser().getId());
+        }
+
     }
 }

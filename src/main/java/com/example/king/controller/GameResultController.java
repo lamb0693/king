@@ -51,9 +51,8 @@ public class GameResultController {
     @PostMapping(value = "/create", produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
     public ResponseEntity<Boolean> createGameResult(@RequestBody GameResultCreateDTO gameResultCreateDTO){
-        log.info("I am in createGameResult@GameResultController : gameResultCreateDTO");
         log.info("****** createGameResult@GameResultController : gameResultCreateDTO = " + gameResultCreateDTO.toString() );
-        //gameResultService.createGameResult( gameResultCreateDTO );
+        gameResultService.createGameResult( gameResultCreateDTO );
 
         return ResponseEntity.ok().contentType(MediaType.APPLICATION_JSON).body(true);
     }
@@ -65,7 +64,7 @@ public class GameResultController {
         GameResultCreateDTO gameResultCreateDTO = new GameResultCreateDTO();
         gameResultCreateDTO.setGame_kind("QUIZ");
         gameResultCreateDTO.setWinner_id("ccc@ddd.eee");
-        gameResultCreateDTO.setLooser_id("aaa@bbb.ccc");
+        gameResultCreateDTO.setLoser_id("aaa@bbb.ccc");
 
         gameResultService.createGameResult( gameResultCreateDTO );
 
