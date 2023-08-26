@@ -3,10 +3,10 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="~{layout/layout.html}">
 
-<div class="container" layout:fragment="content">
+<div class="container" layout:fragment="content" style="background-color: #eeeeee; border-radius:4px">
 
     <form th:action="@{/member/modifyPasword}" method="post" id="changePasswordForm">
-        <div class="fs-5 mt-5 mb-2 text-primary">
+        <div class="fs-5 mt-3 mb-2 mt-3 text-primary p-3">
             비밀 번호 변경
         </div>
         <div class="input-group mb-3">
@@ -22,7 +22,7 @@
         </div>
     </form>
 
-    <form id="withdrawForm" th:action="@{/member/delete}" method="post">
+    <form id="withdrawForm" th:action="@{/member/delete}" method="post" class="p-3">
         <div class="fs-5 mt-5 mb-2 text-danger">
             회원 탈퇴
         </div>

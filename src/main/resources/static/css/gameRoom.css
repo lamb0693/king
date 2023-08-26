@@ -9,7 +9,6 @@
 .game_paddle{
     width : 80px;
     height : 20px;
-    background-color: green;
     left : 180px; /* 210-180 */
     position :absolute;
     border-radius: 20%;

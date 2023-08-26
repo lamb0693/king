@@ -81,6 +81,8 @@ public class MemberServiceImpl implements MemberService {
             memberAuthDTO.setId(member.get().getId());
             memberAuthDTO.setPassword(member.get().getPassword());
             memberAuthDTO.setNickname(member.get().getNickname());
+            memberAuthDTO.setLocked(member.get().isLocked());
+            log.info(" **** getAuthDTO:MemberServiceImpl : memberAuthDTO is set" + memberAuthDTO.toString());
             return memberAuthDTO;
         } else {
             log.info("getAtuhDTO@MemberServiceImpl : no result");

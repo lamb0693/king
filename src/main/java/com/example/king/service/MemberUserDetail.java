@@ -14,10 +14,13 @@ public class MemberUserDetail implements UserDetails {
     @Getter
     String nickname;
 
+    boolean locked;
+
     public MemberUserDetail(MemberAuthDTO memberAuthDTO) {
         this.id = memberAuthDTO.getId();
         this.password = memberAuthDTO.getPassword();
         this.nickname = memberAuthDTO.getNickname();
+        this.locked= memberAuthDTO.isLocked();
     }
 
     @Override
@@ -42,7 +45,7 @@ public class MemberUserDetail implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !this.locked;
     }
 
     @Override

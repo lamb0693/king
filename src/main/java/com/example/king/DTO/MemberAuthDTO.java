@@ -9,7 +9,8 @@ import lombok.Setter;
 @Setter
 @Valid
 public class MemberAuthDTO {
-
+    // 추가하면 UserDetail 과 getAuthoDTO@MemberServicdImp 손봐야
+    
     @NotEmpty
     private String id;
 
@@ -19,12 +20,16 @@ public class MemberAuthDTO {
     @NotEmpty
     private String nickname;
 
+    @NotEmpty
+    private boolean locked;
+
     @Override
     public String toString() {
         return "MemberAuthDTO{" +
                 "id='" + id + '\'' +
                 ", password='" + password + '\'' +
                 ", nickname='" + nickname + '\'' +
+                ", locked=" + locked +
                 '}';
     }
 }

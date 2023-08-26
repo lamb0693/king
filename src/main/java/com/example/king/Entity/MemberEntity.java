@@ -26,6 +26,9 @@ public class MemberEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    @Column(length = 6, nullable=false )
+    private boolean locked=false;  //lock는 id로 사용불가 mysql 예약어인듯
+
     @Column(updatable = false)
     @CreationTimestamp()
     private LocalDateTime joindate = LocalDateTime.now();
