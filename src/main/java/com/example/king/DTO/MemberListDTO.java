@@ -11,7 +11,6 @@ import java.util.Date;
 @Getter
 @Setter
 @ToString
-@Valid      /* Validation 추가 해야 됨*/
 public class MemberListDTO {
     private String id;
     private String nickname;
