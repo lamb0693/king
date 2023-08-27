@@ -20,6 +20,8 @@ public class HomeController {
     public String home(Model model){
         List<RankingDTO> pingRankList = memberService.getRanker("PING");
 
+        String[] rankString =  {"킹", "왕", "짱", "4", "5"};
+        model.addAttribute("rankString", rankString );
         model.addAttribute("pingRankList", pingRankList);
 
         return "home";

@@ -6,7 +6,7 @@
 
 <div class="container" layout:fragment="content">
 
-    <div class="row" style="height : 650px; background-color: #eeeeee; padding : 20px 0">
+    <div class="row" style="height : 650px; background-color: #eeeeee; padding : 20px 0; border-radius: 6px">
         <div class="col-4 d-flex justify-content-center">
             <div class="card" style="width: 18rem;">
                 <img src="/image/image1.jpg" class="card-img-top" alt="gameImage1">
@@ -17,20 +17,14 @@
                         <tr>
                             <th scope="col">랭킹</th>
                             <th scope="col">아이디</th>
+                            <th scope="col">승리</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>킹</td>
-                            <td>홍길동</td>
-                        </tr>
-                        <tr>
-                            <td>왕</td>
-                            <td>무명남</td>
-                        </tr>
-                        <tr>
-                            <td>짱</td>
-                            <td>무명녀</td>
+                        <tr th:each="ranker, i :  ${pingRankList}">
+                            <td>[[ ${rankString[i.index]} ]] </td>
+                            <td>[[${ranker.nickname}]]</td>
+                            <td>[[${ranker.winCount}]]</td>
                         </tr>
                         </tbody>
                     </table>
@@ -53,20 +47,10 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>킹</td>
-                            <td>[[${pingRankList[0].nickname}]]</td>
-                            <td>[[${pingRankList[0].winCount}]]</td>
-                        </tr>
-                        <tr>
-                            <td>왕</td>
-                            <td>[[${pingRankList[1].nickname}]]</td>
-                            <td>[[${pingRankList[1].winCount}]]</td>
-                        </tr>
-                        <tr>
-                            <td>짱</td>
-                            <td>[[${pingRankList[2].nickname}]]</td>
-                            <td>[[${pingRankList[2].winCount}]]</td>
+                        <tr th:each="ranker, i :  ${pingRankList}">
+                            <td>[[ ${rankString[i.index]} ]] </td>
+                            <td>[[${ranker.nickname}]]</td>
+                            <td>[[${ranker.winCount}]]</td>
                         </tr>
                         </tbody>
                     </table>
@@ -85,20 +69,14 @@
                         <tr>
                             <th scope="col">랭킹</th>
                             <th scope="col">아이디</th>
+                            <th scope="col">승리</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>킹</td>
-                            <td>홍길동</td>
-                        </tr>
-                        <tr>
-                            <td>왕</td>
-                            <td>무명남</td>
-                        </tr>
-                        <tr>
-                            <td>짱</td>
-                            <td>무명녀</td>
+                        <tr th:each="ranker, i :  ${pingRankList}">
+                            <td>[[ ${rankString[i.index]} ]] </td>
+                            <td>[[${ranker.nickname}]]</td>
+                            <td>[[${ranker.winCount}]]</td>
                         </tr>
                         </tbody>
                     </table>
