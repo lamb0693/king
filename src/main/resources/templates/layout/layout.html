@@ -4,6 +4,8 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head>
     <meta charset="UTF-8">
+    <meta name="_csrf" th:content="${_csrf.token}"/>
+    <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
     <title>Title</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
     <script src="/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
@@ -11,12 +13,29 @@
     <th:block layout:fragment="cssFrag">
 
     </th:block>
+    <style>
+        #titleDiv > span {
+            font-weight: 900;
+            font-style : oblique;
+            text-align: center;
+        }
+        .enlargedCharSpan{
+            font-size : 50px
+        }
+        .normalCharSpan{
+            font-size : 40px
+        }
+    </style>
 </head>
 <body>
 
     <div class="container mb-3">
-        <div class="container fs-2 mb-3">Header Image Area</div>
-        <div class="container">
+        <div class="container mb-3 text-center" id="titleDiv" style="background:linear-gradient(58.2deg, rgba(40, 91, 212, 0.73) -3%, rgba(171, 53, 163, 0.45) 49.3%, rgba(255, 204, 112, 0.37) 97.7%); height:80px">
+            <span style="color:blue">킹</span>&nbsp&nbsp&nbsp<span style="color:lightgreen">왕</span>&nbsp&nbsp&nbsp<span style="color:lightcoral">짱</span>
+            &nbsp&nbsp&nbsp&nbsp&nbsp
+            <span style="color:blue">King</span>&nbsp&nbsp&nbsp<span style="color:lightgreen">Wang</span>&nbsp&nbsp&nbsp<span style="color:lightcoral">Zzang</span>
+        </div>
+        <div class="row">
             <nav class="navbar navbar-expand-lg bg-body-tertiary"> <!--/* Navigation Area  */-->
                 <div class="container-fluid">
                     <a class="navbar-brand" href="/">HomeImage</a>
@@ -29,7 +48,7 @@
                                 <a class="nav-link active" aria-current="page" th:href="@{/}">메뉴0</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#">메뉴1</a>
+                                <a class="nav-link" href="/result/list">게임성적검색</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/member/list">멤버관리</a>
@@ -40,13 +59,13 @@
                         </ul>
                     </div>
                     <div>
-                        <span sec:authorize="isAnonymous()"><a th:href="@{/auth/login}" class="fs-6 text-bg-success text-decoration-none">로그인</a></span>
-                        <span sec:authorize="isAnonymous()"><a th:href="@{/member/create}" class="fs-6 text-bg-success text-decoration-none">회원가입</a></span>
+                        <span sec:authorize="isAnonymous()"><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/auth/login}" class="fs-6 text-bg-success text-decoration-none">로그인</a></span>
+                        <span sec:authorize="isAnonymous()"><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/member/create}" class="fs-6 text-bg-success text-decoration-none">회원가입</a></span>
                         <th:block sec:authorize="isAuthenticated()">
                             <!--/* span sec:authentication="name"></span>님 */-->
-                            <span sec:authentication="principal.nickname" class="fs-5"></span>님
-                            <span ><a th:href="@{/auth/logout}" class="fs-6 text-bg-success text-decoration-none">로그아웃</a></span>
-                            <span><a th:href="@{/member/modify}" class="fs-6 text-bg-success text-decoration-none">개인정보수정</a></span>
+                            <span style="border-radius:6px; padding : 5px 7px;" sec:authentication="principal.nickname" class="fs-5"></span>님
+                            <span><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/auth/logout}" class="fs-6 text-bg-success text-decoration-none">로그아웃</a></span>
+                            <span><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/member/modify}" class="fs-6 text-bg-warning text-decoration-none">개인정보수정</a></span>
                         </th:block>
                     </div>
                 </div>
@@ -58,9 +77,14 @@
     <div layout:fragment="content">
     </div>
 
-    <div class="container mt-3 fs-2">
-        Footer Area
+    <div class="container mt-3 text-center" style="height:70px; font-size:14px; padding : 0 5px; border-top: 2px solid #222; background-color: rgba(225, 225, 225, 0.7); line-height: 70px">
+        <span style="margin-right: 30px">CopyRight : KingWangZzang Co. 2023</span>  <span style="margin-right: 30px">주소 : 부산광역시 부산진구 중앙대로</span> <span style="margin-right: 30px">Email : admin@bbb.ccc</span>
     </div>
 
+    <th:block layout:fragment="script">
+
+    </th:block>
+
+    <script src="/js/layout.js"></script>
 </body>
 </html>

@@ -30,9 +30,10 @@ public class SecurityConfig {
 
         http.authorizeHttpRequests( (request) -> {
             request.requestMatchers("/").permitAll()
+                    .requestMatchers("/image/**", "/js/**", "/css/**").permitAll()
+                    //.requestMatchers("/result/create").permitAll()
                     .requestMatchers("/member/create").permitAll()
                     .requestMatchers("/auth/login/error").permitAll()
-
                     .requestMatchers("/auth/login").permitAll()
                     .requestMatchers("/member/exist/id/**").permitAll()
                     .requestMatchers("/member/exist/nickname/**").permitAll()
@@ -55,11 +56,11 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers ("/image/**", "/js/**", "/css/**");
-        // configure Web security...
-    }
+//    @Bean
+//    public WebSecurityCustomizer webSecurityCustomizer() {
+//        return (web) -> web.ignoring().requestMatchers ("/image/**", "/js/**", "/css/**");
+//        // configure Web security...
+//    }
 
     @Bean
     PasswordEncoder passwordEncoder(){

@@ -1,0 +1,7 @@
+#divPaging{
+    text-align: center;
+}
+#divPaging > a {
+    margin: 0 10px;
+    text-decoration: none;
+}

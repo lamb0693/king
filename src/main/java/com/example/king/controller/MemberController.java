@@ -2,6 +2,7 @@ package com.example.king.controller;
 
 import com.example.king.DTO.MemberCreateDTO;
 import com.example.king.DTO.MemberListDTO;
+import com.example.king.DTO.MemberListPageDTO;
 import com.example.king.Entity.MemberEntity;
 import com.example.king.Repository.MemberRepository;
 import com.example.king.service.MemberService;
@@ -13,6 +14,8 @@ import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -37,18 +40,42 @@ public class MemberController {
     private MemberService memberService;
     private PasswordEncoder passwordEncoder;
 
+//    @GetMapping("/list")
+//    public String viewMembers(Model model){
+//        List<MemberListDTO> members = memberService.getMemberList();
+//
+//        if(members ==null || members.isEmpty()){
+//            log.info("viewMembers@MemberController : members is null or empty");
+//        }
+//
+//        model.addAttribute("members", members);
+//
+//        return "member/viewMembers.html";
+//    }
+
     @GetMapping("/list")
-    public String viewMembers(Model model){
-        List<MemberListDTO> members = memberService.getMemberList();
+    public String viewMembers(@RequestParam(value="page", defaultValue = "0") String page, Model model){
+        Pageable pageable = PageRequest.of(Integer.parseInt(page), 2);
+        MemberListPageDTO memberListPageDTO = memberService.getMemberListWithPage(pageable);
+
+        List<MemberListDTO> members = memberListPageDTO.getMemberListDTOList();
+        int pageSize = memberListPageDTO.getPageSize();
+        long totalElement = memberListPageDTO.getTotalElements();
+        int currentPage = memberListPageDTO.getCurrentPage();
 
         if(members ==null || members.isEmpty()){
             log.info("viewMembers@MemberController : members is null or empty");
         }
 
+        log.info("viewMembers@MemberController : memberListPageDTO" + memberListPageDTO.toString() );
         model.addAttribute("members", members);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalElement", totalElement);
+        model.addAttribute("currentPage", currentPage);
 
-        return "member/viewMembers.html";
+        return "member/viewMembers";
     }
+
 
     @GetMapping("/create")
     public String createMemberForm(){

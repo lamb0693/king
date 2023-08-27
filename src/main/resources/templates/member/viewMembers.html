@@ -26,7 +26,30 @@
             </tr>
         </tbody>
     </table>
+    <div id="divPaging" class="fs-4">
 
+    </div>
 
+    <script src="/js/paging.js"></script>
 </div>
 
+<th:block layout:fragment="cssFrag">
+    <link rel="stylesheet" href="/css/viewMembers.css">
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+
+    const MAX_LINK = 5 // 가급적 홀수로
+    const BASE_URL = "/member/list?"
+
+    const pageSize = Number ([[${pageSize}]] )
+    const totalElement = Number( [[${totalElement}]] )
+    const currentPage = Number( [[${currentPage}]] )
+
+    const divPaging = document.getElementById("divPaging");
+
+    const anchorList = customPaging(MAX_LINK, BASE_URL, pageSize, totalElement, currentPage)
+
+    anchorList.forEach( (anchor) => divPaging.appendChild(anchor))
+
+</script>

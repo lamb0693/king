@@ -3,15 +3,16 @@ package com.example.king.serviceImpl;
 import com.example.king.DTO.MemberAuthDTO;
 import com.example.king.DTO.MemberCreateDTO;
 import com.example.king.DTO.MemberListDTO;
+import com.example.king.DTO.MemberListPageDTO;
 import com.example.king.Entity.MemberEntity;
 import com.example.king.Repository.MemberRepository;
 import com.example.king.constant.Role;
 import com.example.king.service.MemberService;
-import com.example.king.service.MemberUserDetail;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.hibernate.dialect.lock.OptimisticEntityLockException;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,27 +28,50 @@ public class MemberServiceImpl implements MemberService {
 
     private MemberRepository memberRepository;
 
+    private MemberListDTO entityToDTO(MemberEntity memberEntity){
+        MemberListDTO memberListDTO = new MemberListDTO();
+        memberListDTO.setId(memberEntity.getId());
+        memberListDTO.setNickname(memberEntity.getNickname());
+        memberListDTO.setRole(memberEntity.getRole().name());
+        memberListDTO.setJoindate(memberEntity.getJoindate());
+        return memberListDTO;
+    }
+
+//    @Override
+//    public List<MemberListDTO> getMemberList() {
+//        List<MemberListDTO> memberDTOList = new ArrayList<>();
+//
+//        List<MemberEntity> memberEntityList = memberRepository.findAll();
+//
+//        if(memberEntityList.isEmpty()){
+//            log.info("getMemberList@MemberServiceImpl return null List");
+//            return memberDTOList;
+//        }
+//
+//        for(MemberEntity memberEntity : memberEntityList){
+//            memberDTOList.add( entityToDTO(memberEntity) );
+//        }
+//
+//        return memberDTOList;
+//    }
+
     @Override
-    public List<MemberListDTO> getMemberList() {
+    public MemberListPageDTO getMemberListWithPage(Pageable pageable) {
         List<MemberListDTO> memberDTOList = new ArrayList<>();
 
-        List<MemberEntity> memberEntityList = memberRepository.findAll();
-
-        if(memberEntityList.isEmpty()){
-            log.info("getMemberList@MemberServiceImpl return null List");
-            return memberDTOList;
-        }
+        Page<MemberEntity> memberEntityList = memberRepository.findAll(pageable);
 
         for(MemberEntity memberEntity : memberEntityList){
-            MemberListDTO memberListDTO = new MemberListDTO();
-            memberListDTO.setId(memberEntity.getId());
-            memberListDTO.setNickname(memberEntity.getNickname());
-            memberListDTO.setRole(memberEntity.getRole().name());
-            memberListDTO.setJoindate(memberEntity.getJoindate());
-            memberDTOList.add(memberListDTO);
+            memberDTOList.add( entityToDTO(memberEntity) );
         }
 
-        return memberDTOList;
+        MemberListPageDTO memberListPageDTO = new MemberListPageDTO();
+        memberListPageDTO.setMemberListDTOList(memberDTOList);
+        memberListPageDTO.setCurrentPage(memberEntityList.getNumber());
+        memberListPageDTO.setPageSize(memberEntityList.getTotalPages());
+        memberListPageDTO.setTotalElements(memberEntityList.getTotalElements());
+
+        return memberListPageDTO;
     }
 
     @Override
@@ -81,6 +105,8 @@ public class MemberServiceImpl implements MemberService {
             memberAuthDTO.setId(member.get().getId());
             memberAuthDTO.setPassword(member.get().getPassword());
             memberAuthDTO.setNickname(member.get().getNickname());
+            memberAuthDTO.setLocked(member.get().isLocked());
+            log.info(" **** getAuthDTO:MemberServiceImpl : memberAuthDTO is set" + memberAuthDTO.toString());
             return memberAuthDTO;
         } else {
             log.info("getAtuhDTO@MemberServiceImpl : no result");
