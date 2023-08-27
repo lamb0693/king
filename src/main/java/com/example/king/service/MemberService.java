@@ -1,9 +1,6 @@
 package com.example.king.service;
 
-import com.example.king.DTO.MemberAuthDTO;
-import com.example.king.DTO.MemberCreateDTO;
-import com.example.king.DTO.MemberListDTO;
-import com.example.king.DTO.MemberListPageDTO;
+import com.example.king.DTO.*;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -28,4 +25,6 @@ public interface MemberService {
     Boolean checkNicknameExist(String nickname);
 
     void saveNewPassword(String id, String password);
+
+    List<RankingDTO> getRanker(String game_kind);
 }

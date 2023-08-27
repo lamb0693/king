@@ -70,7 +70,7 @@ html, body {
     align-items: center;
     justify-content: center;
 }
-@media (max-width: 800px) {
+@media (max-width: 770px) {
     #chat_area {
         display: none;
     }

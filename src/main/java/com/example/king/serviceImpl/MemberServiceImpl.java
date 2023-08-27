@@ -1,9 +1,6 @@
 package com.example.king.serviceImpl;
 
-import com.example.king.DTO.MemberAuthDTO;
-import com.example.king.DTO.MemberCreateDTO;
-import com.example.king.DTO.MemberListDTO;
-import com.example.king.DTO.MemberListPageDTO;
+import com.example.king.DTO.*;
 import com.example.king.Entity.MemberEntity;
 import com.example.king.Repository.MemberRepository;
 import com.example.king.constant.Role;
@@ -151,5 +148,22 @@ public class MemberServiceImpl implements MemberService {
             log.error("error saveNewPassword@MemberServiceImpl : no result ");
         }
 
+    }
+
+    @Override
+    public List<RankingDTO> getRanker(String game_kind) {
+        List<Object[]> resultList = memberRepository.findTop3PINGPlayers();
+        List<RankingDTO> dtoList = new ArrayList<>();
+
+        for( Object[] result :  resultList){
+            RankingDTO dto = new RankingDTO();
+            dto.setNickname( (String) result[0]);
+            dto.setWinCount( (long) result[1]);
+            dtoList.add(dto);
+        }
+
+        log.info("**** getLanker@MemberController return dtoList " + dtoList.toString());
+
+        return dtoList;
     }
 }
