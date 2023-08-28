@@ -61,6 +61,7 @@ public class GameResultController {
     @GetMapping("/create")
     @ResponseBody
     public ResponseEntity<Boolean> createGameResult(){
+        log.info("**********I am in createGameResult@GameREsultController");
         GameResultCreateDTO gameResultCreateDTO = new GameResultCreateDTO();
         gameResultCreateDTO.setGame_kind("QUIZ");
         gameResultCreateDTO.setWinner_id("ccc@ddd.eee");

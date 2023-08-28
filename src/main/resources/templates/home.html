@@ -81,16 +81,20 @@
                         </tbody>
                     </table>
 
-                    <a th:href="@{/ping/waitingroom}" class="btn btn-primary">대기실</a>
+                    <a th:href="@{/quiz/waitingroom}" class="btn btn-primary">대기실</a>
                 </div> <!--/* end of class card body */-->
             </div> <!--/* end of class card */-->
         </div> <!--/* end of class col-4 */-->
     </div> <!--/* end of class row */-->
 
+    <!--/*  넘어온 결과에 대한 표시 */-->
     <script th:inline="javascript">
         const passwordModified = [[${passwordModified}]];
-        if(passwordModified) alert("비밀 번호가 변경 되었습니다, 다시 로그인 하세요")
         const withdrawn = [[${withdrawn}]];
-        if(withdrawn) alert("정상적으로 회원 탈퇴 되었습니다")
+        const saveResult = [[${saveResult}]];
+        if(saveResult) strSaveResult = saveResult.toString()
+        if(passwordModified) alert("비밀 번호가 변경 되었습니다, 다시 로그인 하세요");
+        else if(withdrawn) alert("정상적으로 회원 탈퇴 되었습니다");
+        else if(saveResult === 'saveSuccess') alert('회원 가입이 성공하였어요, 로그인하세요');
     </script>
 </div>
