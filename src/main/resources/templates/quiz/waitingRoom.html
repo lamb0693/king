@@ -8,12 +8,12 @@
     <div class="d-none" sec:authentication="principal.username" id="userId"></div>
     <div class="d-none" sec:authentication="principal.nickname" id="userNickname"></div>
     <div class="alert alert-dark" role="alert">
-        Waiting Room
+        Quiz Waiting Room
     </div>
     <table class="table" id="roomListTable">
         <thead>
         <tr>
-            <th scope="col">개설자 id</th>
+            <th scope="col">개설자 Nickname</th>
             <th scope="col">참가인원</th>
             <th scope="col">참가</th>
         </tr>
@@ -29,7 +29,5 @@
     </div>
 
     <script src="/js/socket.io.min.js"></script>
-    <script src="/js/ping/pingWaitingRoom.js"></script>
+    <script src="/js/quiz/quizWaitingRoom.js"></script>
 </div>
-
-

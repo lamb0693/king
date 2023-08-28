@@ -111,7 +111,7 @@ public class MemberController {
             //성공하면 "saveResult"를 redirectResult로 setting 후 member/list로 redirect한다
             //***** 나중에 viewMembers.html에 처리 과정 추가 ****
             redirectAttributes.addFlashAttribute("saveResult", "saveSuccess");
-            return "redirect:/member/list";
+            return "redirect:/";
         }
     }
 

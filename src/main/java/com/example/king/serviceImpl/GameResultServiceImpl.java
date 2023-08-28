@@ -78,6 +78,8 @@ public class GameResultServiceImpl implements GameResultService {
 
     @Override
     public void createGameResult(GameResultCreateDTO gameResultCreateDTO) {
+        log.info("***** createGameResult@GameResultServiceImpl : gameREusltCreateDTO = " + gameResultCreateDTO.toString());
+
         GameResultEntity entity = new GameResultEntity();
 
         entity.setGameKind(GameKind.valueOf( gameResultCreateDTO.getGame_kind() ));
