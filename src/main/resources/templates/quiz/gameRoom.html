@@ -17,10 +17,15 @@
         <div class="col fs-2 center-text text-bg-success" sec:authentication="principal.nickname"></div>
     </div>
 
-    <div class="d-flex mb-3">
+    <div class="d-flex mb-2">
         <div class="p-2 flex-grow-0 flex-shrink-0" style="width: 420px">
-            <div class="bg-secondary">
-                Quiz Area
+            <div class="bg-secondary text-start" id="quizArea">
+                <div id="divTimer" class="fs-1 text-center bg-danger mb-2">3</div>
+                <div id="divProblem" class="fs-5 mb-1 pl-1 pr-3" style="height:120px; background-color: #eeeeee">문제영역</div>
+                <div id="divAnswer1" class="fs-6 mb-1 px-3" style="height:80px; background-color: #eeeeee" >정답인 영역을 클릭하세요</div>
+                <div id="divAnswer2" class="fs-6 mb-1 px-2" style="height:80px; background-color: #eeeeee">정답인 영역을 클릭하세요</div>
+                <div id="divAnswer3" class="fs-6 mb-1 px-2" style="height:80px; background-color: #eeeeee">정답인 영역을 클릭하세요</div>
+                <div id="divAnswer4" class="fs-6 mb-1 px-2" style="height:80px; background-color: #eeeeee">정답인 영역을 클릭하세요</div>
             </div>
         </div>
         <div class="p-2 bg-primary flex-grow-1 ms-2" id="chat_area" >
@@ -45,9 +50,6 @@
     </div>
     <div class="mt-2 d-flex align-items-start">
         <button id="start" class="btn btn-primary" disabled>start</button>
-        <button id="stopGame" class="btn btn-danger" disabled>stop</button>
-        <button id="toLeft" class="btn btn-secondary">Left</button>
-        <button id="toRight" class="btn btn-secondary">Right</button>
     </div>
 
     <script src="/js/socket.io.min.js"></script>
