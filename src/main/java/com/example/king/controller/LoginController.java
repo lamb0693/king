@@ -1,13 +1,9 @@
 package com.example.king.controller;
 
-import com.example.king.DTO.MemberAuthDTO;
 import com.example.king.service.MemberService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
-import org.springframework.security.authentication.AnonymousAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -20,8 +16,13 @@ public class LoginController {
     MemberService memberService;
 
     @GetMapping("/login")
-    public String login(){
+    public String login(HttpServletRequest request){
         log.info("****** login@LoginController");
+
+        // 여기로 보낸 page를 session에 저장한다
+        String fromUri = request.getHeader("Referer");
+        log.info(" ****** login@LoginController  Referer = " + fromUri);
+        request.getSession().setAttribute("pageFrom",fromUri );
 
         return "/login/loginForm" ;
     }
