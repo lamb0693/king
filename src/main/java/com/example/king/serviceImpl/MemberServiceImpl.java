@@ -3,6 +3,7 @@ package com.example.king.serviceImpl;
 import com.example.king.DTO.*;
 import com.example.king.Entity.MemberEntity;
 import com.example.king.Repository.MemberRepository;
+import com.example.king.constant.GameKind;
 import com.example.king.constant.Role;
 import com.example.king.service.MemberService;
 import lombok.AllArgsConstructor;
@@ -151,8 +152,8 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
-    public List<RankingDTO> getRanker(String game_kind) {
-        List<Object[]> resultList = memberRepository.findTop3PINGPlayers();
+    public List<RankingDTO> getRanker(GameKind gameKind) {
+        List<Object[]> resultList = memberRepository.findTop5Players(gameKind);
         List<RankingDTO> dtoList = new ArrayList<>();
 
         for( Object[] result :  resultList){
