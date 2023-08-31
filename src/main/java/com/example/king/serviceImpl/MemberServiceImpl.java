@@ -34,6 +34,7 @@ public class MemberServiceImpl implements MemberService {
         memberListDTO.setNickname(memberEntity.getNickname());
         memberListDTO.setRole(memberEntity.getRole().name());
         memberListDTO.setJoindate(memberEntity.getJoindate());
+        memberListDTO.setLocked(memberEntity.isLocked());
         return memberListDTO;
     }
 
@@ -192,4 +193,26 @@ public class MemberServiceImpl implements MemberService {
 
         return dtoList;
     }
+
+    @Override
+    public void blockId(String id) throws IllegalArgumentException, OptimisticEntityLockException{
+        Optional<MemberEntity> optional = memberRepository.findById(id);
+
+        MemberEntity memberEntity = optional.orElseThrow();
+        memberEntity.setLocked(true);
+
+        memberRepository.save(memberEntity);
+    }
+
+    @Override
+    public void freeBlockedId(String id) {
+        Optional<MemberEntity> optional = memberRepository.findById(id);
+
+        MemberEntity memberEntity = optional.orElseThrow();
+        memberEntity.setLocked(false);
+
+        memberRepository.save(memberEntity);
+    }
+
+
 }

@@ -20,11 +20,12 @@ public class HomeController {
     @GetMapping("/")
     public String home(Model model){
         List<RankingDTO> pingRankList = memberService.getRanker(GameKind.valueOf("PING"));
-        //List<RankingDTO> ladderRankList = memberService.getRanker("PING");
+        List<RankingDTO> ladderRankList = memberService.getRanker(GameKind.valueOf("LADDER"));
         List<RankingDTO> quizRankList = memberService.getRanker(GameKind.valueOf("QUIZ"));
 
         String[] rankString =  {"킹", "왕", "짱", "4", "5"};
         model.addAttribute("rankString", rankString );
+        model.addAttribute("ladderRankList", ladderRankList);
         model.addAttribute("pingRankList", pingRankList);
         model.addAttribute("quizRankList", quizRankList);
 

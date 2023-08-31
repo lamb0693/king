@@ -28,4 +28,8 @@ public interface MemberService {
     void saveNewPassword(String id, String password);
 
     List<RankingDTO> getRanker(GameKind gameKind);
+
+    void blockId(String id);
+
+    void freeBlockedId(String id);
 }

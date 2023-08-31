@@ -15,6 +15,7 @@
                 <th scope="col">nickname</th>
                 <th scope="col">role</th>
                 <th scope="col">joindate</th>
+                <th scope="col">계정 차단</th>
             </tr>
         </thead>
         <tbody>
@@ -23,6 +24,8 @@
                 <td th:text="${member.nickname}"></td>
                 <td th:text="${member.role}"></td>
                 <td th:text="${member.joindate}"></td>
+                <td th:if="${member.locked}"><a class="text-decoration-none" th:href="@{/member/freeId/{id}(id=${member.id})}">계정 차단 해제</a></td>
+                <td th:unless="${member.locked}"><a class="text-decoration-none" th:href="@{/member/blockId/{id}(id=${member.id})}">계정 차단</a></td>
             </tr>
         </tbody>
     </table>

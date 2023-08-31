@@ -37,6 +37,7 @@ public class SecurityConfig {
                     .requestMatchers("/auth/login").permitAll()
                     .requestMatchers("/member/exist/id/**").permitAll()
                     .requestMatchers("/member/exist/nickname/**").permitAll()
+                    .requestMatchers("/member/list").hasAuthority("ROLE_ADMIN")
                     .anyRequest().authenticated();
         })
         .userDetailsService(memberUserDetailsService)

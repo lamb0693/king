@@ -16,4 +16,5 @@ public class MemberListDTO {
     private String nickname;
     private String role;
     private LocalDateTime joindate;
+    private boolean locked;
 }
