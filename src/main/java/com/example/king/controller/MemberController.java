@@ -1,5 +1,6 @@
 package com.example.king.controller;
 
+import com.example.king.DTO.MemberAuthDTO;
 import com.example.king.DTO.MemberCreateDTO;
 import com.example.king.DTO.MemberListDTO;
 import com.example.king.DTO.MemberListPageDTO;
@@ -7,6 +8,7 @@ import com.example.king.Entity.MemberEntity;
 import com.example.king.Repository.MemberRepository;
 import com.example.king.service.MemberService;
 import com.example.king.service.MemberUserDetail;
+import com.example.king.service.TokenService;
 import com.example.king.serviceImpl.MemberServiceImpl;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -39,6 +41,7 @@ public class MemberController {
 
     private MemberService memberService;
     private PasswordEncoder passwordEncoder;
+    private TokenService tokenService;
 
     @GetMapping("/list")
     public String viewMembers(@RequestParam(value="page", defaultValue = "0") String page, Model model){
@@ -159,6 +162,15 @@ public class MemberController {
         log.info(" ******** checkIdExist@LoginController return OK + :" +memberService.checkIdExist(nickname) );
 
         return ResponseEntity.ok(memberService.checkNicknameExist(nickname));
+    }
+
+    @GetMapping("/getJwtToken")
+    public String getJwtToken(@AuthenticationPrincipal MemberUserDetail memberUserDetail, Model model){
+        log.info("getJwtToken@MemberController : id =>" + memberUserDetail.getUsername());
+        String token = tokenService.createToken(60*24, memberUserDetail.getUsername());
+        model.addAttribute("token", token);
+
+        return "member/viewToken";
     }
 
 }
