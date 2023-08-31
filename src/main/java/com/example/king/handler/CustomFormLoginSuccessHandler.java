@@ -13,8 +13,12 @@ import java.io.IOException;
 public class CustomFormLoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
-       log.info("I am in onAuthenticationSuccess@CustomFormLoginSuccessHandler");
+        log.info("***** I am in onAuthenticationSuccess@CustomFormLoginSuccessHandler");
+        String pageFrom = (String) request.getSession().getAttribute("pageFrom");
+        log.info("***** onAuthenticationSuccess@CustomFormLoginSuccessHandler " + pageFrom);
+        if(pageFrom != null) request.getSession().removeAttribute("pageFrom"); // 세션에서 없애줌
 
-       response.sendRedirect("/");
+        if(pageFrom == null || pageFrom.isEmpty()) response.sendRedirect("/");
+        else response.sendRedirect(pageFrom);
     }
 }

@@ -40,22 +40,9 @@ public class MemberController {
     private MemberService memberService;
     private PasswordEncoder passwordEncoder;
 
-//    @GetMapping("/list")
-//    public String viewMembers(Model model){
-//        List<MemberListDTO> members = memberService.getMemberList();
-//
-//        if(members ==null || members.isEmpty()){
-//            log.info("viewMembers@MemberController : members is null or empty");
-//        }
-//
-//        model.addAttribute("members", members);
-//
-//        return "member/viewMembers.html";
-//    }
-
     @GetMapping("/list")
     public String viewMembers(@RequestParam(value="page", defaultValue = "0") String page, Model model){
-        Pageable pageable = PageRequest.of(Integer.parseInt(page), 2);
+        Pageable pageable = PageRequest.of(Integer.parseInt(page), 10);
         MemberListPageDTO memberListPageDTO = memberService.getMemberListWithPage(pageable);
 
         List<MemberListDTO> members = memberListPageDTO.getMemberListDTOList();
@@ -74,6 +61,20 @@ public class MemberController {
         model.addAttribute("currentPage", currentPage);
 
         return "member/viewMembers";
+    }
+
+    @GetMapping("blockId/{id}")
+    public String blockId(@PathVariable String id){
+        memberService.blockId(id);
+
+        return "redirect:/member/list";
+    }
+
+    @GetMapping("freeId/{id}")
+    public String freeId(@PathVariable String id){
+        memberService.freeBlockedId(id);
+
+        return "redirect:/member/list";
     }
 
 

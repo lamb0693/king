@@ -16,16 +16,20 @@ public class MemberUserDetail implements UserDetails {
 
     boolean locked;
 
+    Collection<? extends GrantedAuthority> authorities;
+
     public MemberUserDetail(MemberAuthDTO memberAuthDTO) {
         this.id = memberAuthDTO.getId();
         this.password = memberAuthDTO.getPassword();
         this.nickname = memberAuthDTO.getNickname();
         this.locked= memberAuthDTO.isLocked();
+        this.authorities = memberAuthDTO.getAuthorities();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return null;
+
+        return this.authorities;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.king.service;
 
 import com.example.king.DTO.*;
+import com.example.king.constant.GameKind;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -26,5 +27,9 @@ public interface MemberService {
 
     void saveNewPassword(String id, String password);
 
-    List<RankingDTO> getRanker(String game_kind);
+    List<RankingDTO> getRanker(GameKind gameKind);
+
+    void blockId(String id);
+
+    void freeBlockedId(String id);
 }
