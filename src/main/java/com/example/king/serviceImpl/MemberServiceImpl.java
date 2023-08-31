@@ -11,11 +11,13 @@ import lombok.extern.log4j.Log4j2;
 import org.hibernate.dialect.lock.OptimisticEntityLockException;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -94,16 +96,39 @@ public class MemberServiceImpl implements MemberService {
         return 0; // success
     }
 
+//    @Override
+//    public MemberAuthDTO getAuthDTO(String id) {
+//        MemberAuthDTO memberAuthDTO = new MemberAuthDTO();
+//
+//        Optional<MemberEntity> member = memberRepository.findById(id);
+//        if( member.isPresent() ){
+//            memberAuthDTO.setId(member.get().getId());
+//            memberAuthDTO.setPassword(member.get().getPassword());
+//            memberAuthDTO.setNickname(member.get().getNickname());
+//            memberAuthDTO.setLocked(member.get().isLocked());
+//            log.info(" **** getAuthDTO:MemberServiceImpl : memberAuthDTO is set" + memberAuthDTO.toString());
+//            return memberAuthDTO;
+//        } else {
+//            log.info("getAtuhDTO@MemberServiceImpl : no result");
+//            return null;
+//        }
+//    }
+
+    // 수정
     @Override
     public MemberAuthDTO getAuthDTO(String id) {
-        MemberAuthDTO memberAuthDTO = new MemberAuthDTO();
+        MemberAuthDTO memberAuthDTO = null;
 
         Optional<MemberEntity> member = memberRepository.findById(id);
         if( member.isPresent() ){
-            memberAuthDTO.setId(member.get().getId());
-            memberAuthDTO.setPassword(member.get().getPassword());
-            memberAuthDTO.setNickname(member.get().getNickname());
-            memberAuthDTO.setLocked(member.get().isLocked());
+            memberAuthDTO = new MemberAuthDTO(
+                    member.get().getId(),
+                    member.get().getPassword(),
+                    member.get().getNickname(),
+                    member.get().isLocked(),
+                    Arrays.asList(new SimpleGrantedAuthority("ROLE_" + member.get().getRole()))
+            );
+
             log.info(" **** getAuthDTO:MemberServiceImpl : memberAuthDTO is set" + memberAuthDTO.toString());
             return memberAuthDTO;
         } else {
