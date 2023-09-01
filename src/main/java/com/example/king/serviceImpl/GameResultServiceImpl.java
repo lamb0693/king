@@ -2,6 +2,7 @@ package com.example.king.serviceImpl;
 
 import com.example.king.DTO.GameResultCreateDTO;
 import com.example.king.DTO.GameResultListDTO;
+import com.example.king.DTO.GameResultListPageDTO;
 import com.example.king.Entity.GameResultEntity;
 import com.example.king.Entity.MemberEntity;
 import com.example.king.Repository.GameResultRepository;
@@ -9,6 +10,8 @@ import com.example.king.constant.GameKind;
 import com.example.king.service.GameResultService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
@@ -59,21 +62,49 @@ public class GameResultServiceImpl implements GameResultService {
         return dtoList;
     }
 
-    @Override
-    public List<GameResultListDTO> getGameResultList(String userId, String gameKind){
-        log.info("**** getGameResultList@GameResultServiceImpl : user id , gameKind" + userId + ", " + gameKind);
+//    @Override
+//    public List<GameResultListDTO> getGameResultList(String userId, String gameKind){
+//        log.info("**** getGameResultList@GameResultServiceImpl : user id , gameKind" + userId + ", " + gameKind);
+//
+//        List<GameResultEntity> entityList = new ArrayList<>();
+//
+//        if(userId.isEmpty()){
+//            if(gameKind.equals("not_selected")) entityList = gameResultRepository.findAll();
+//            else entityList =  gameResultRepository.findAllByGameKind(GameKind.valueOf(gameKind));
+//        } else {
+//            if(gameKind.equals("not_selected")) entityList =  gameResultRepository.findAllByIdContains(userId);
+//            else entityList = gameResultRepository.findAllBy(userId, GameKind.valueOf(gameKind));
+//        }
+//
+//        return entityToDTO(entityList);
+//    }
 
-        List<GameResultEntity> entityList = new ArrayList<>();
+    @Override
+    public GameResultListPageDTO getGameResultList(String userId, String gameKind, Pageable pageable){
+        log.info("**** getGameResultList@GameResultServiceImpl : user id , gameKind" + userId + ", " + gameKind);
+        List<GameResultListDTO> gameResultListDTOList = new ArrayList<>();
+
+        Page<GameResultEntity> gameResultEntityPage  = null;
 
         if(userId.isEmpty()){
-            if(gameKind.equals("not_selected")) entityList = gameResultRepository.findAll();
-            else entityList =  gameResultRepository.findAllByGameKind(GameKind.valueOf(gameKind));
+            if(gameKind.equals("not_selected")) gameResultEntityPage = gameResultRepository.findAll(pageable);
+            else gameResultEntityPage = gameResultRepository.findAllByGameKind(GameKind.valueOf(gameKind), pageable);
         } else {
-            if(gameKind.equals("not_selected")) entityList =  gameResultRepository.findAllByIdContains(userId);
-            else entityList = gameResultRepository.findAllBy(userId, GameKind.valueOf(gameKind));
+            if(gameKind.equals("not_selected")) gameResultEntityPage =  gameResultRepository.findAllByIdContains(userId, pageable);
+            else gameResultEntityPage = gameResultRepository.findAllBy(userId, GameKind.valueOf(gameKind), pageable);
         }
 
-        return entityToDTO(entityList);
+        gameResultListDTOList = entityToDTO( gameResultEntityPage.getContent() );
+
+        // page 정보 만들기
+        GameResultListPageDTO gameResultListPageDTO = new GameResultListPageDTO();
+        gameResultListPageDTO.setGameResultListDTOList(gameResultListDTOList);
+
+        gameResultListPageDTO.setCurrentPage(gameResultEntityPage.getNumber());
+        gameResultListPageDTO.setPageSize(gameResultEntityPage.getTotalPages());
+        gameResultListPageDTO.setTotalElements(gameResultEntityPage.getTotalElements());
+
+        return gameResultListPageDTO;
     }
 
     @Override

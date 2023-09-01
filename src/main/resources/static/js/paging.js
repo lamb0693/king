@@ -1,4 +1,13 @@
-const customPaging = (MAX_LINK, BASE_URL, pageSize, totalElement, currentPage) => {
+const customPaging = (MAX_LINK, BASE_URL, pageSize, totalElement, currentPage, ...args) => {
+    const noOfArgs = args.length // page 외에 넘어오는  argument
+    let addToEnd = ""
+    for(let i=0; i*2<args.length; i++){
+        if( args[i*2+1] !== null && args[i*2+1] !== 'undefined'){
+            addToEnd = addToEnd + "&" + args[i] + "=" + args[i+1]
+        }
+    }
+    //console.log(addToEnd)
+
     if(currentPage>=pageSize) return null
 
     const anchorList = []
@@ -15,7 +24,7 @@ const customPaging = (MAX_LINK, BASE_URL, pageSize, totalElement, currentPage) =
     // 시작이 0이 아니면 설정
     if(startPageLink !== 0) {
         const anchorFirst = document.createElement("a");
-        anchorFirst.href = BASE_URL + "page=0";
+        anchorFirst.href = BASE_URL + "page=0" + addToEnd;
         anchorFirst.textContent = "시작";
         anchorList.push(anchorFirst)
     }
@@ -25,7 +34,7 @@ const customPaging = (MAX_LINK, BASE_URL, pageSize, totalElement, currentPage) =
         const anchorPrev = document.createElement("a");
         let moveTo = currentPage - MAX_LINK
         if(moveTo < 0) moveTo = 0
-        anchorPrev.href = BASE_URL + `page=${moveTo}`
+        anchorPrev.href = BASE_URL + `page=${moveTo}` + addToEnd
         anchorPrev.textContent = "이전";
         anchorList.push(anchorPrev)
     }
@@ -33,7 +42,7 @@ const customPaging = (MAX_LINK, BASE_URL, pageSize, totalElement, currentPage) =
     // page link 설정
     for(let i=0; i<MAX_LINK; i++){
         let anchor = document.createElement("a");
-        anchor.href = BASE_URL + "page=" + (startPageLink + i);
+        anchor.href = BASE_URL + "page=" + (startPageLink + i) + addToEnd;
         anchor.textContent = "" + (startPageLink + i);
         if( (startPageLink + i) === currentPage ){
             anchor.style.fontStyle = "italic"
@@ -48,7 +57,7 @@ const customPaging = (MAX_LINK, BASE_URL, pageSize, totalElement, currentPage) =
         const anchorNext = document.createElement("a");
         let moveTo = currentPage + MAX_LINK
         if(moveTo >= pageSize) moveTo=pageSize-1
-        anchorNext.href = BASE_URL + `page=${moveTo}`
+        anchorNext.href = BASE_URL + `page=${moveTo}` + addToEnd
         anchorNext.textContent = "다음"
         anchorList.push(anchorNext)
     }
@@ -56,7 +65,7 @@ const customPaging = (MAX_LINK, BASE_URL, pageSize, totalElement, currentPage) =
     // 끝이  끝이 아니면 설정
     if(startPageLink < pageSize -MAX_LINK){
         const anchorLast = document.createElement("a");
-        anchorLast.href = BASE_URL + `page=${pageSize-1}`;
+        anchorLast.href = BASE_URL + `page=${pageSize-1}` + addToEnd;
         anchorLast.textContent = "끝";
         anchorList.push(anchorLast)
     }
