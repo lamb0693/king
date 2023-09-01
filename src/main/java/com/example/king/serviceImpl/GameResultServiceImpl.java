@@ -52,8 +52,8 @@ public class GameResultServiceImpl implements GameResultService {
             GameResultListDTO dto = new GameResultListDTO();
             dto.setGame_id( entity.getGame_id());
             dto.setGame_kind( entity.getGameKind().name());
-            dto.setWinner_id( entity.getWinner().getId());
-            dto.setLoser_id( entity.getLoser().getId());
+            if(entity.getWinner() != null) dto.setWinner_id( entity.getWinner().getId());
+            if(entity.getLoser() != null) dto.setLoser_id( entity.getLoser().getId());
             dto.setGamedate( entity.getGamedate());
 
             dtoList.add(dto);
