@@ -18,11 +18,11 @@ public class LoginController {
     @GetMapping("/login")
     public String login(HttpServletRequest request){
         log.info("****** login@LoginController");
-
-        // 여기로 보낸 page를 session에 저장한다
-        String fromUri = request.getHeader("Referer");
-        log.info(" ****** login@LoginController  Referer = " + fromUri);
-        request.getSession().setAttribute("pageFrom",fromUri );
+//
+//        // 여기로 보낸 page를 session에 저장한다   이걸로는 안됨 Spring Security 문제인지
+//        String fromUri = request.getHeader("Referer");
+//        log.info(" ****** login@LoginController  Referer = " + fromUri);
+//        request.getSession().setAttribute("pageFrom",fromUri );
 
         return "/login/loginForm" ;
     }

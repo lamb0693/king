@@ -2,10 +2,14 @@ package com.example.king.controller;
 
 import com.example.king.DTO.GameResultCreateDTO;
 import com.example.king.DTO.GameResultListDTO;
+import com.example.king.DTO.GameResultListPageDTO;
+import com.example.king.DTO.MemberListDTO;
 import com.example.king.constant.GameKind;
 import com.example.king.service.GameResultService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -23,13 +27,25 @@ public class GameResultController {
     private GameResultService gameResultService;
 
     @GetMapping("/list")
-    public String gameResultList(@RequestParam(value="search_id", defaultValue="") String search_id,
+    public String gameResultList(@RequestParam(value="page", defaultValue = "0") String page,
+                                @RequestParam(value="search_id", defaultValue="") String search_id,
                                  @RequestParam(value="game_kind", defaultValue = "not_selected") String game_kind, Model model){
         log.info("****** gameResultList@GameResultController : search_id, game_kind : " + search_id + "," + game_kind);
 
-        List<GameResultListDTO> dtoList = gameResultService.getGameResultList(search_id, game_kind);
+        Pageable pageable = PageRequest.of(Integer.parseInt(page), 10);
+        GameResultListPageDTO gameResultListPageDTO = gameResultService.getGameResultList(search_id, game_kind, pageable);
 
-        model.addAttribute("dtoList", dtoList);
+        List<GameResultListDTO> results = gameResultListPageDTO.getGameResultListDTOList();
+        int pageSize = gameResultListPageDTO.getPageSize();
+        long totalElement = gameResultListPageDTO.getTotalElements();
+        int currentPage = gameResultListPageDTO.getCurrentPage();
+
+        model.addAttribute("results", results);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalElement", totalElement);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("search_id", search_id);
+        model.addAttribute("game_kind", game_kind);
 
         return "result/viewGameResult";
     }
@@ -39,9 +55,18 @@ public class GameResultController {
                                  @RequestParam(value="game_kind", defaultValue = "not_selected") String game_kind, Model model){
         log.info("****** gameResultListByPost@GameResultController : search_id, game_kind : " + search_id + "," + game_kind);
 
-        List<GameResultListDTO> dtoList = gameResultService.getGameResultList(search_id, game_kind);
+        Pageable pageable = PageRequest.of(0, 10); // post로 오는것은 curPage가 없음
+        GameResultListPageDTO gameResultListPageDTO = gameResultService.getGameResultList(search_id, game_kind, pageable);
 
-        model.addAttribute("dtoList", dtoList);
+        List<GameResultListDTO> results = gameResultListPageDTO.getGameResultListDTOList();
+        int pageSize = gameResultListPageDTO.getPageSize();
+        long totalElement = gameResultListPageDTO.getTotalElements();
+        int currentPage = gameResultListPageDTO.getCurrentPage();
+
+        model.addAttribute("results", results);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalElement", totalElement);
+        model.addAttribute("currentPage", currentPage);
         model.addAttribute("search_id", search_id);
         model.addAttribute("game_kind", game_kind);
 

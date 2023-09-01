@@ -12,7 +12,7 @@ import java.util.List;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, String> {
 
-     Page<MemberEntity> findAll(Pageable pageable);
+     //Page<MemberEntity> findAll(Pageable pageable);
      Boolean existsByNickname(String nickname);
 
      @Query("select m.nickname, count(r.winner) as winCount from MemberEntity m left outer join GameResultEntity  r ON ( m.id = r.winner.id  and r.gameKind = :gameKind ) group by m.nickname order by winCount desc limit 5")

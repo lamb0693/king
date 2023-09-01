@@ -38,15 +38,43 @@
         </tr>
         </thead>
         <tbody>
-        <tr th:each="dtoList : ${dtoList}">
-            <td th:text="${dtoList.game_id}"></td>
-            <td th:text="${dtoList.game_kind}"></td>
-            <td th:text="${dtoList.gamedate}"></td>
-            <td th:text="${dtoList.winner_id}"></td>
-            <td th:text="${dtoList.loser_id}"></td>
+        <tr th:each="result : ${results}">
+            <td th:text="${result.game_id}"></td>
+            <td th:text="${result.game_kind}"></td>
+            <td th:text="${result.gamedate}"></td>
+            <td th:text="${result.winner_id}"></td>
+            <td th:text="${result.loser_id}"></td>
         </tr>
         </tbody>
     </table>
 
+    <div id="divPaging" class="fs-4">
+
+    </div>
+
+    <script src="/js/paging.js"></script>
 
 </div>
+
+<th:block layout:fragment="cssFrag">
+    <link rel="stylesheet" href="/css/viewMembers.css">
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+
+    const MAX_LINK = 5 // 가급적 홀수로
+    const BASE_URL = "/result/list?"
+
+    const pageSize = Number ([[${pageSize}]] )
+    const totalElement = Number( [[${totalElement}]] )
+    const currentPage = Number( [[${currentPage}]] )
+    const search_id = [[${search_id}]].toString()
+    const game_kind = [[${game_kind}]].toString()
+
+    const divPaging = document.getElementById("divPaging");
+
+    const anchorList = customPaging(MAX_LINK, BASE_URL, pageSize, totalElement, currentPage, "search_id", search_id, "game_kind", game_kind)
+
+    anchorList.forEach( (anchor) => divPaging.appendChild(anchor))
+
+</script>
