@@ -8,48 +8,52 @@
     <link rel="stylesheet" href="/css/gameRoom.css">
 </th:block>
 
-<div class="container custom-container text-center" layout:fragment="content"  style="height:70vh">
+<div class="container custom-container text-center" layout:fragment="content" style="height:680px">
     <div class="d-none" sec:authentication="principal.username" id="userId"></div>
     <div class="d-none" sec:authentication="principal.nickname" id="userNickname"></div>
     <div id="divRoomName" class="d-none" th:text="${roomName}"></div>
-    <div th:if="${player == 'player0'}" class="row mb-2">
-        <div id="divPlayerNo0" class="col fs-2 center-text bg-warning" th:text="${player}"></div>
-        <div class="col fs-2 center-text text-bg-success" sec:authentication="principal.nickname"></div>
-    </div>
 
-    <div class="d-flex mb-2">
-        <div class="p-2 flex-grow-0 flex-shrink-0" style="width: 420px">
-            <div class="bg-secondary text-start" id="quizArea">
-                <div id="divTimer" class="fs-1 text-center bg-danger mb-2">3</div>
-                <div id="divProblem" class="fs-5 mb-1 pl-1 pr-3" style="height:120px; background-color: #eeeeee">문제영역</div>
-                <div id="divAnswer1" class="fs-6 mb-1 px-3" style="height:80px; background-color: #eeeeee" >정답인 영역을 클릭하세요</div>
-                <div id="divAnswer2" class="fs-6 mb-1 px-2" style="height:80px; background-color: #eeeeee">정답인 영역을 클릭하세요</div>
-                <div id="divAnswer3" class="fs-6 mb-1 px-2" style="height:80px; background-color: #eeeeee">정답인 영역을 클릭하세요</div>
-                <div id="divAnswer4" class="fs-6 mb-1 px-2" style="height:80px; background-color: #eeeeee">정답인 영역을 클릭하세요</div>
+    <div class="row"  style="padding : 15px 0 15px 0;
+        background:linear-gradient(58.2deg, rgba(255, 204, 112, 0.1) -3%, rgba(171, 53, 163, 0.2) 49.3%, rgba(40, 91, 212, 0.3) 97.7%);">
+        <div th:if="${player == 'player0'}" class="d-flex" style="height: 50px; margin-bottom: 15px; justify-content: space-around">
+            <div id="divPlayerNo0" class="fs-2 center-text bg-warning flex-grow-0 px-5 rounded-2" th:text="${player}"></div>
+            <div class="fs-2 center-text text-bg-success flex-grow-0 px-5 rounded-2" sec:authentication="principal.nickname"></div>
+        </div>
+
+        <div class="d-flex">
+            <div class="flex-grow-0 flex-shrink-0" style="width: 420px; height: 520px">
+                <div class="bg-secondary text-start" id="quizArea">
+                    <div id="divTimer" class="fs-1 text-center bg-danger mb-2" style="height:68px">3</div>
+                    <div id="divProblem" class="fs-5 mb-1 pl-1 pr-3 overflow-hidden" style="height:110px; background-color: #eeeeee">문제영역</div>
+                    <div id="divAnswer1" class="fs-6 mb-1 px-3 overflow-hidden" style="height:80px; background-color: #eeeeee" >정답인 영역을 클릭하세요</div>
+                    <div id="divAnswer2" class="fs-6 mb-1 px-2 overflow-hidden" style="height:80px; background-color: #eeeeee">정답인 영역을 클릭하세요</div>
+                    <div id="divAnswer3" class="fs-6 mb-1 px-2 overflow-hidden" style="height:80px; background-color: #eeeeee">정답인 영역을 클릭하세요</div>
+                    <div id="divAnswer4" class="fs-6 mb-1 px-2 overflow-hidden" style="height:80px; background-color: #eeeeee">정답인 영역을 클릭하세요</div>
+                </div>
+            </div>
+            <div class="p-2 bg-primary flex-grow-1 ms-2" id="chat_area" style="height: 520px" >
+                <div>
+                    <div class="row fs-2 center-text" style="height:60px;">Send Message</div>
+                    <div class="row mb-3" style="height:370px"><div class="form-floating">
+                        <textarea class="form-control" id="taChatMsg" style="height:100%" placeholder="Leave a comment here"></textarea>
+                        <label for="taChatMsg">Comments</label>
+                    </div></div>
+                    <div class="row" style="height:60px"><div class="input-group mb-3">
+                        <input type="text" class="form-control" id="txtChatMsg" placeholder="Send Message" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <span class="input-group-text" id="basic-addon2"><button class="btn btn-primary" id="btnSendMessage">보내기</button></span>
+                    </div></div>
+                </div>
             </div>
         </div>
-        <div class="p-2 bg-primary flex-grow-1 ms-2" id="chat_area" >
-            <div >
-                <div class="row fs-2 center-text" style="height:60px;">Send Message</div>
-                <div class="row mb-3" style="height:370px"><div class="form-floating">
-                    <textarea class="form-control" id="taChatMsg" style="height:100%" placeholder="Leave a comment here"></textarea>
-                    <label for="taChatMsg">Comments</label>
-                </div></div>
-                <div class="row" style="height:60px"><div class="input-group mb-3">
-                    <input type="text" class="form-control" id="txtChatMsg" placeholder="Send Message" aria-label="Recipient's username" aria-describedby="basic-addon2">
-                    <span class="input-group-text" id="basic-addon2"><button class="btn btn-primary" id="btnSendMessage">보내기</button></span>
-                </div></div>
-            </div>
+
+        <div th:if="${player == 'player1'}" class="d-flex justify-content-around" style="height: 50px; margin-top: 15px">
+            <div id="divPlayerNo1" class="fs-2 center-text bg-info flex-grow-0 px-5 rounded-2" th:text="${player}"></div>
+            <div class="fs-2 center-text text-bg-success flex-grow-0 px-5 rounded-2" sec:authentication="principal.nickname"></div>
         </div>
     </div>
 
-
-    <div th:if="${player == 'player1'}" class="row mb-2">
-        <div id="divPlayerNo1" class="col fs-2 center-text bg-info mx-3" th:text="${player}"></div>
-        <div class="col fs-2 center-text text-bg-success mx-3" sec:authentication="principal.nickname"></div>
-    </div>
-    <div class="mt-2 d-flex align-items-start">
-        <button id="start" class="btn btn-primary" disabled>start</button>
+    <div class="d-flex align-items-start" style="margin-top : 20px">
+        <button id="start" class="btn btn-primary mx-2" disabled>start</button>
     </div>
 
     <script src="/js/socket.io.min.js"></script>
