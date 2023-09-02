@@ -1,4 +1,4 @@
-const listCharSpan = document.querySelectorAll("#titleDiv > span");
+const listCharSpan = document.querySelectorAll("#titleDiv > div");
 //console.log(listCharSpan)
 let curEnlargedSpan = 0
 
@@ -16,6 +16,6 @@ const timer = setInterval( ()=> {
     }
 
     curEnlargedSpan++
-    if(curEnlargedSpan===6) curEnlargedSpan=0
+    if(curEnlargedSpan===8) curEnlargedSpan=0
 
 }, 1000)

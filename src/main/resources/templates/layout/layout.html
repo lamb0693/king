@@ -14,7 +14,7 @@
 
     </th:block>
     <style>
-        #titleDiv > span {
+        #titleDiv > div {
             font-weight: 900;
             font-style : oblique;
             text-align: center;
@@ -25,20 +25,30 @@
         .normalCharSpan{
             font-size : 40px
         }
+        @media screen and (max-width: 1000px){
+            .navbar-brand{ display: none}
+        }
     </style>
 </head>
 <body>
 
     <div class="container mb-3">
-        <div class="container mb-3 text-center overflow-hidden" id="titleDiv" style="background:linear-gradient(58.2deg, rgba(40, 91, 212, 0.73) -3%, rgba(171, 53, 163, 0.45) 49.3%, rgba(255, 204, 112, 0.37) 97.7%); height:80px">
-            <span style="color:blue">킹</span>&nbsp&nbsp&nbsp<span style="color:lightgreen">왕</span>&nbsp&nbsp&nbsp<span style="color:lightcoral">짱</span>
-            &nbsp&nbsp&nbsp&nbsp&nbsp
-            <span style="color:blue">King</span>&nbsp&nbsp&nbsp<span style="color:lightgreen">Wang</span>&nbsp&nbsp&nbsp<span style="color:lightcoral">Zzang</span>
+        <div class="row mb-1 text-center overflow-hidden" id="titleDiv"
+             style="background:linear-gradient(58.2deg, rgba(40, 91, 212, 0.9) -3%, rgba(171, 53, 163, 0.7) 49.3%, rgba(255, 204, 112, 0.5) 97.7%);
+             border-radius: 5px; border:2px solid #fd7e14; height:80px">
+            <div class="col-2" ></div>
+            <div class="col-1" style="color:blue">킹</div>
+            <div class="col-1" style="color:lightgreen">왕</div>
+            <div class="col-1" style="color:#f00">짱</div>
+            <div class="col-2" style="color:blue">KING</div>
+            <div class="col-2" style="color:lightgreen">WANG</div>
+            <div class="col-2" style="color:#f00">ZZANG</div>
+            <div class="col-1"></div>
         </div>
         <div class="row">
-            <nav class="navbar navbar-expand-lg bg-dark-subtle"> <!--/* Navigation Area  */-->
-                <div class="container-fluid">
-                    <a class="navbar-brand" href="/">HomeImage</a>
+            <nav class="navbar navbar-expand-lg bg-dark-subtle" style="height:60px; border-radius: 5px"> <!--/* Navigation Area  */-->
+                <div class="container-fluid overflow-hidden">
+                    <a class="navbar-brand" href="/"><img class="overflow-hidden" src="/image/logo.png" alt="logo"></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
@@ -54,9 +64,12 @@
                                 <a class="nav-link active" aria-current="page" th:href="@{/quiz/waitingroom}">퀴즈</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="/result/list">게임성적검색</a>
+                                <a class="nav-link active" aria-current="page" th:href="@{/}">랭킹</a>
                             </li>
                             <th:block sec:authorize="hasRole('ROLE_ADMIN')">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/result/list">결과검색</a>
+                                </li>
                                 <li  class="nav-item">
                                     <a class="nav-link" href="/member/list">멤버관리</a>
                                 </li>
@@ -71,9 +84,6 @@
                         <span sec:authorize="isAnonymous()"><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/auth/login}" class="fs-6 text-bg-success text-decoration-none">로그인</a></span>
                         <span sec:authorize="isAnonymous()"><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/member/create}" class="fs-6 text-bg-success text-decoration-none">회원가입</a></span>
                         <th:block sec:authorize="isAuthenticated()">
-                            <!--/* span sec:authentication="name"></span>님 */-->
-                            <!--/* span style="border-radius:6px; padding : 5px 7px;" sec:authentication="principal.username" class="fs-5"></span */-->
-                            <!--/* span style="border-radius:6px; padding : 5px 7px;" sec:authentication="principal.authorities" class="fs-5"></span */-->
                             <span style="border-radius:6px; padding : 5px 7px;" sec:authentication="principal.nickname" class="fs-5"></span>님
                             <span><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/auth/logout}" class="fs-6 text-bg-success text-decoration-none">로그아웃</a></span>
                             <span><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/member/modify}" class="fs-6 text-bg-warning text-decoration-none">개인정보수정</a></span>
@@ -88,8 +98,13 @@
     <div layout:fragment="content">
     </div>
 
-    <div class="container mt-3 text-center" style="height:70px; font-size:14px; padding : 0 5px; border-top: 2px solid #222; background-color: rgba(225, 225, 225, 0.7); line-height: 70px">
-        <span style="margin-right: 30px">CopyRight : KingWangZzang Co. 2023</span>  <span style="margin-right: 30px">주소 : 부산광역시 부산진구 중앙대로</span> <span style="margin-right: 30px">Email : admin@bbb.ccc</span>
+    <div class="container mt-3 text-center" style="height:70px; font-size:14px; padding : 0 5px; border-top: 2px solid #222; background-color: rgba(225, 225, 225, 0.7);
+            border-radius: 5px; line-height: 70px; overflow: hidden">
+        <span style="margin-right: 30px"><img src="/image/logo.png" alt="logoBig"></span>
+        <span style="margin-right: 30px">CopyRight : KingWangZzang Co. 2023</span>
+        <span style="margin-right: 30px">주소 : 부산광역시 부산진구 중앙대로</span>
+        <span style="margin-right: 30px">Email : admin@bbb.ccc</span>
+        <span style="margin-right: 30px"><img src="/image/logo.png" alt="logoBig"></span>
     </div>
 
     <th:block layout:fragment="script">
