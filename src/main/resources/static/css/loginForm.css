@@ -15,7 +15,7 @@ a { text-decoration:none; }
 .clearfix:after { content:""; display:block; clear:both; }
 
 
-.s_membership {height: 60vh; padding-top: 8%; background:linear-gradient(58.2deg, rgba(40, 91, 212, 0.73) -3%, rgba(171, 53, 163, 0.45) 49.3%, rgba(255, 204, 112, 0.37) 97.7%)}
+.s_membership {height: 680px; padding-top: 8%; background:linear-gradient(58.2deg, rgba(40, 91, 212, 0.73) -3%, rgba(171, 53, 163, 0.45) 49.3%, rgba(255, 204, 112, 0.37) 97.7%)}
 /*height:(높이값 안주면 내용만큼만 나온다).padding-top: 10%는 자기 상위요소의 10%임, 지그은 높이가 100vh니까 화면 전체값의 10%*/
 .membership_1 { width: 380px; padding: 20px; border: 1px solid #333;}
 h1 {text-align: center; height: 80px; font-size: 40px;}

@@ -2,8 +2,8 @@ const customPaging = (MAX_LINK, BASE_URL, pageSize, totalElement, currentPage, .
     const noOfArgs = args.length // page 외에 넘어오는  argument
     let addToEnd = ""
     for(let i=0; i*2<args.length; i++){
-        if( args[i*2+1] !== null && args[i*2+1] !== 'undefined'){
-            addToEnd = addToEnd + "&" + args[i] + "=" + args[i+1]
+        if( args[i*2+1] !== null && args[i*2+1] !== 'undefined' && args[i*2+1] !==""){
+            addToEnd = addToEnd + "&" + args[i*2] + "=" + args[i*2+1]
         }
     }
     //console.log(addToEnd)
