@@ -23,6 +23,9 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
         this.tokenService = tokenService;
     }
 
+    // Exception 이 catch 되지 않으면 다음 filter로 진행되는 듯
+    // Excetptin 이 catch 되면 Authetnticatin 성공 => endpoint로 진행
+    //      Auth 실패 상태면 response_ok만 보내는 결과
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
 
@@ -40,8 +43,10 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
             strToken = strAuthHeader.substring(7);
         } catch( Exception e){
             System.out.println(e.getMessage());
+            return;
         }
         log.info("##### doFilterInternal@BaseController : strTokenName, strToken => " + strTokenName + ", " + strToken);
+        //if(!strToken.equals("Bearer")) throw new RuntimeException("token kind not acceptable");
 
         String msg;
         Authentication authentication = null;
