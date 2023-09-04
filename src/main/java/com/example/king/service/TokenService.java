@@ -34,7 +34,7 @@ public class TokenService {
 
     }
 
-    public String getIdFromToken(String token){
+    public String getIdFromToken(String token) throws Exception{
         Claims claims = Jwts.parserBuilder()
                 .setSigningKey(DatatypeConverter.parseBase64Binary(SECRET_KEY))
                 .build()
