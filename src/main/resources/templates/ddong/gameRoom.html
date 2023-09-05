@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+      layout:decorate="~{layout/layout.html}">
+
+<th:block layout:fragment="cssFrag">
+    <link rel="stylesheet" href="/css/gameRoom.css">
+</th:block>
+
+<div class="container custom-container text-center" layout:fragment="content" style="height:680px">
+    <div class="d-none" sec:authentication="principal.username" id="userId"></div>
+    <div class="d-none" sec:authentication="principal.nickname" id="userNickname"></div>
+    <div id="divRoomName" class="d-none" th:text="${roomName}"></div>
+
+    <div class="row"  style="padding : 15px 0 15px 0;
+        background:linear-gradient(58.2deg, rgba(255, 204, 112, 0.1) -3%, rgba(171, 53, 163, 0.2) 49.3%, rgba(40, 91, 212, 0.3) 97.7%);">
+        <div th:if="${player == 'player0'}" class="d-flex" style="height: 50px; margin-bottom: 15px; justify-content: space-around">
+            <div id="divPlayerNo0" class="fs-2 center-text bg-warning flex-grow-0 px-5 rounded-2" th:text="${player}"></div>
+            <div class="fs-2 center-text text-bg-success flex-grow-0 px-5 rounded-2" sec:authentication="principal.nickname"></div>
+        </div>
+
+        <div class="d-flex">
+            <div class="p-2 position-relative flex-grow-0 flex-shrink-0" style="width: 420px; height: 520px" id="ddongGameBoard">
+                <div class="bg-secondary">
+                    <div id="wall_upper" class="wall_upper wall_horizontal position-absolute"></div>
+                    <div id="wall_lower" class="wall_lower wall_horizontal position-absolute"></div>
+                    <div id="wall_left" class="wall_left wall_vertical position-absolute"></div>
+                    <div id="wall_right" class="wall_right wall_vertical position-absolute"></div>
+                </div>
+            </div>
+            <div class="p-2 bg-primary flex-grow-1 ms-2" id="chat_area" style="height: 520px" >
+                <div >
+                    <div class="row fs-2 center-text" style="height:60px;">Send Message</div>
+                    <div class="row mb-3" style="height:370px"><div class="form-floating">
+                        <textarea class="form-control" id="taChatMsg" style="height:100%" placeholder="Leave a comment here"></textarea>
+                        <label for="taChatMsg">Comments</label>
+                    </div></div>
+                    <div class="row" style="height:60px"><div class="input-group mb-3">
+                        <input type="text" class="form-control" id="txtChatMsg" placeholder="Send Message" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                        <span class="input-group-text" id="basic-addon2"><button class="btn btn-primary" id="btnSendMessage">보내기</button></span>
+                    </div></div>
+                </div>
+            </div>
+        </div>
+
+        <div th:if="${player == 'player1'}" class="d-flex justify-content-around" style="height: 50px; margin-top: 15px">
+            <div id="divPlayerNo1" class="fs-2 center-text bg-info flex-grow-0 px-5 rounded-2" th:text="${player}"></div>
+            <div class="fs-2 center-text text-bg-success flex-grow-0 px-5 rounded-2" sec:authentication="principal.nickname"></div>
+        </div>
+    </div>
+
+    <div class="d-flex align-items-start" style="margin-top : 20px">
+        <button id="start" class="btn btn-primary mx-2" disabled>start</button>
+        <button id="stopGame" class="btn btn-danger mx-2" disabled>stop</button>
+        <button id="toLeft" class="btn btn-secondary mx-2">Left</button>
+        <button id="toRight" class="btn btn-secondary mx-2">Right</button>
+    </div>
+
+    <script src="/js/socket.io.min.js"></script>
+    <script src="/js/ddong/ddongGameRoom.js"></script>
+</div>
+

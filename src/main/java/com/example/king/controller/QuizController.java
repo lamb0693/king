@@ -29,7 +29,7 @@ public class QuizController {
         return "quiz/gameRoom";
     }
 
-//    @CrossOrigin(origins = "http://localhost:3002")
+    @CrossOrigin(origins = "http://localhost:3002")
     @GetMapping("/token/getquiz")
     @ResponseBody
     public ResponseEntity<QuizDTO> getQuiz(){
@@ -40,12 +40,4 @@ public class QuizController {
         return ResponseEntity.ok(quizDTO);
     }
 
-    @GetMapping("test")
-    public String test(){
-
-        QuizDTO quizDTO = quizService.getOneQuiz();
-        log.info(quizDTO);
-
-        return "quiz/testFetch";
-    }
 }
