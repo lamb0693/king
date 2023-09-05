@@ -7,11 +7,13 @@ import com.example.king.provider.CustomJwtAuthenticationProvider;
 import com.example.king.service.MemberUserDetail;
 import com.example.king.service.MemberUserDetailsService;
 import com.example.king.service.TokenService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
@@ -24,8 +26,14 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.servlet.util.matcher.MvcRequestMatcher;
 import org.springframework.security.web.util.matcher.AndRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import java.util.Arrays;
 
 @Configuration
 @EnableWebSecurity
@@ -39,10 +47,10 @@ public class SecurityConfig {
     @Bean
     @Order(2)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-
         http.authorizeHttpRequests( (request) -> {
             request.requestMatchers("/").permitAll()
                     .requestMatchers("/image/**", "/js/**", "/css/**").permitAll()
+                    //.requestMatchers("/quiz/token/quiz").permitAll()
                     //.requestMatchers("/result/create").permitAll()
                     .requestMatchers("/member/create").permitAll()
                     .requestMatchers("/auth/login/error").permitAll()
@@ -66,7 +74,6 @@ public class SecurityConfig {
                 .logoutSuccessUrl("/");
         });
 
-
         return http.build();
     }
 
@@ -81,6 +88,9 @@ public class SecurityConfig {
                 .addFilterBefore(new JwtTokenCheckFilter(customJwtAuthenticationProvider, tokenService), UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement( (session) -> {
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)   ;
+        });
+        http.cors(httpSecurityCorsConfigurer -> {
+            httpSecurityCorsConfigurer.configurationSource((corsConfigurationSource()));
         });
         return http.build();
     }
@@ -98,5 +108,18 @@ public class SecurityConfig {
     @Bean
     public AuthenticationFailureHandler authenticationFailureHandler(){
         return new CustomAuthenticationFailureHandler();
+    }
+
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+        CorsConfiguration configuration = new CorsConfiguration();
+
+        configuration.setAllowedOriginPatterns(Arrays.asList("http://localhost:3002"));
+        configuration.setAllowedMethods(Arrays.asList("GET"));
+        configuration.setAllowedHeaders(Arrays.asList("Authorization"));
+        configuration.setAllowCredentials(true);
+        UrlBasedCorsConfigurationSource source= new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/quiz/token/getquiz", configuration);
+        return source;
     }
 }

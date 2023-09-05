@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <script>
+        const resultProm = fetch("http://localhost:8080/quiz/token/getquiz", {
+            // headers : {
+            //     'Authorization' : JWT_TOKEN
+            // }
+        });
+        const dataProm = resultProm.then((result) => {
+            console.log(result)
+            return result.json();
+        });
+        const errorProm = dataProm.then((data) => {
+            // let gamedata = mapGameData[roomName];
+            // gamedata.problem = data[0]["problem"];
+            // gamedata.select1 = data[0]["sel1"];
+            // gamedata.select2 = data[0]["sel2"];
+            // gamedata.select3 = data[0]["sel3"];
+            // gamedata.select4 = data[0]["sel4"];
+            // gamedata.answer = data[0]["answer"];
+            console.log(data);
+        });
+        errorProm.catch((err) => {
+            console.log(err);
+        });
+    </script>
+</body>
+</html>

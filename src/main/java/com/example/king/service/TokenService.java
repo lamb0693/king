@@ -29,7 +29,7 @@ public class TokenService {
         return Jwts.builder()
                 .setSubject(id)
                 .signWith(sigingKey, signatureAlgorithm)
-                .setExpiration(new Date(System.currentTimeMillis()+ (long)expTimeMin*1000))
+                .setExpiration(new Date(System.currentTimeMillis()+ (long)expTimeMin*60*1000))
                 .compact();
 
     }

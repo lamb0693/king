@@ -42,8 +42,7 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
             strTokenName = strAuthHeader.substring(0,6);
             strToken = strAuthHeader.substring(7);
         } catch( Exception e){
-            System.out.println(e.getMessage());
-            return;
+            log.info(e.getMessage());
         }
         log.info("##### doFilterInternal@BaseController : strTokenName, strToken => " + strTokenName + ", " + strToken);
         //if(!strToken.equals("Bearer")) throw new RuntimeException("token kind not acceptable");
@@ -58,6 +57,7 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
 
         } catch (Exception e){
             log.info("##### doFilterInternal@BaseController : invalid token excetpion : " + e.getMessage());
+            filterChain.doFilter(request, response);
         }
 
         if(authentication!=null) {
