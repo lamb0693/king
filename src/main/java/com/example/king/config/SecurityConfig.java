@@ -17,6 +17,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.LogoutConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -82,6 +83,7 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain tokenFilterChain(HttpSecurity http) throws Exception {
         log.info("####tokenFilterChain");
+        http.csrf(AbstractHttpConfigurer::disable);
         http.securityMatcher(AntPathRequestMatcher.antMatcher("/quiz/token/getquiz"));
         http.securityMatcher(AntPathRequestMatcher.antMatcher("/member/resetPassword/process"));
         http.authorizeHttpRequests((request) -> {

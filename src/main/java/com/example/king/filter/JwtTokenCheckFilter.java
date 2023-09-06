@@ -31,7 +31,7 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
 
         log.info("###########doFilterInternal@TokenCheckFilter");
         String strAuthHeader = (String) request.getHeader("Authorization");
-        log.info("##### doFilterInternal@BaseController : strAuthHeader " + strAuthHeader);
+        log.info("##### doFilterInternal@JwtTokenFilter : strAuthHeader " + strAuthHeader);
         if(strAuthHeader==null || strAuthHeader.length()<8){
             log.info("##### doFilterInternal@BaseController : invalid token");
             //Exception 처리 해 주어야

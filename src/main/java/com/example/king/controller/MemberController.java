@@ -3,6 +3,7 @@ package com.example.king.controller;
 import com.example.king.DTO.MemberCreateDTO;
 import com.example.king.DTO.MemberListDTO;
 import com.example.king.DTO.MemberListPageDTO;
+import com.example.king.DTO.PasswordResetDTO;
 import com.example.king.service.EmailService;
 import com.example.king.service.MemberService;
 import com.example.king.service.MemberUserDetail;
@@ -25,6 +26,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
+
+import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 
 @Controller
 @Log4j2
@@ -215,13 +218,15 @@ public class MemberController {
     }
 
     @PostMapping("/resetPassword/process")
-    public String resetPasswordProcessing(@RequestHeader("Authorization") String authHeader, @RequestParam String id, @RequestParam String password){
+    @ResponseBody
+    public ResponseEntity<String> resetPasswordProcessing(@RequestBody PasswordResetDTO passwordResetDTO){
         log.info("##### resetPassword@MemberController : id + token : >");
-        log.info("##### resetPassword@MemberController : authHeader" + authHeader);
-        log.info(id);
-        log.info(password);
+        //log.info("##### resetPassword@MemberController : authHeader" + authHeader);
+        log.info(passwordResetDTO.getId());
+        log.info(passwordResetDTO.getPassword());
 
-        return "redirect:/";
+        //return "redirect:/auth/login";
+        return ResponseEntity.ok("retrurn " + passwordResetDTO.getId() + "," + passwordResetDTO.getPassword());
     }
 
 }
