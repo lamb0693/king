@@ -95,9 +95,11 @@
         const passwordModified = [[${passwordModified}]];
         const withdrawn = [[${withdrawn}]];
         const saveResult = [[${saveResult}]];
+        const sendedEmail = [[${sendedEmail}]];
         if(saveResult) strSaveResult = saveResult.toString()
         if(passwordModified) alert("비밀 번호가 변경 되었습니다, 다시 로그인 하세요");
         else if(withdrawn) alert("정상적으로 회원 탈퇴 되었습니다");
         else if(saveResult === 'saveSuccess') alert('회원 가입이 성공하였어요, 로그인하세요');
+        else if(sendedEmail === 'true') alert('비밀번호 수정용 mail을 발송하였습니다');
     </script>
 </div>

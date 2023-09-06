@@ -32,4 +32,6 @@ public interface MemberService {
     void blockId(String id);
 
     void freeBlockedId(String id);
+
+    boolean existMember(String id, String nickname);
 }

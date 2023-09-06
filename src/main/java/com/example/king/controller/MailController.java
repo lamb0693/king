@@ -11,19 +11,19 @@ import org.springframework.web.bind.annotation.*;
 @ResponseBody
 public class MailController {
     EmailService emailService;
-    @GetMapping("/test")
-    public String sendTestMail(){
-        String retMessage = emailService.sendEmail("aaa@aaa.aaa", "test email", "test Email body");
-        if( retMessage.equals("success")) return "메일 전송이 성공하였습니다";
-        else return "메일 전송이 실패하였습니다. 관리자에게 문의하세요";
-    }
-
-    @GetMapping("/testHtml")
-    public String sendTestHtmlMail(){
-        String retMessage = emailService.sendHTMLEmail("aaa@aaa.aaa", "test email", "/email/resetPasswordTemplate");
-        if( retMessage.equals("success")) return "메일 전송이 성공하였습니다";
-        else return "메일 전송이 실패하였습니다. 관리자에게 문의하세요";
-    }
+//    @GetMapping("/test")
+//    public String sendTestMail(){
+//        String retMessage = emailService.sendEmail("aaa@aaa.aaa", "test email", "test Email body");
+//        if( retMessage.equals("success")) return "메일 전송이 성공하였습니다";
+//        else return "메일 전송이 실패하였습니다. 관리자에게 문의하세요";
+//    }
+//
+//    @GetMapping("/testHtml")
+//    public String sendTestHtmlMail(){
+//        String retMessage = emailService.sendHTMLEmail("aaa@aaa.aaa", "test email", "/email/resetPasswordTemplate");
+//        if( retMessage.equals("success")) return "메일 전송이 성공하였습니다";
+//        else return "메일 전송이 실패하였습니다. 관리자에게 문의하세요";
+//    }
 
     @PostMapping("/resetPasswordEmail")
     public String sendResetPasswordMail(@RequestParam String toId){

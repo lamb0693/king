@@ -44,19 +44,19 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
         } catch( Exception e){
             log.info(e.getMessage());
         }
-        log.info("##### doFilterInternal@BaseController : strTokenName, strToken => " + strTokenName + ", " + strToken);
+        log.info("##### doFilterInternal@JWTTokenFilter : strTokenName, strToken => " + strTokenName + ", " + strToken);
         //if(!strToken.equals("Bearer")) throw new RuntimeException("token kind not acceptable");
 
         String msg;
         Authentication authentication = null;
         try{
             msg =  tokenService.getIdFromToken(strToken);
-            log.info("##### doFilterInternal@BaseController : id =>" + msg);
+            log.info("##### doFilterInternal@JWTTokenFilter : id =>" + msg);
 
             authentication= authProvicer.getAuthentication(msg);
 
         } catch (Exception e){
-            log.info("##### doFilterInternal@BaseController : invalid token excetpion : " + e.getMessage());
+            log.info("##### doFilterInternal@JWTTokenFilter: invalid token excetpion : " + e.getMessage());
             filterChain.doFilter(request, response);
         }
 

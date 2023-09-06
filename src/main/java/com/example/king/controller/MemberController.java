@@ -3,6 +3,7 @@ package com.example.king.controller;
 import com.example.king.DTO.MemberCreateDTO;
 import com.example.king.DTO.MemberListDTO;
 import com.example.king.DTO.MemberListPageDTO;
+import com.example.king.service.EmailService;
 import com.example.king.service.MemberService;
 import com.example.king.service.MemberUserDetail;
 import com.example.king.service.TokenService;
@@ -34,6 +35,7 @@ public class MemberController {
     private MemberService memberService;
     private PasswordEncoder passwordEncoder;
     private TokenService tokenService;
+    private EmailService emailService;
 
     @GetMapping("/list")
     public String viewMembers(@RequestParam(value="page", defaultValue = "0") String page, Model model){
@@ -165,9 +167,61 @@ public class MemberController {
         return "member/viewToken";
     }
 
-    @GetMapping("/resetPassword")
+    @GetMapping("/testToken")
+    public String validateToken(@RequestParam String token){
+        try{
+            tokenService.getIdFromToken(token);
+        } catch(Exception e){
+            log.error(e.getMessage());
+        }
+
+        return "redirect:/";
+    }
+
+    // resetPasswordForm : Id와 nickname을 입력 => post로 보내서 확인
+    @GetMapping("/forgotPassword")
     public String resetPassword(){
         return "member/forgotPasswordForm";
+    }
+
+    // id nick name을 받아 검증후 mail을 보냄.
+    @PostMapping("/forgotPassword")
+    public String sendResetPasswordEmail(@RequestParam String id, @RequestParam String nickname, RedirectAttributes redirectAttributes){
+        if( memberService.existMember(id, nickname) ) {
+            String retMessage = emailService.sendHTMLEmail(id, "비밀 번호 수정 링크입니다", "/email/resetPasswordTemplate");
+            if( retMessage.equals("success")){
+                redirectAttributes.addFlashAttribute("sendedEmail", "true");
+                return "redirect:/";
+            }
+            else {
+                redirectAttributes.addFlashAttribute("error", "메일 전송이 실패하였습니다. 관리자에게 문의하세요");
+                return "redirect:/member/resetPassword";
+            }
+        } else {
+            redirectAttributes.addFlashAttribute("error", "member id와 nickname을 확인하세요");
+            return "redirect:/member/resetPassword";
+        }
+    }
+
+    @GetMapping("/resetPassword")
+    public String resetPassword(@RequestParam String id, @RequestParam String token, Model model){
+        log.info("##### resetPassword@MemberController : id + token : >");
+        log.info(id);
+        log.info(token);
+        model.addAttribute("id", id);
+        model.addAttribute("token", token);
+
+        return "member/resetPasswordForm";
+    }
+
+    @PostMapping("/resetPassword/process")
+    public String resetPasswordProcessing(@RequestHeader("Authorization") String authHeader, @RequestParam String id, @RequestParam String password){
+        log.info("##### resetPassword@MemberController : id + token : >");
+        log.info("##### resetPassword@MemberController : authHeader" + authHeader);
+        log.info(id);
+        log.info(password);
+
+        return "redirect:/";
     }
 
 }

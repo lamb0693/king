@@ -38,24 +38,6 @@ public class MemberServiceImpl implements MemberService {
         return memberListDTO;
     }
 
-//    @Override
-//    public List<MemberListDTO> getMemberList() {
-//        List<MemberListDTO> memberDTOList = new ArrayList<>();
-//
-//        List<MemberEntity> memberEntityList = memberRepository.findAll();
-//
-//        if(memberEntityList.isEmpty()){
-//            log.info("getMemberList@MemberServiceImpl return null List");
-//            return memberDTOList;
-//        }
-//
-//        for(MemberEntity memberEntity : memberEntityList){
-//            memberDTOList.add( entityToDTO(memberEntity) );
-//        }
-//
-//        return memberDTOList;
-//    }
-
     @Override
     public MemberListPageDTO getMemberListWithPage(Pageable pageable) {
         List<MemberListDTO> memberDTOList = new ArrayList<>();
@@ -96,24 +78,6 @@ public class MemberServiceImpl implements MemberService {
 
         return 0; // success
     }
-
-//    @Override
-//    public MemberAuthDTO getAuthDTO(String id) {
-//        MemberAuthDTO memberAuthDTO = new MemberAuthDTO();
-//
-//        Optional<MemberEntity> member = memberRepository.findById(id);
-//        if( member.isPresent() ){
-//            memberAuthDTO.setId(member.get().getId());
-//            memberAuthDTO.setPassword(member.get().getPassword());
-//            memberAuthDTO.setNickname(member.get().getNickname());
-//            memberAuthDTO.setLocked(member.get().isLocked());
-//            log.info(" **** getAuthDTO:MemberServiceImpl : memberAuthDTO is set" + memberAuthDTO.toString());
-//            return memberAuthDTO;
-//        } else {
-//            log.info("getAtuhDTO@MemberServiceImpl : no result");
-//            return null;
-//        }
-//    }
 
     // 수정
     @Override
@@ -214,5 +178,13 @@ public class MemberServiceImpl implements MemberService {
         memberRepository.save(memberEntity);
     }
 
+    @Override
+    public boolean existMember(String id, String nickname) {
+        Optional<MemberEntity> optional = memberRepository.findById(id);
+        MemberEntity memberEntity = optional.orElseThrow();
+
+        if(memberEntity.getNickname().equals(nickname)) return true;
+        else return false;
+    }
 
 }

@@ -52,7 +52,7 @@ public class SecurityConfig {
                     .requestMatchers("/image/**", "/js/**", "/css/**").permitAll()
                     //.requestMatchers("/result/create").permitAll()
                     .requestMatchers("/mail/test", "/mail/testHtml").permitAll()
-                    .requestMatchers("/member/resetPassword").permitAll()
+                    .requestMatchers("/member/forgotPassword", "/member/resetPassword").permitAll()
                     .requestMatchers("/member/create").permitAll()
                     .requestMatchers("/auth/login/error").permitAll()
                     .requestMatchers("/auth/login").permitAll()
@@ -83,8 +83,9 @@ public class SecurityConfig {
     public SecurityFilterChain tokenFilterChain(HttpSecurity http) throws Exception {
         log.info("####tokenFilterChain");
         http.securityMatcher(AntPathRequestMatcher.antMatcher("/quiz/token/getquiz"));
+        http.securityMatcher(AntPathRequestMatcher.antMatcher("/member/resetPassword/process"));
         http.authorizeHttpRequests((request) -> {
-                    request.requestMatchers("/quiz/token/getquiz").authenticated();
+                    request.requestMatchers("/quiz/token/getquiz", "/member/resetPassword/process").authenticated();
                 })
                 .addFilterBefore(new JwtTokenCheckFilter(customJwtAuthenticationProvider, tokenService), UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement( (session) -> {

@@ -22,6 +22,7 @@ import java.util.Map;
 public class EmailService {
     private JavaMailSender mailSender;
     private TemplateEngine templateEngine;
+    TokenService tokenService;
 
     public String sendEmail(String to, String subject, String body){
         SimpleMailMessage message = new SimpleMailMessage();
@@ -37,16 +38,19 @@ public class EmailService {
         }
     }
 
-    public String sendHTMLEmail(String to, String subject, String templateName){
+    public String sendHTMLEmail(String toId, String subject, String templateName){
         MimeMessage mimeMessage = mailSender.createMimeMessage();
         Map<String, Object> contextMap = new HashMap<>();
-        contextMap.put("email_id", to);
+        String href="http://localhost:8080/member/resetPassword?id=" + toId + "&token=";
+        href += tokenService.createToken(5, toId);
+        contextMap.put("email_id", toId);
+        contextMap.put("email_href", href);
         Context context = new Context(Locale.KOREA, contextMap);
 
         try {
             MimeMessageHelper mimeMessageHelper = new MimeMessageHelper(mimeMessage, MimeMessageHelper.MULTIPART_MODE_NO, StandardCharsets.UTF_8.name() );
 
-            mimeMessageHelper.setTo(to);
+            mimeMessageHelper.setTo(toId);
             mimeMessageHelper.setSubject(subject);
             mimeMessageHelper.setFrom("admin@kiwnwangzzang.test"); // Set the sender's email address
 
