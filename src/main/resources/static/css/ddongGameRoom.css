@@ -1,0 +1,67 @@
+
+.player0_char{
+    width: 30px;
+    height: 50px;
+    top : 450px;
+    background-color:#997404;
+    position: absolute;
+}
+.player1_char{
+    width: 30px;
+    height: 50px;
+    top:450px;
+    background-color:  #0dcaf0;
+    position: absolute;
+}
+/*
+  벽 충돌 체크
+     js  const board_left  10  board_right=410
+        const board_upper 10  board_lower = 510
+*/
+.wall_horizontal{
+    left : 0px;
+    width : 420px;
+    height : 10px;
+    border-radius : 5%;
+    background-color: black;
+}
+.wall_vertical{
+    top : 0px;
+    height : 520px;
+    width : 10px;
+    border-radius : 5%;
+    background-color: black;
+}
+.wall_left{
+    left : 0px;
+}
+.wall_right{
+    left : 410px;
+}
+.wall_upper{
+    top : 0px;
+}
+.wall_lower{
+    top : 510px;
+}
+
+html, body {
+    height: 100%;
+}
+.custom-container {
+    height: 100%;
+}
+.borad-height{
+    height: 520px;
+}
+.center-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+@media (max-width: 770px) {
+    #chat_area {
+        display: none;
+    }
+}
+
