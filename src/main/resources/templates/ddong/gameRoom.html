@@ -5,7 +5,7 @@
       layout:decorate="~{layout/layout.html}">
 
 <th:block layout:fragment="cssFrag">
-    <link rel="stylesheet" href="/css/gameRoom.css">
+    <link rel="stylesheet" href="/css/ddongGameRoom.css">
 </th:block>
 
 <div class="container custom-container text-center" layout:fragment="content" style="height:680px">
@@ -27,6 +27,8 @@
                     <div id="wall_lower" class="wall_lower wall_horizontal position-absolute"></div>
                     <div id="wall_left" class="wall_left wall_vertical position-absolute"></div>
                     <div id="wall_right" class="wall_right wall_vertical position-absolute"></div>
+                    <div id="player0_char" class="player0_char"></div>
+                    <div id="player1_char" class="player1_char"></div>
                 </div>
             </div>
             <div class="p-2 bg-primary flex-grow-1 ms-2" id="chat_area" style="height: 520px" >
