@@ -181,7 +181,8 @@ public class MemberServiceImpl implements MemberService {
     @Override
     public boolean existMember(String id, String nickname) {
         Optional<MemberEntity> optional = memberRepository.findById(id);
-        MemberEntity memberEntity = optional.orElseThrow();
+        MemberEntity memberEntity = optional.orElse(null);
+        if(memberEntity == null )return false;
 
         if(memberEntity.getNickname().equals(nickname)) return true;
         else return false;
