@@ -85,7 +85,7 @@ public class SecurityConfig {
         log.info("####tokenFilterChain");
         http.csrf(AbstractHttpConfigurer::disable);
         http.securityMatcher(AntPathRequestMatcher.antMatcher("/quiz/token/getquiz"));
-        http.securityMatcher(AntPathRequestMatcher.antMatcher("/member/resetPassword/process"));
+        //http.securityMatcher(AntPathRequestMatcher.antMatcher("/member/resetPassword/process"));
         http.authorizeHttpRequests((request) -> {
                     request.requestMatchers("/quiz/token/getquiz", "/member/resetPassword/process").authenticated();
                 })
