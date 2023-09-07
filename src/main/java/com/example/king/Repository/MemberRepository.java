@@ -2,6 +2,7 @@ package com.example.king.Repository;
 
 import com.example.king.Entity.MemberEntity;
 import com.example.king.constant.GameKind;
+import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<MemberEntity, String> {
 
