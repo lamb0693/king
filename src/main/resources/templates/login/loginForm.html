@@ -8,26 +8,9 @@
 </th:block>
 
 <div class="container" layout:fragment="content">
-    <!--/* div>
-        <div class="fs-4 text-danger mb-3" th:if="${param.error}">
-            <span th:text="${message}"></span>
-        </div>
-    </div>
-    <div>
-        <form th:action="@{/auth/login}" method="post">
-            <div class="mb-3">
-                <label for="id" class="form-label">id(Email)</label>
-                <input type="text" class="form-control" id="id" name="id" placeholder="Email id">
-            </div>
-            <div class="mb-3">
-                <label for="password" class="form-label">Password</label>
-                <input type="password" class="form-control" id="password" name=password placeholder="password">
-            </div>
-            <Button class="btn btn-primary">Login</Button>
-        </form>
-    </div */-->
+
     <section class="s_membership">
-        <h1>로 그 인</h1>
+        <h1>로 그 인 [[${resetPwdResult}]]</h1>
         <div class="login_form">
             <div class="fs-6 text-danger mb-3" th:if="${param.error}">
                 <span th:text="${message}"></span>
@@ -43,4 +26,13 @@
             <a href="/member/forgotPassword" style="font-size:20px">forgot password?</a>
         </div>
     </section>
+
+    <script th:inline="javascript">
+        console.log("resetPwdResult :" + [[${resetPwdResult}]] )
+        let resetPwdResult = [[${resetPwdResult}]];
+        if(resetPwdResult) alert(resetPwdResult);
+    </script>
 </div>
+
+<!--/*  넘어온 결과에 대한 표시 */-->
+

@@ -198,11 +198,11 @@ public class MemberController {
             }
             else {
                 redirectAttributes.addFlashAttribute("error", "메일 전송이 실패하였습니다. 관리자에게 문의하세요");
-                return "redirect:/member/resetPassword";
+                return "redirect:/member/forgotPassword";
             }
         } else {
             redirectAttributes.addFlashAttribute("error", "member id와 nickname을 확인하세요");
-            return "redirect:/member/resetPassword";
+            return "redirect:/member/forgotPassword";
         }
     }
 
@@ -218,15 +218,21 @@ public class MemberController {
     }
 
     @PostMapping("/resetPassword/process")
-    @ResponseBody
-    public ResponseEntity<String> resetPasswordProcessing(@RequestBody PasswordResetDTO passwordResetDTO){
-        log.info("##### resetPassword@MemberController : id + token : >");
-        //log.info("##### resetPassword@MemberController : authHeader" + authHeader);
-        log.info(passwordResetDTO.getId());
-        log.info(passwordResetDTO.getPassword());
+    public String resetPasswordProcessing(@RequestBody PasswordResetDTO passwordResetDTO, RedirectAttributes redirectAttributes){
 
-        //return "redirect:/auth/login";
-        return ResponseEntity.ok("retrurn " + passwordResetDTO.getId() + "," + passwordResetDTO.getPassword());
+        //**** filter를 다시 들어가서 login이 다시 불림.. 해결 해야 할 듯
+        String id = passwordResetDTO.getId();
+        String password = passwordEncoder.encode( passwordResetDTO.getPassword() );
+        // tokenFilter 가 두번 돌면서 중간에 문제가 생김 통해서 온 것과 관련 있는지 addFlashAttribute가 먹지 않음??
+        try{
+            memberService.saveNewPassword(id, password);
+            redirectAttributes.addFlashAttribute("resetPwdResult", "아이디가 변경되었습니다. 새로운 아이디로 로그인하세요" );
+        } catch (Exception e){
+            log.error("resetPasswordProcessing@MemberController : " + e.getMessage() );
+            redirectAttributes.addFlashAttribute("resetPwdResult", "비밀번호 변경이 실패했습니다. 관리자에 문의하세여");
+        }
+
+        return "redirect:/auth/login";
     }
 
 }
