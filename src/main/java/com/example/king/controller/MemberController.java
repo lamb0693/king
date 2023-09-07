@@ -232,7 +232,7 @@ public class MemberController {
             redirectAttributes.addFlashAttribute("resetPwdResult", "비밀번호 변경이 실패했습니다. 관리자에 문의하세여");
         }
 
-        return "redirect:/auth/login";
+        return "redirect:/";
     }
 
 }

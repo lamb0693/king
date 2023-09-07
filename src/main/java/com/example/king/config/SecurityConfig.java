@@ -52,10 +52,10 @@ public class SecurityConfig {
             request.requestMatchers("/").permitAll()
                     .requestMatchers("/image/**", "/js/**", "/css/**").permitAll()
                     //.requestMatchers("/result/create").permitAll()
-                    .requestMatchers("/mail/test", "/mail/testHtml").permitAll()
+                    //.requestMatchers("/mail/test", "/mail/testHtml").permitAll()
                     .requestMatchers("/member/forgotPassword", "/member/resetPassword").permitAll()
                     .requestMatchers("/member/create").permitAll()
-                    .requestMatchers("/auth/login/error").permitAll()
+                    //.requestMatchers("/auth/login/error").permitAll()
                     .requestMatchers("/auth/login").permitAll()
                     .requestMatchers("/member/exist/id/**").permitAll()
                     .requestMatchers("/member/exist/nickname/**").permitAll()
@@ -84,12 +84,14 @@ public class SecurityConfig {
     public SecurityFilterChain tokenFilterChain(HttpSecurity http) throws Exception {
         log.info("####tokenFilterChain");
         http.csrf(AbstractHttpConfigurer::disable);
-        http.securityMatcher(AntPathRequestMatcher.antMatcher("/quiz/token/getquiz"));
+        http.securityMatcher("/quiz/token/getquiz", "/member/resetPassword/process");
+        //http.securityMatcher(AntPathRequestMatcher.antMatcher("/quiz/token/getquiz"));
         //http.securityMatcher(AntPathRequestMatcher.antMatcher("/member/resetPassword/process"));
         http.authorizeHttpRequests((request) -> {
-                    request.requestMatchers("/quiz/token/getquiz", "/member/resetPassword/process").authenticated();
-                })
-                .addFilterBefore(new JwtTokenCheckFilter(customJwtAuthenticationProvider, tokenService), UsernamePasswordAuthenticationFilter.class);
+                    request.anyRequest().authenticated();
+//                    request.requestMatchers("/quiz/token/getquiz", "/member/resetPassword/process").authenticated();
+                });
+        http.addFilterBefore(new JwtTokenCheckFilter(customJwtAuthenticationProvider, tokenService), UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement( (session) -> {
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)   ;
         });
