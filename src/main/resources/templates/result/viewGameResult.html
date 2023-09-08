@@ -30,7 +30,7 @@
             </form>
         </div>
 
-        <div style="height: 480px">
+        <div style="height: 480px; overflow: hidden">
             <table class="table table-info">
                 <thead>
                 <tr>
@@ -49,7 +49,12 @@
                     <td th:text="${result.gamedate}"></td>
                     <td th:text="${result.winner_id}"></td>
                     <td th:text="${result.loser_id}"></td>
-                    <td><a href="#"  th:id="|link${result.game_id}|" onclick="removeGameResult()" style="text-decoration: none">기록삭제</a></td>
+                    <td>
+                        <form id="removeResultForm" th:action="@{/result/remove}" method="post">
+                            <input type="hidden" name="strId" th:value="${result.game_id}">
+                            <button class="btn btn-sm btn-danger">삭제</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -87,10 +92,19 @@
 
     const removeGameResult = (event) => {
         event.preventDefault();
-        const strId = event.target.id;
-        console.log(strId);
 
+        if(!confirm("이 게임 기록을 삭제하시겠습니까?")) return
+
+        const form = event.target.parentElement
+        console.log(form)
+
+        form.submit()
     }
 
+    const btnsRemove = document.querySelectorAll("td form button");
+    for(let btn of btnsRemove) btn.addEventListener("click", removeGameResult);
+
+    const removeResult = [[${removeResult}]].toString();
+    if(removeResult!=null) alert(removeResult)
 
 </script>

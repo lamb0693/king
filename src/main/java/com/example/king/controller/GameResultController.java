@@ -14,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -166,4 +167,16 @@ public class GameResultController {
         return "result/searchRankerForm";
     }
 
+    @PostMapping("/remove")
+    public String removeGameResult(String strId, RedirectAttributes redirectAttributes){
+        long game_id = Long.parseLong(strId);
+        String result = gameResultService.removeGameResult(game_id);
+        if(result.equals("success")){
+            redirectAttributes.addFlashAttribute("removeResult", "해당 기록이 삭제 되었습니다");
+        } else {
+            redirectAttributes.addFlashAttribute("removeResult", "기록 삭제에 실패했습니다");
+        }
+
+        return "redirect:list";
+    }
 }

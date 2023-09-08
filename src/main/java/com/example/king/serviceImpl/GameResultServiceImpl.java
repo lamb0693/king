@@ -51,7 +51,11 @@ public class GameResultServiceImpl implements GameResultService {
         for(GameResultEntity entity : entityList){
             GameResultListDTO dto = new GameResultListDTO();
             dto.setGame_id( entity.getGame_id());
-            dto.setGame_kind( entity.getGameKind().name());
+            switch (entity.getGameKind().name()) {
+                case "PING" -> dto.setGame_kind("PingPong");
+                case "LADDER" -> dto.setGame_kind("낙하물 피하기");
+                case "QUIZ" -> dto.setGame_kind("상식 퀴즈 대결");
+            }
             if(entity.getWinner() != null) dto.setWinner_id( entity.getWinner().getId());
             if(entity.getLoser() != null) dto.setLoser_id( entity.getLoser().getId());
             dto.setGamedate( entity.getGamedate());
@@ -61,23 +65,6 @@ public class GameResultServiceImpl implements GameResultService {
 
         return dtoList;
     }
-
-//    @Override
-//    public List<GameResultListDTO> getGameResultList(String userId, String gameKind){
-//        log.info("**** getGameResultList@GameResultServiceImpl : user id , gameKind" + userId + ", " + gameKind);
-//
-//        List<GameResultEntity> entityList = new ArrayList<>();
-//
-//        if(userId.isEmpty()){
-//            if(gameKind.equals("not_selected")) entityList = gameResultRepository.findAll();
-//            else entityList =  gameResultRepository.findAllByGameKind(GameKind.valueOf(gameKind));
-//        } else {
-//            if(gameKind.equals("not_selected")) entityList =  gameResultRepository.findAllByIdContains(userId);
-//            else entityList = gameResultRepository.findAllBy(userId, GameKind.valueOf(gameKind));
-//        }
-//
-//        return entityToDTO(entityList);
-//    }
 
     @Override
     public GameResultListPageDTO getGameResultList(String userId, String gameKind, Pageable pageable){
@@ -129,5 +116,17 @@ public class GameResultServiceImpl implements GameResultService {
             log.error("createGameResult@GamerResultServiceImpl : " + e.getMessage() + entity.getGameKind() + entity.getWinner().getId() + entity.getLoser().getId());
         }
 
+    }
+
+    @Override
+    public String removeGameResult(long game_id){
+
+        try{
+            gameResultRepository.deleteById(game_id);
+            return "success";
+        } catch (Exception e){
+            log.error("createGameResult@GamerResultServiceImpl : " + e.getMessage());
+            return "fail to remove";
+        }
     }
 }

@@ -15,7 +15,7 @@
                     <div class="input-group">
                         <div class="input-group">
                             <select class="form-select" name="game_kind" aria-label="Default select example">
-                                <option value="PING" th:selected="${game_kind=='PING'}">PING</option>
+                                <option value="PING" th:selected="${game_kind=='PING'}">Pingpong</option>
                                 <option value="LADDER" th:selected="${game_kind=='LADDER'}">낙하물</option>
                                 <option value="QUIZ" th:selected="${game_kind=='QUIZ'}">QUIZ</option>
                             </select>
@@ -38,7 +38,7 @@
             </form>
         </div>
 
-        <div style="height: 480px">
+        <div style="height: 480px; overflow: hidden">
             <table class="table table-info">
                 <thead>
                 <tr>

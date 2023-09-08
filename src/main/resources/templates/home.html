@@ -11,7 +11,7 @@
             <div class="card" style="width: 18rem;">
                 <img src="/image/ddong_game.png" height="240px" class="card-img-top" alt="gameImage1">
                 <div class="card-body">
-                    <h5 class="card-title">Game1</h5>
+                    <h5 class="card-title">낙하물 피하기</h5>
                     <table class="table">
                         <thead>
                         <tr>
@@ -29,8 +29,8 @@
                         </tbody>
                     </table>
 
-                    <a th:href="@{/ddong/waitingroom}" class="btn btn-primary">대기실</a>
-                    <a th:href="@{/}" class="btn btn-primary">전체 성적 보기</a>
+                    <a th:href="@{/ddong/waitingroom}" class="btn btn-sm btn-primary">대기실</a>
+                    <a href="http://localhost:8080/result/listRanker?page=0&game_kind=LADDER&order_by=winCount&order=DESC" class="btn btn-sm btn-success">전체 성적</a>
                 </div> <!--/* end of class card body */-->
             </div> <!--/* end of class card */-->
         </div>  <!--/* end of class col-4 */-->
@@ -56,8 +56,8 @@
                         </tbody>
                     </table>
 
-                    <a th:href="@{/ping/waitingroom}" class="btn btn-primary">대기실</a>
-                    <a th:href="@{/}" class="btn btn-primary">전체 성적 보기</a>
+                    <a th:href="@{/ping/waitingroom}" class="btn btn-sm btn-primary">대기실</a>
+                    <a href="http://localhost:8080/result/listRanker?page=0&game_kind=PING&order_by=winCount&order=DESC" class="btn btn-sm btn-success">전체 성적</a>
                 </div>   <!--/* end of class card body */-->
             </div> <!--/* end of class card */-->
         </div> <!--/* end of class col-4 */-->
@@ -83,8 +83,8 @@
                         </tbody>
                     </table>
 
-                    <a th:href="@{/quiz/waitingroom}" class="btn btn-primary">대기실</a>
-                    <a th:href="@{/}" class="btn btn-primary">전체 성적 보기</a>
+                    <a th:href="@{/quiz/waitingroom}" class="btn btn-sm btn-primary">대기실</a>
+                    <a href="http://localhost:8080/result/listRanker?page=0&game_kind=QUIZ&order_by=winCount&order=DESC" class="btn btn-sm btn-success">전체 성적</a>
                 </div> <!--/* end of class card body */-->
             </div> <!--/* end of class card */-->
         </div> <!--/* end of class col-4 */-->
