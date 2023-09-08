@@ -39,6 +39,7 @@
                     <th scope="col">게임날자</th>
                     <th scope="col">승리</th>
                     <th scope="col">패배</th>
+                    <th scope="col">기록삭제</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,6 +49,7 @@
                     <td th:text="${result.gamedate}"></td>
                     <td th:text="${result.winner_id}"></td>
                     <td th:text="${result.loser_id}"></td>
+                    <td><a href="#"  th:id="|link${result.game_id}|" onclick="removeGameResult()" style="text-decoration: none">기록삭제</a></td>
                 </tr>
                 </tbody>
             </table>
@@ -82,5 +84,13 @@
     const anchorList = customPaging(MAX_LINK, BASE_URL, pageSize, totalElement, currentPage, "search_id", search_id, "game_kind", game_kind)
 
     anchorList.forEach( (anchor) => divPaging.appendChild(anchor))
+
+    const removeGameResult = (event) => {
+        event.preventDefault();
+        const strId = event.target.id;
+        console.log(strId);
+
+    }
+
 
 </script>

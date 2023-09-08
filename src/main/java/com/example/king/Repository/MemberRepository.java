@@ -19,4 +19,7 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
 
      @Query("select m.nickname, count(r.winner) as winCount from MemberEntity m left outer join GameResultEntity  r ON ( m.id = r.winner.id  and r.gameKind = :gameKind ) group by m.nickname order by winCount desc limit 5")
      List<Object[]> findTop5Players(@Param("gameKind") GameKind gameKind);
+
+     @Query("select m.nickname as nickName, count(r.winner) as winCount from MemberEntity m left outer join GameResultEntity  r ON ( m.id = r.winner.id  and r.gameKind = :gameKind ) group by m.nickname")
+     Page<Object[]> findAllRanker(@Param("gameKind") GameKind gameKind, Pageable pageable);
 }

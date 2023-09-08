@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout/layout.html}">
+
+<div class="container" layout:fragment="content">
+    <div class="row" style="height : 680px; background:linear-gradient(58.2deg, rgba(255, 204, 112, 0.1) -3%, rgba(171, 53, 163, 0.2) 49.3%, rgba(40, 91, 212, 0.3) 97.7%);  padding : 20px 0; border-radius: 6px">
+        <div class="alert alert-dark" role="alert" style="height:50px">
+            게임별 랭킹 검색
+        </div>
+
+        <div style="height:50px">
+            <form th:action="@{/result/listRanker}" method="post">
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <div class="input-group">
+                        <div class="input-group">
+                            <select class="form-select" name="game_kind" aria-label="Default select example">
+                                <option value="PING" th:selected="${game_kind=='PING'}">PING</option>
+                                <option value="LADDER" th:selected="${game_kind=='LADDER'}">낙하물</option>
+                                <option value="QUIZ" th:selected="${game_kind=='QUIZ'}">QUIZ</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="input-group">
+                        <select class="form-select" name="order_by" aria-label="Default select example">
+                            <option value="winCount" th:selected="${order_by=='winCount'}">승리 회수</option>
+                            <option value="nickName" th:selected="${order_by=='nickName'}">Nickname</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <select class="form-select" name="order" aria-label="Default select example">
+                            <option value="ASC" th:selected="${order=='ASC'}">Ascending</option>
+                            <option value="DESC" th:selected="${order=='DESC'}">Descending</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary flex-shrink-0">검색</button>
+                </div>
+            </form>
+        </div>
+
+        <div style="height: 480px">
+            <table class="table table-info">
+                <thead>
+                <tr>
+                    <th scope="col">순위</th>
+                    <th scope="col">종류</th>
+                    <th scope="col">Nickname</th>
+                    <th scope="col">승리</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="ranker : ${rankers}">
+                    <td th:text="${ranker.rank}"></td>
+                    <td th:text="${ranker.gameName}"></td>
+                    <td th:text="${ranker.nickname}"></td>
+                    <td th:text="${ranker.winCount}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div id="divPaging" class="fs-4" style="height: 50px;">
+
+        </div>
+    </div>
+
+    <script src="/js/paging.js"></script>
+
+</div>
+
+<th:block layout:fragment="cssFrag">
+    <link rel="stylesheet" href="/css/viewMembers.css">
+</th:block>
+
+<script layout:fragment="script" th:inline="javascript">
+
+    const MAX_LINK = 5 // 가급적 홀수로
+    const BASE_URL = "/result/listRanker?"
+
+    const pageSize = Number ([[${pageSize}]] )
+    const totalElement = Number( [[${totalElement}]] )
+    const currentPage = Number( [[${currentPage}]] )
+    const order_by = [[${order_by}]].toString()
+    const game_kind = [[${game_kind}]].toString()
+    const order = [[${order}]].toString()
+
+    const divPaging = document.getElementById("divPaging");
+
+    const anchorList = customPaging(MAX_LINK, BASE_URL, pageSize, totalElement, currentPage, "game_kind", game_kind, "order_by", order_by, "order", order)
+
+    anchorList.forEach( (anchor) => divPaging.appendChild(anchor))
+
+</script>

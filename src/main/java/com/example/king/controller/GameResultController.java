@@ -1,15 +1,14 @@
 package com.example.king.controller;
 
-import com.example.king.DTO.GameResultCreateDTO;
-import com.example.king.DTO.GameResultListDTO;
-import com.example.king.DTO.GameResultListPageDTO;
-import com.example.king.DTO.MemberListDTO;
+import com.example.king.DTO.*;
 import com.example.king.constant.GameKind;
 import com.example.king.service.GameResultService;
+import com.example.king.service.MemberService;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -25,6 +24,7 @@ import java.util.List;
 public class GameResultController {
 
     private GameResultService gameResultService;
+    private MemberService memberService;
 
     @GetMapping("/list")
     public String gameResultList(@RequestParam(value="page", defaultValue = "0") String page,
@@ -97,5 +97,73 @@ public class GameResultController {
         return ResponseEntity.ok(true);
     }
 
+    @GetMapping("/listRanker")
+    public String listRanker(@RequestParam(value="page", defaultValue = "0") String strPage,
+                             @RequestParam(value="order_by", defaultValue = "winCount") String order_by,
+                             @RequestParam(value="order", defaultValue = "DESC") String order,
+                             @RequestParam(value="game_kind", defaultValue = "PING") String game_kind,Model model){
+
+        log.info("####### listRankerWithParameter@GameResultController : order_by, order, game_kind ");
+        log.info(strPage, order_by, order, game_kind);
+
+        Sort sort = null;
+        if(order.equals("ASC")){
+            sort = Sort.by(order_by).ascending();
+        } else {
+            sort = Sort.by(order_by).descending();
+        }
+        Pageable pageable = PageRequest.of(Integer.parseInt(strPage), 10, sort);
+        //default는 낙하물로
+        RankingListPageDTO rankingListPageDTO = memberService.getTotalRanker(GameKind.valueOf(game_kind), order_by, pageable);
+        List<RankingDTO> rankers = rankingListPageDTO.getRankingDTOList();
+        int pageSize = rankingListPageDTO.getPageSize();
+        long totalElement = rankingListPageDTO.getTotalElements();
+        int currentPage = rankingListPageDTO.getCurrentPage();
+
+        log.info("listRanker@MemberController : memberListPageDTO" + rankingListPageDTO.toString() );
+        model.addAttribute("rankers", rankers);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalElement", totalElement);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("game_kind", game_kind);
+        model.addAttribute("order_by", order_by);
+        model.addAttribute("order", order);
+
+        return "result/searchRankerForm";
+
+    }
+
+    @PostMapping("/listRanker")
+    public String listRankerWithParameter( @RequestParam String order_by, @RequestParam String order,
+                @RequestParam String game_kind,  Model model){
+
+        log.info("####### listRankerWithParameter@GameResultController : order_by, order, game_kind ");
+
+        Sort sort = null;
+        if(order.equals("ASC")){
+            sort = Sort.by(order_by).ascending();
+        } else {
+            sort = Sort.by(order_by).descending();
+        }
+        Pageable pageable = PageRequest.of(0, 10, sort);
+
+        RankingListPageDTO rankingListPageDTO = memberService.getTotalRanker(GameKind.valueOf(game_kind), order_by, pageable);
+
+        List<RankingDTO> rankers = rankingListPageDTO.getRankingDTOList();
+        int pageSize = rankingListPageDTO.getPageSize();
+        long totalElement = rankingListPageDTO.getTotalElements();
+        int currentPage = rankingListPageDTO.getCurrentPage();
+
+        log.info("listRanker@MemberController : memberListPageDTO" + rankingListPageDTO.toString() );
+        model.addAttribute("rankers", rankers);
+        model.addAttribute("pageSize", pageSize);
+        model.addAttribute("totalElement", totalElement);
+        model.addAttribute("currentPage", currentPage);
+        model.addAttribute("game_kind", game_kind);
+        model.addAttribute("order_by", order_by);
+        model.addAttribute("order", order);
+
+        return "result/searchRankerForm";
+    }
 
 }

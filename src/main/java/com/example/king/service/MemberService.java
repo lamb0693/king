@@ -29,6 +29,8 @@ public interface MemberService {
 
     List<RankingDTO> getRanker(GameKind gameKind);
 
+    RankingListPageDTO getTotalRanker(GameKind gameKind, String orderBy, Pageable pageable);
+
     void blockId(String id);
 
     void freeBlockedId(String id);

@@ -51,8 +51,6 @@ public class SecurityConfig {
         http.authorizeHttpRequests( (request) -> {
             request.requestMatchers("/").permitAll()
                     .requestMatchers("/image/**", "/js/**", "/css/**").permitAll()
-                    //.requestMatchers("/result/create").permitAll()
-                    //.requestMatchers("/mail/test", "/mail/testHtml").permitAll()
                     .requestMatchers("/member/forgotPassword", "/member/resetPassword").permitAll()
                     .requestMatchers("/member/create").permitAll()
                     //.requestMatchers("/auth/login/error").permitAll()
@@ -85,12 +83,9 @@ public class SecurityConfig {
         log.info("####tokenFilterChain");
         http.csrf(AbstractHttpConfigurer::disable);
         http.securityMatcher("/quiz/token/getquiz", "/member/resetPassword/process");
-        //http.securityMatcher(AntPathRequestMatcher.antMatcher("/quiz/token/getquiz"));
-        //http.securityMatcher(AntPathRequestMatcher.antMatcher("/member/resetPassword/process"));
         http.authorizeHttpRequests((request) -> {
                     request.anyRequest().authenticated();
-//                    request.requestMatchers("/quiz/token/getquiz", "/member/resetPassword/process").authenticated();
-                });
+        });
         http.addFilterBefore(new JwtTokenCheckFilter(customJwtAuthenticationProvider, tokenService), UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement( (session) -> {
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)   ;
