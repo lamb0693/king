@@ -30,7 +30,7 @@
             </form>
         </div>
 
-        <div style="height: 480px">
+        <div style="height: 480px; overflow: hidden">
             <table class="table table-info">
                 <thead>
                 <tr>
@@ -39,6 +39,7 @@
                     <th scope="col">게임날자</th>
                     <th scope="col">승리</th>
                     <th scope="col">패배</th>
+                    <th scope="col">기록삭제</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -48,6 +49,12 @@
                     <td th:text="${result.gamedate}"></td>
                     <td th:text="${result.winner_id}"></td>
                     <td th:text="${result.loser_id}"></td>
+                    <td>
+                        <form id="removeResultForm" th:action="@{/result/remove}" method="post">
+                            <input type="hidden" name="strId" th:value="${result.game_id}">
+                            <button class="btn btn-sm btn-danger">삭제</button>
+                        </form>
+                    </td>
                 </tr>
                 </tbody>
             </table>
@@ -82,5 +89,22 @@
     const anchorList = customPaging(MAX_LINK, BASE_URL, pageSize, totalElement, currentPage, "search_id", search_id, "game_kind", game_kind)
 
     anchorList.forEach( (anchor) => divPaging.appendChild(anchor))
+
+    const removeGameResult = (event) => {
+        event.preventDefault();
+
+        if(!confirm("이 게임 기록을 삭제하시겠습니까?")) return
+
+        const form = event.target.parentElement
+        console.log(form)
+
+        form.submit()
+    }
+
+    const btnsRemove = document.querySelectorAll("td form button");
+    for(let btn of btnsRemove) btn.addEventListener("click", removeGameResult);
+
+    const removeResult = [[${removeResult}]].toString();
+    if(removeResult!=null) alert(removeResult)
 
 </script>

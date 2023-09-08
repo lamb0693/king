@@ -51,15 +51,13 @@ public class SecurityConfig {
         http.authorizeHttpRequests( (request) -> {
             request.requestMatchers("/").permitAll()
                     .requestMatchers("/image/**", "/js/**", "/css/**").permitAll()
-                    //.requestMatchers("/result/create").permitAll()
-                    //.requestMatchers("/mail/test", "/mail/testHtml").permitAll()
                     .requestMatchers("/member/forgotPassword", "/member/resetPassword").permitAll()
                     .requestMatchers("/member/create").permitAll()
                     //.requestMatchers("/auth/login/error").permitAll()
                     .requestMatchers("/auth/login").permitAll()
                     .requestMatchers("/member/exist/id/**").permitAll()
                     .requestMatchers("/member/exist/nickname/**").permitAll()
-                    .requestMatchers("/member/list", "/member/getJwtToken", "/result/list").hasAuthority("ROLE_ADMIN")
+                    .requestMatchers("/member/list", "/member/getJwtToken", "/result/list", "/result/remove").hasAuthority("ROLE_ADMIN")
                     .requestMatchers("/logout").authenticated()
                     .anyRequest().authenticated();
         })
@@ -69,6 +67,11 @@ public class SecurityConfig {
                 .usernameParameter("id") // loadByUserName 의 parameter를 지정 default=username
                 .failureHandler(authenticationFailureHandler())
                 .successHandler(authenticationSuccessHandler());
+        })
+        .rememberMe( (remember) -> {
+            remember.alwaysRemember(false)
+                    .tokenValiditySeconds(60*60*24*5)
+                    .userDetailsService(memberUserDetailsService);
         })
         .logout((logout) -> {
             logout.logoutUrl("/auth/logout")  //PostMappeing("/auth/logout")으로 logout 설정
@@ -85,12 +88,9 @@ public class SecurityConfig {
         log.info("####tokenFilterChain");
         http.csrf(AbstractHttpConfigurer::disable);
         http.securityMatcher("/quiz/token/getquiz", "/member/resetPassword/process");
-        //http.securityMatcher(AntPathRequestMatcher.antMatcher("/quiz/token/getquiz"));
-        //http.securityMatcher(AntPathRequestMatcher.antMatcher("/member/resetPassword/process"));
         http.authorizeHttpRequests((request) -> {
                     request.anyRequest().authenticated();
-//                    request.requestMatchers("/quiz/token/getquiz", "/member/resetPassword/process").authenticated();
-                });
+        });
         http.addFilterBefore(new JwtTokenCheckFilter(customJwtAuthenticationProvider, tokenService), UsernamePasswordAuthenticationFilter.class);
         http.sessionManagement( (session) -> {
             session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)   ;

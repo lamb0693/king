@@ -10,11 +10,17 @@ public class RankingDTO {
 
     private long winCount;
 
+    private String gameName;
+
+    private int rank;
+
     @Override
     public String toString() {
         return "RankingDTO{" +
                 "nickname='" + nickname + '\'' +
                 ", winCount=" + winCount +
+                ", gameName='" + gameName + '\'' +
+                ", rank=" + rank +
                 '}';
     }
 }

@@ -159,6 +159,39 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public RankingListPageDTO getTotalRanker(GameKind gameKind, String orderBy, Pageable pageable) {
+        RankingListPageDTO rankingListPageDTO = new RankingListPageDTO();
+
+        Page<Object[]> resultListwithPage = memberRepository.findAllRanker(gameKind, pageable);
+
+        List<RankingDTO> dtoList = new ArrayList<>();
+
+        int i = resultListwithPage.getNumber()*10 + 1;
+        for( Object[] result :  resultListwithPage){
+            RankingDTO dto = new RankingDTO();
+            dto.setNickname( (String) result[0]);
+            dto.setWinCount( (long) result[1]);
+            switch (gameKind.toString()){
+                case "PING" : dto.setGameName("Pingpong"); break;
+                case "LADDER" : dto.setGameName("낙하물 피하기"); break;
+                case "QUIZ" : dto.setGameName("상식 퀴즈 대결");
+            }
+            dto.setRank(i);
+            dtoList.add(dto);
+            i++;
+        }
+
+        rankingListPageDTO.setRankingDTOList(dtoList);
+        rankingListPageDTO.setCurrentPage(resultListwithPage.getNumber());
+        rankingListPageDTO.setPageSize(resultListwithPage.getTotalPages());
+        rankingListPageDTO.setTotalElements(resultListwithPage.getTotalElements());
+
+        log.info("**** getTotalRanker@MemberController return dtoList " + dtoList.toString());
+
+        return rankingListPageDTO;
+    }
+
+    @Override
     public void blockId(String id) throws IllegalArgumentException, OptimisticEntityLockException{
         Optional<MemberEntity> optional = memberRepository.findById(id);
 

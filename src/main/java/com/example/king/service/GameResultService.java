@@ -14,4 +14,6 @@ public interface GameResultService {
     public GameResultListPageDTO getGameResultList(String userId, String gameKind, Pageable pageable);
 
     public void createGameResult(GameResultCreateDTO gameResultCreateDTO);
+
+    String removeGameResult(long game_id);
 }
