@@ -5,6 +5,7 @@ const divId = document.getElementById("divId")
 const divToken = document.getElementById("divToken")
 
 const changePassword = (event) => {
+    event.preventDefault()
     const txtPassword1 = document.getElementById("txtPassword1");
     if (txtPassword1 == null)
         console.log("error --- txtPassword1 is null");
@@ -47,10 +48,16 @@ const changePassword = (event) => {
     .then(response => {
         // Handle the response
         console.log(response)
+        return response.text()
+    })
+    .then( (data) => {
+        alert(data)
+        document.location.href="/auth/login"
     })
     .catch(error => {
         // Handle errors
-        console.log(error)
+        alert(error)
+        document.location.href="/auth/login"
     });
 
     //changePasswordForm.submit();
