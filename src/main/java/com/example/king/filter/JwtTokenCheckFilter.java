@@ -35,36 +35,31 @@ public class JwtTokenCheckFilter extends OncePerRequestFilter {
         if(strAuthHeader==null || strAuthHeader.length()<8){
             log.info("##### doFilterInternal@BaseController : invalid token");
             //Exception 처리 해 주어야
-        }
-        String strTokenName = null;
-        String strToken = null;
-        try{
-            strTokenName = strAuthHeader.substring(0,6);
-            strToken = strAuthHeader.substring(7);
-        } catch( Exception e){
-            log.info(e.getMessage());
-        }
-        log.info("##### doFilterInternal@JWTTokenFilter : strTokenName, strToken => " + strTokenName + ", " + strToken);
-        //if(!strToken.equals("Bearer")) throw new RuntimeException("token kind not acceptable");
-
-        String msg;
-        Authentication authentication = null;
-        try{
-            msg =  tokenService.getIdFromToken(strToken);
-            log.info("##### doFilterInternal@JWTTokenFilter : id =>" + msg);
-
-            authentication= authProvicer.getAuthentication(msg);
-
-        } catch (Exception e){
-            log.info("##### doFilterInternal@JWTTokenFilter: invalid token excetpion : " + e.getMessage());
             filterChain.doFilter(request, response);
-        }
+        } else{
+            String strTokenName = null;
+            String strToken = null;
+            String msg;
+            Authentication authentication = null;
+            try{
+                strTokenName = strAuthHeader.substring(0,6);
+                strToken = strAuthHeader.substring(7);
+                log.info("##### doFilterInternal@JWTTokenFilter : strTokenName, strToken => " + strTokenName + ", " + strToken);
+                //if(!strToken.equals("Bearer")) throw new RuntimeException("token kind not acceptable");
+                msg =  tokenService.getIdFromToken(strToken);
+                log.info("##### doFilterInternal@JWTTokenFilter : id =>" + msg);
 
-        if(authentication!=null) {
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            filterChain.doFilter(request, response);
+                authentication= authProvicer.getAuthentication(msg);
+
+                if(authentication!=null) {
+                    SecurityContextHolder.getContext().setAuthentication(authentication);
+                    filterChain.doFilter(request, response);
+                }
+            } catch( Exception e){
+                log.error("### exception : doFilterInternal@JwtTokenCheckFilter : " + e.getMessage());
+                filterChain.doFilter(request, response);
+            }
         }
 
     }
-
 }
