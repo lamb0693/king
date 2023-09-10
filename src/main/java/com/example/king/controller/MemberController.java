@@ -9,6 +9,7 @@ import com.example.king.service.MemberService;
 import com.example.king.service.MemberUserDetail;
 import com.example.king.service.TokenService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
@@ -217,18 +218,23 @@ public class MemberController {
     }
 
     @PostMapping("/resetPassword/process")
+    @Transactional
     public ResponseEntity<String> resetPasswordProcessing(@RequestBody PasswordResetDTO passwordResetDTO, RedirectAttributes redirectAttributes){
 
         //**** filter를 다시 들어가서 login이 다시 불림.. 해결 해야 할 듯
         String id = passwordResetDTO.getId();
         String password = passwordEncoder.encode( passwordResetDTO.getPassword() );
+
+        if(!memberService.existMember(passwordResetDTO.getId(), passwordResetDTO.getNickname()))
+            return ResponseEntity.badRequest().body("새로운 패스워드 설정이 실패 했습니다 ,Nickname을 확인하세요\n닉네임을 모르시면 관리자에게 문의하세요");
+
         // tokenFilter 가 두번 돌면서 중간에 문제가 생김 통해서 온 것과 관련 있는지 addFlashAttribute가 먹지 않음??
         try{
             memberService.saveNewPassword(id, password);
-            return ResponseEntity.ok().body("아이디가 변경되었습니다. 새로운 아이디로 로그인하세요");
+            return ResponseEntity.ok().body("새로운 패스워드가 설정되었습니다. 다시 아이디로 로그인하세요");
         } catch (Exception e){
             log.error("resetPasswordProcessing@MemberController : " + e.getMessage() );
-            return ResponseEntity.badRequest().body("아이디 변경이 실패 했습니다 ,관리자에게 문의하세요");
+            return ResponseEntity.badRequest().body("새로운 패스워드 설정이 실패 했습니다 ,관리자에게 문의하세요");
         }
     }
 }

@@ -12,6 +12,8 @@ const changePassword = (event) => {
     const txtPassword2 = document.getElementById("txtPassword2");
     if (txtPassword2 == null)
         console.log("error --- txtPassword2 is null");
+    if (txtNickname == null)
+        console.log("error --- txtNickname is null");
     const changePasswordForm = document.getElementById("changePasswordForm");
     if (changePasswordForm == null)
         alert("error --- changePasswordForm is null");
@@ -30,6 +32,7 @@ const changePassword = (event) => {
     formData = {
         "id" : divId.textContent,
         "password" : txtPassword1.value,
+        "nickname" : txtNickname.value
     }
 
     const JWT_TOKEN = "Bearer " + divToken.textContent;
@@ -51,7 +54,8 @@ const changePassword = (event) => {
         return response.text()
     })
     .then( (data)=> {
-        alert(data)
+        if(data.includes("새로운")) alert(data)
+        else alert("인증이 실패했습니다, 다시 시도하세요")
         document.location.href="/auth/login"
     })
     .catch(error => {

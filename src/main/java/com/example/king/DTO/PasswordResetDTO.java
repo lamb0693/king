@@ -8,4 +8,5 @@ import lombok.Setter;
 public class PasswordResetDTO {
     String id;
     String password;
+    String nickname;
 }
