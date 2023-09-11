@@ -181,6 +181,10 @@ public class MemberServiceImpl implements MemberService {
                 case "LADDER" : dto.setGameName("낙하물 피하기"); break;
                 case "QUIZ" : dto.setGameName("상식 퀴즈 대결");
             }
+            if(dto.getWinCount()>10 ) dto.setGrade(GradeCons.GRADE_KING);
+            else if(dto.getWinCount()>5) dto.setGrade(GradeCons.GRADE_WANG);
+            else if(dto.getWinCount()>2) dto.setGrade(GradeCons.GRADE_ZZANG);
+            else dto.setGrade(GradeCons.GRACE_GEN);
             dto.setRank(i);
             dtoList.add(dto);
             i++;

@@ -46,6 +46,7 @@
                     <th scope="col">종류</th>
                     <th scope="col">Nickname</th>
                     <th scope="col">승리</th>
+                    <th scope="col">등급</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -54,6 +55,10 @@
                     <td th:text="${ranker.gameName}"></td>
                     <td th:text="${ranker.nickname}"></td>
                     <td th:text="${ranker.winCount}"></td>
+                    <td th:if="${ranker.grade==0}"><div class="span_grade_0">G</div></td>
+                    <td th:if="${ranker.grade==1}"><div class="span_grade_1">Z</div></td>
+                    <td th:if="${ranker.grade==2}"><div class="span_grade_2">W</div></td>
+                    <td th:if="${ranker.grade==3}"><div class="span_grade_3">K</div></td>
                 </tr>
                 </tbody>
             </table>
@@ -69,7 +74,7 @@
 </div>
 
 <th:block layout:fragment="cssFrag">
-    <link rel="stylesheet" href="/css/viewMembers.css">
+    <link rel="stylesheet" href="/css/searchRankerForm.css">
 </th:block>
 
 <script layout:fragment="script" th:inline="javascript">
