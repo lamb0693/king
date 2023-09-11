@@ -189,8 +189,8 @@ public class MemberController {
 
     // id nick name을 받아 검증후 mail을 보냄.
     @PostMapping("/forgotPassword")
-    public String sendResetPasswordEmail(@RequestParam String id, @RequestParam String nickname, RedirectAttributes redirectAttributes){
-        if( memberService.existMember(id, nickname) ) {
+    public String sendResetPasswordEmail(@RequestParam String id, RedirectAttributes redirectAttributes){
+        if( memberService.checkIdExist(id) ) {
             String retMessage = emailService.sendHTMLEmail(id, "비밀 번호 수정 링크입니다", "/email/resetPasswordTemplate");
             if( retMessage.equals("success")){
                 redirectAttributes.addFlashAttribute("sendedEmail", "true");
@@ -201,7 +201,7 @@ public class MemberController {
                 return "redirect:/member/forgotPassword";
             }
         } else {
-            redirectAttributes.addFlashAttribute("error", "member id와 nickname을 확인하세요");
+            redirectAttributes.addFlashAttribute("error", "가입되지 않은  Email 주소입니다");
             return "redirect:/member/forgotPassword";
         }
     }

@@ -1,0 +1,29 @@
+.td_view_grade_3{
+    text-align: center;
+    width: 25px;
+    height: 25px;
+    background-color : gold;
+    border-radius: 50%;
+}
+.td_view_grade_2{
+    text-align: center;
+    width: 25px;
+    height: 25px;
+    background-color: silver;
+    border-radius: 50%;
+}
+.td_view_grade_1{
+    text-align: center;
+    width: 25px;
+    height: 25px;
+    background-color : #997404;
+    border-radius: 50%;
+}
+.td_view_grade_0{
+    text-align: center;
+    width: 25px;
+    height: 25px;
+    background-color: black;
+    color : white;
+    border-radius: 50%;
+}

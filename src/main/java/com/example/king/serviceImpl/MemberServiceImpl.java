@@ -4,6 +4,7 @@ import com.example.king.DTO.*;
 import com.example.king.Entity.MemberEntity;
 import com.example.king.Repository.MemberRepository;
 import com.example.king.constant.GameKind;
+import com.example.king.constant.GradeCons;
 import com.example.king.constant.Role;
 import com.example.king.service.MemberService;
 import lombok.AllArgsConstructor;
@@ -150,6 +151,10 @@ public class MemberServiceImpl implements MemberService {
             RankingDTO dto = new RankingDTO();
             dto.setNickname( (String) result[0]);
             dto.setWinCount( (long) result[1]);
+            if(dto.getWinCount() > 10) dto.setGrade(GradeCons.GRADE_KING);
+            else if(dto.getWinCount() > 5 ) dto.setGrade(GradeCons.GRADE_WANG);
+            else if(dto.getWinCount() > 2 ) dto.setGrade(GradeCons.GRADE_ZZANG);
+            else dto.setGrade(GradeCons.GRACE_GEN);
             dtoList.add(dto);
         }
 
@@ -219,6 +224,32 @@ public class MemberServiceImpl implements MemberService {
 
         if(memberEntity.getNickname().equals(nickname)) return true;
         else return false;
+    }
+
+    private int getGrade(int count){
+        if(count>10) return GradeCons.GRADE_KING;
+        else if(count>5) return GradeCons.GRADE_WANG;
+        else if(count>2) return GradeCons.GRADE_ZZANG;
+        else return GradeCons.GRACE_GEN;
+    }
+
+    @Override
+    public MyInfoDTO getMyResultInfo(String id) {
+        MyInfoDTO myInfoDTO = new MyInfoDTO();
+
+        myInfoDTO.setPingWinCount( memberRepository.getWinCount(GameKind.valueOf("PING"), id) );
+        myInfoDTO.setPingGrade(  getGrade( myInfoDTO.getPingWinCount() ) );
+        myInfoDTO.setDdongWinCount( memberRepository.getWinCount(GameKind.valueOf("LADDER"), id) );
+        myInfoDTO.setDdongGrade(  getGrade( myInfoDTO.getDdongWinCount() ) );
+        myInfoDTO.setQuizWinCount( memberRepository.getWinCount(GameKind.valueOf("QUIZ"), id) );
+        myInfoDTO.setQuizGrade( getGrade( myInfoDTO.getQuizWinCount() ) );
+        myInfoDTO.setPingLoseCount( memberRepository.getLoseCount(GameKind.valueOf("PING"), id) );
+        myInfoDTO.setDdongLoseCount( memberRepository.getLoseCount(GameKind.valueOf("LADDER"), id) );
+        myInfoDTO.setQuizLoseCount( memberRepository.getLoseCount(GameKind.valueOf("QUIZ"), id) );
+
+
+        log.info("#####getMyResultInfo@MemberServiceImpl : myInfoDTO : {}" , myInfoDTO);
+        return myInfoDTO;
     }
 
 }

@@ -4,6 +4,7 @@ import com.example.king.DTO.*;
 import com.example.king.constant.GameKind;
 import com.example.king.service.GameResultService;
 import com.example.king.service.MemberService;
+import com.example.king.service.MemberUserDetail;
 import lombok.AllArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.PageRequest;
@@ -11,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -178,5 +180,17 @@ public class GameResultController {
         }
 
         return "redirect:list";
+    }
+
+    @GetMapping("/viewMyResult")
+    public String viewMyResult(Model model, @AuthenticationPrincipal MemberUserDetail memberUserDetail){
+        MyInfoDTO myInfoDTO = new MyInfoDTO();
+
+        if(memberUserDetail.getUsername() != null){
+            myInfoDTO = memberService.getMyResultInfo(memberUserDetail.getUsername());
+            model.addAttribute("myResult", myInfoDTO);
+        }
+
+        return "result/myGameResult";
     }
 }

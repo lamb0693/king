@@ -14,6 +14,8 @@ public class RankingDTO {
 
     private int rank;
 
+    private int grade;
+
     @Override
     public String toString() {
         return "RankingDTO{" +

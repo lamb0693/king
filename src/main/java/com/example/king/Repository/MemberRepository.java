@@ -22,4 +22,11 @@ public interface MemberRepository extends JpaRepository<MemberEntity, String> {
 
      @Query("select m.nickname as nickName, count(r.winner) as winCount from MemberEntity m left outer join GameResultEntity  r ON ( m.id = r.winner.id  and r.gameKind = :gameKind ) group by m.nickname")
      Page<Object[]> findAllRanker(@Param("gameKind") GameKind gameKind, Pageable pageable);
+
+     @Query("select count(r.winner) as winCount from GameResultEntity r where r.winner.id = :id  and r.gameKind = :gameKind" )
+     int getWinCount(@Param("gameKind") GameKind gameKind, @Param("id") String id);
+
+     @Query("select count(r.loser) as winCount from GameResultEntity r where r.loser.id = :id  and r.gameKind = :gameKind" )
+     int getLoseCount(@Param("gameKind") GameKind gameKind, @Param("id") String id);
+
 }

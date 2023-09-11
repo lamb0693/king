@@ -36,4 +36,7 @@ public interface MemberService {
     void freeBlockedId(String id);
 
     boolean existMember(String id, String nickname);
+
+    MyInfoDTO getMyResultInfo(String id);
+
 }

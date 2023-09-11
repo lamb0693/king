@@ -84,7 +84,8 @@
                         <span sec:authorize="isAnonymous()"><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/auth/login}" class="fs-6 text-bg-success text-decoration-none">로그인</a></span>
                         <span sec:authorize="isAnonymous()"><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/member/create}" class="fs-6 text-bg-success text-decoration-none">회원가입</a></span>
                         <th:block sec:authorize="isAuthenticated()">
-                            <span style="border-radius:6px; padding : 5px 7px;" sec:authentication="principal.nickname" class="fs-5"></span>님
+                            <span style="border-radius:6px; padding : 5px 7px;" sec:authentication="principal.nickname" class="fs-5"></span>
+                            <span><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/result/viewMyResult}" class="fs-6 text-bg-success text-decoration-none">내성적</a></span>
                             <span><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/auth/logout}" class="fs-6 text-bg-success text-decoration-none">로그아웃</a></span>
                             <span><a style="border-radius:6px; padding : 5px 7px;" th:href="@{/member/modify}" class="fs-6 text-bg-warning text-decoration-none">개인정보수정</a></span>
                         </th:block>
