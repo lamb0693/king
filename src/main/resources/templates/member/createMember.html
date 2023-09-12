@@ -5,61 +5,66 @@
 
 
 <div class="container" layout:fragment="content">
-    <div class="alert alert-secondary mb-3 shadow-sm" role="alert">
-        회원가입
+    <div class="row" style="height : 680px; background:linear-gradient(58.2deg, rgba(255, 204, 112, 0.1) -3%, rgba(171, 53, 163, 0.2) 49.3%, rgba(40, 91, 212, 0.3) 97.7%);  padding : 20px 0; border-radius: 6px">
+
+        <div class="alert alert-success mb-3 shadow-sm" role="alert" style="height: 70px; ">
+            회원가입
+        </div>
+        <div class="row" style="height:600px">
+            <!--/*  아래와 같이 쓰면 csrf token을 자동으로 넣어줌  */-->
+            <form th:action="@{/member/create}"  method="post">
+                <div class="shadow-lg rounded-1" style="border-radius: 1%;">
+                    <div th:if="${id}">  <!--/* 설정된 error의 field */-->
+                        <span th:text="${id}" class="text-danger fs-6  p-2"></span>
+                    </div>
+                    <div class="row p-2 mb-2 align-items-center">
+                        <div class="col-2 fs-6 text-center">
+                            <label for="id" class="form-label">Id(Email)</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" class="form-control" id="id" name="id" placeholder="id"
+                                   th:value="${previousValue != null ? previousValue.id : ''}">
+                        </div>
+                        <div class="col-6 fs-6 text-danger" id="divExistId">
+                            Id 중복 확인
+                        </div>
+                    </div>
+                    <div th:if="${nickname}">  <!--/* 설정된 error의 field */-->
+                        <span th:text="${nickname}" class="text-danger fs-6 p-2"></span>
+                    </div>
+                    <div class="row p-2 mb-2 align-items-center">
+                        <div class="col-2 fs-6 text-center">
+                            <label for="nickname" class="form-label">NickName</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="text" class="form-control" id="nickname" name="nickname" placeholder="nickname"
+                                   th:attr="value=${previousValue != null ? previousValue.nickname : ''}">
+                        </div>
+                        <div class="col-6  fs-6 text-danger" id="divExistNickname">
+                            nickname 중복 확인
+                        </div>
+                    </div>
+                    <div th:if="${password}">  <!--/* 설정된 error의 field */-->
+                        <span th:text="${password}" class="text-danger fs-6 p-2"></span>
+                    </div>
+                    <div class="row p-2 mb-2 align-items-center">
+                        <div class="col-2 fs-6 text-center">
+                            <label for="password" class="form-label">Password</label>
+                        </div>
+                        <div class="col-4">
+                            <input type="password" autoComplete="off"  class="form-control" id="password" name="password" placeholder="password">
+                        </div>
+                        <div class="col-6">
+                            8자리 이상,  영문 대, 소문자 숫자로 만들어주세요
+                        </div>
+                    </div>
+                </div>
+                <div class="p-2 d-flex align-items-center">
+                    <Button type="submit" class="btn btn-primary w-25">가입</Button>
+                </div>
+            </form>
+        </div>
     </div>
-    <!--/*  아래와 같이 쓰면 csrf token을 자동으로 넣어줌  */-->
-    <form th:action="@{/member/create}"  method="post">
-        <div class="shadow-sm rounded-1" style="background-color: #eeeeee; border-radius: 1%;">
-            <div th:if="${id}">  <!--/* 설정된 error의 field */-->
-                <span th:text="${id}" class="text-danger fs-6  p-2"></span>
-            </div>
-            <div class="row p-2 mb-2 align-items-center">
-                <div class="col-2 fs-6 text-center">
-                    <label for="id" class="form-label">Id(Email)</label>
-                </div>
-                <div class="col-4">
-                    <input type="text" class="form-control" id="id" name="id" placeholder="id"
-                           th:value="${previousValue != null ? previousValue.id : ''}">
-                </div>
-                <div class="col-6 fs-6 text-danger" id="divExistId">
-                    Id 중복 확인
-                </div>
-            </div>
-            <div th:if="${nickname}">  <!--/* 설정된 error의 field */-->
-                <span th:text="${nickname}" class="text-danger fs-6 p-2"></span>
-            </div>
-            <div class="row p-2 mb-2 align-items-center">
-                <div class="col-2 fs-6 text-center">
-                    <label for="nickname" class="form-label">NickName</label>
-                </div>
-                <div class="col-4">
-                    <input type="text" class="form-control" id="nickname" name="nickname" placeholder="nickname"
-                           th:attr="value=${previousValue != null ? previousValue.nickname : ''}">
-                </div>
-                <div class="col-6  fs-6 text-danger" id="divExistNickname">
-                    nickname 중복 확인
-                </div>
-            </div>
-            <div th:if="${password}">  <!--/* 설정된 error의 field */-->
-                <span th:text="${password}" class="text-danger fs-6 p-2"></span>
-            </div>
-            <div class="row p-2 mb-2 align-items-center">
-                <div class="col-2 fs-6 text-center">
-                    <label for="password" class="form-label">Password</label>
-                </div>
-                <div class="col-4">
-                    <input type="password" autoComplete="off"  class="form-control" id="password" name="password" placeholder="password">
-                </div>
-                <div class="col-6">
-                    8자리 이상,  영문 대, 소문자 숫자로 만들어주세요
-                </div>
-            </div>
-        </div>
-        <div class="p-2 d-flex align-items-center">
-            <Button type="submit" class="btn btn-primary w-25">가입</Button>
-        </div>
-    </form>
 
     <script src="/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
     <script src="/js/createMember.js"></script>

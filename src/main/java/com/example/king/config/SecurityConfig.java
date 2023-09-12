@@ -57,7 +57,7 @@ public class SecurityConfig {
                     .requestMatchers("/image/**", "/js/**", "/css/**").permitAll()
                     .requestMatchers("/member/forgotPassword", "/member/resetPassword").permitAll()
                     .requestMatchers("/member/create").permitAll()
-                    //.requestMatchers("/auth/login/error").permitAll()
+                    .requestMatchers("/auth/login/error").permitAll()
                     .requestMatchers("/auth/login").permitAll()
                     .requestMatchers("/member/exist/id/**").permitAll()
                     .requestMatchers("/member/exist/nickname/**").permitAll()
