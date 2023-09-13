@@ -124,7 +124,7 @@ const onStartButtonClicked = (event) => {
 };
 btnStart.addEventListener('click', onStartButtonClicked);
 // ******* 게임 서버 접속  ******
-const socket = io("http://localhost:3002/quiz", { path: "/socket.io"
+const socket = io(GAME_SERVER_IP + ":3002/quiz", { path: "/socket.io"
 });
 const makeRoomCallBack = (result, strRoomName) => {
     console.log('makeRoomCallback 실행 : ', result);
@@ -218,7 +218,7 @@ socket.on('winner', function (result) {
             method: "POST",
             body: JSON.stringify(sendData),
         };
-        const fetchResult = fetch("http://localhost:8080/result/create", param);
+        const fetchResult = fetch("/result/create", param);
         const dataResult = fetchResult.then((result) => {
             console.log(result);
             return result.text();

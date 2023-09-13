@@ -39,4 +39,5 @@ public interface MemberService {
 
     MyInfoDTO getMyResultInfo(String id);
 
+    void modifyNickname(String username, String nickname);
 }

@@ -256,4 +256,24 @@ public class MemberServiceImpl implements MemberService {
         return myInfoDTO;
     }
 
+    @Override
+    @Transactional
+    public void modifyNickname(String username, String nickname) throws IllegalArgumentException, OptimisticEntityLockException {
+
+        log.info("  ****** modifyNickname@MemberServiceImpl id=" + username);
+
+        MemberCreateDTO dto = new MemberCreateDTO();
+        MemberEntity memberEntity = new MemberEntity();
+
+        Optional<MemberEntity> optional = memberRepository.findById(username);
+        if(optional.isPresent()){
+            memberEntity=optional.get();
+            memberEntity.setNickname(nickname);
+            memberRepository.save(memberEntity);
+            log.info(" *****   modifyNickname@MemberServiceImpl saved new Nickname");
+        } else {
+            log.error("error modifyNickname@MemberServiceImpl : no result ");
+        }
+    }
+
 }

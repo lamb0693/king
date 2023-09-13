@@ -145,6 +145,19 @@ public class MemberController {
         return "redirect:/";
     }
 
+    @PostMapping("changeNickname")
+    public String changePassword(@AuthenticationPrincipal MemberUserDetail memberUserDetail,
+                                 @RequestParam String nickname,
+                                 HttpServletRequest request, RedirectAttributes redirectAttributes){
+        log.info("changePassword@MemberController memberUserDetail" + memberUserDetail.toString());
+
+        memberService.modifyNickname(memberUserDetail.getUsername(), nickname);
+        request.getSession().invalidate();
+        redirectAttributes.addFlashAttribute("modifyNick", "true");
+
+        return "redirect:/";
+    }
+
     @GetMapping("/exist/id/{id}")
     public ResponseEntity<Boolean> checkIdExist(@PathVariable String id){
         //log.info(" ******** checkIdExist@LoginController return OK + :" +memberService.checkIdExist(id) );
