@@ -1,3 +1,4 @@
+//import { SERVER_IP } from "./serverUrl";
 const txtId = document.getElementById("id");
 if (txtId == null)
     console.log("****** Error : txtId : null ******");
@@ -12,7 +13,11 @@ if (divExistNickname == null)
     console.log("****** Error : divExistID : null ******");
 const checkExistId = (event) => {
     event.preventDefault();
-    const resultPromise = fetch("http://localhost:8080/member/exist/id/" + txtId.value);
+    if (txtId.value.length < 3) {
+        divExistID.innerHTML = "사용할 수 없는 ID입니다";
+        return;
+    }
+    const resultPromise = fetch("http://" + SERVER_IP + "/member/exist/id/" + txtId.value);
     const dataPromise = resultPromise.then((res) => {
         //throw new Error("My Error")
         return res.text();
@@ -47,8 +52,12 @@ const checkExistId = (event) => {
 txtId.addEventListener('input', checkExistId);
 const checkExistNickname = (event) => {
     event.preventDefault();
+    if (txtNickname.value.length < 3) {
+        divExistNickname.innerHTML = "3자 이상이어야 합니다";
+        return;
+    }
     const checkNick = async () => {
-        const fetchResult = await fetch("http://localhost:8080/member/exist/nickname/" + txtNickname.value);
+        const fetchResult = await fetch("http://" + SERVER_IP + "/member/exist/nickname/" + txtNickname.value);
         console.log(fetchResult);
         const dataResult = await fetchResult.text(); // promise를 reutrn
         console.log(dataResult);

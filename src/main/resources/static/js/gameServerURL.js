@@ -1,0 +1,1 @@
+const GAME_SERVER_IP = "http://10.100.203.29";

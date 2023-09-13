@@ -3,6 +3,7 @@ package com.example.king.config;
 import com.example.king.filter.JwtTokenCheckFilter;
 import com.example.king.handler.CustomAuthenticationFailureHandler;
 import com.example.king.handler.CustomFormLoginSuccessHandler;
+import com.example.king.handler.CustomOAuth2SuccessHandler;
 import com.example.king.provider.CustomJwtAuthenticationProvider;
 import com.example.king.service.MemberUserDetail;
 import com.example.king.service.MemberUserDetailsService;
@@ -46,6 +47,8 @@ public class SecurityConfig {
     MemberUserDetailsService memberUserDetailsService;
     CustomJwtAuthenticationProvider customJwtAuthenticationProvider;
     TokenService tokenService;
+    CustomOAuth2SuccessHandler customOAuth2SuccessHandler;
+
     @Bean
     @Order(2)
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -54,7 +57,7 @@ public class SecurityConfig {
                     .requestMatchers("/image/**", "/js/**", "/css/**").permitAll()
                     .requestMatchers("/member/forgotPassword", "/member/resetPassword").permitAll()
                     .requestMatchers("/member/create").permitAll()
-                    //.requestMatchers("/auth/login/error").permitAll()
+                    .requestMatchers("/auth/login/error").permitAll()
                     .requestMatchers("/auth/login").permitAll()
                     .requestMatchers("/member/exist/id/**").permitAll()
                     .requestMatchers("/member/exist/nickname/**").permitAll()
@@ -82,6 +85,11 @@ public class SecurityConfig {
                 .invalidateHttpSession(true).deleteCookies("JSESSIONID")
                 .logoutSuccessUrl("/");
         });
+        http.oauth2Login( (oauth)->{
+           oauth.loginPage("/auth/login").permitAll();
+           oauth.defaultSuccessUrl("/");
+           oauth.successHandler(customOAuth2SuccessHandler);
+        });
 
         return http.build();
     }
@@ -105,10 +113,10 @@ public class SecurityConfig {
         return http.build();
     }
 
-    @Bean
-    PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
+//    @Bean
+//    PasswordEncoder passwordEncoder(){
+//        return new BCryptPasswordEncoder();
+//    }
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler(){
@@ -131,5 +139,10 @@ public class SecurityConfig {
         UrlBasedCorsConfigurationSource source= new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/quiz/token/getquiz", configuration);
         return source;
+    }
+
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 }

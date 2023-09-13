@@ -65,7 +65,7 @@ btnMakeRoom.addEventListener('click', makeRoom)
 //btnJoinRoom.addEventListener('click', joinRoom)
 
 // ******* 게임 서버 접속  ******
-const socket = io("http://localhost:3000/ping", {path :"/socket.io"
+const socket = io(GAME_SERVER_IP + ":3000/ping", {path :"/socket.io"
 });
 
 

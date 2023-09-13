@@ -12,6 +12,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,7 +22,7 @@ import java.util.List;
 public class HomeController {
     MemberService memberService;
     @GetMapping("/")
-    public String home(Model model){
+    public String home(Model model, @RequestParam(value = "social", defaultValue = "false") String social){
 
         List<RankingDTO> pingRankList = memberService.getRanker(GameKind.valueOf("PING"));
         List<RankingDTO> ladderRankList = memberService.getRanker(GameKind.valueOf("LADDER"));
@@ -30,6 +31,8 @@ public class HomeController {
         model.addAttribute("ladderRankList", ladderRankList);
         model.addAttribute("pingRankList", pingRankList);
         model.addAttribute("quizRankList", quizRankList);
+
+        model.addAttribute("social", social);
 
         return "home";
     }

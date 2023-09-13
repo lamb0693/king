@@ -4,10 +4,7 @@ import com.example.king.DTO.MemberCreateDTO;
 import com.example.king.DTO.MemberListDTO;
 import com.example.king.DTO.MemberListPageDTO;
 import com.example.king.DTO.PasswordResetDTO;
-import com.example.king.service.EmailService;
-import com.example.king.service.MemberService;
-import com.example.king.service.MemberUserDetail;
-import com.example.king.service.TokenService;
+import com.example.king.service.*;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -37,7 +34,7 @@ import static org.springframework.data.jpa.domain.AbstractPersistable_.id;
 public class MemberController {
 
     private MemberService memberService;
-    private PasswordEncoder passwordEncoder;
+    private MyPasswordEncoder myPasswordEncoder;
     private TokenService tokenService;
     private EmailService emailService;
 
@@ -107,7 +104,7 @@ public class MemberController {
             model.addAttribute("previousValue", memberCreateDTO);
             return "/member/createMember.html";
         } else {
-            if( memberService.saveMember(memberCreateDTO, passwordEncoder) == -1 ){
+            if( memberService.saveMember(memberCreateDTO, myPasswordEncoder.passwordEncoder()) == -1 ){
                 //*********** 실패했을 때 어떻게 할지 나중에 추가
             };
             //성공하면 "saveResult"를 redirectResult로 setting 후 member/list로 redirect한다
@@ -128,7 +125,7 @@ public class MemberController {
     public String modifyPassword(@AuthenticationPrincipal MemberUserDetail userDetail, @RequestParam String password1, HttpServletRequest request
         ,RedirectAttributes redirectAttributes){
 
-        memberService.saveNewPassword(userDetail.getUsername(), passwordEncoder.encode(password1));
+        memberService.saveNewPassword(userDetail.getUsername(), myPasswordEncoder.passwordEncoder().encode(password1));
         request.getSession().invalidate();
 
         redirectAttributes.addFlashAttribute("passwordModified", "true");
@@ -144,6 +141,19 @@ public class MemberController {
         memberService.deleteById(memberUserDetail.getUsername());
         request.getSession().invalidate();
         redirectAttributes.addFlashAttribute("withdrawn", "true");
+
+        return "redirect:/";
+    }
+
+    @PostMapping("changeNickname")
+    public String changePassword(@AuthenticationPrincipal MemberUserDetail memberUserDetail,
+                                 @RequestParam String nickname,
+                                 HttpServletRequest request, RedirectAttributes redirectAttributes){
+        log.info("changePassword@MemberController memberUserDetail" + memberUserDetail.toString());
+
+        memberService.modifyNickname(memberUserDetail.getUsername(), nickname);
+        request.getSession().invalidate();
+        redirectAttributes.addFlashAttribute("modifyNick", "true");
 
         return "redirect:/";
     }
@@ -223,7 +233,7 @@ public class MemberController {
 
         //**** filter를 다시 들어가서 login이 다시 불림.. 해결 해야 할 듯
         String id = passwordResetDTO.getId();
-        String password = passwordEncoder.encode( passwordResetDTO.getPassword() );
+        String password = myPasswordEncoder.passwordEncoder().encode( passwordResetDTO.getPassword() );
 
         if(!memberService.existMember(passwordResetDTO.getId(), passwordResetDTO.getNickname()))
             return ResponseEntity.badRequest().body("새로운 패스워드 설정이 실패 했습니다 ,Nickname을 확인하세요\n닉네임을 모르시면 관리자에게 문의하세요");

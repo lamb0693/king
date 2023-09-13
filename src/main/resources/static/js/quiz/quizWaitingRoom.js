@@ -56,7 +56,7 @@ const joinRoom = (event) => {
 btnMakeRoom.addEventListener('click', makeRoom)
 
 // ******* 게임 서버 접속  ******
-const socket = io("http://localhost:3002/quiz", {path :"/socket.io"
+const socket = io(GAME_SERVER_IP + ":3002/quiz", {path :"/socket.io"
 });
 
 

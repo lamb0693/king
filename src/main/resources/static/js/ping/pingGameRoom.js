@@ -101,7 +101,7 @@ const onStopButtonClikced = (event) => {
 const btnStop = document.getElementById("stopGame");
 btnStop.addEventListener('click', onStopButtonClikced);
 // ******* 게임 서버 접속  ******
-const socket = io("http://localhost:3000/ping", { path: "/socket.io"
+const socket = io(GAME_SERVER_IP + ":3000/ping", { path: "/socket.io"
 });
 const makeRoomCallBack = (result, strRoomName) => {
     console.log('makeRoomCallback 실행 : ', result);
@@ -178,7 +178,7 @@ socket.on('winner', function (result) {
             "winner_id": result.winnerId,
             "loser_id": result.loserId
         };
-        fetch("http://localhost:8080/result/create", {
+        fetch("/result/create", {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
