@@ -17,7 +17,7 @@ const checkExistId = (event) => {
         divExistID.innerHTML = "사용할 수 없는 ID입니다";
         return;
     }
-    const resultPromise = fetch("http://" + SERVER_IP + "/member/exist/id/" + txtId.value);
+    const resultPromise = fetch("/member/exist/id/" + txtId.value);
     const dataPromise = resultPromise.then((res) => {
         //throw new Error("My Error")
         return res.text();
@@ -57,7 +57,7 @@ const checkExistNickname = (event) => {
         return;
     }
     const checkNick = async () => {
-        const fetchResult = await fetch("http://" + SERVER_IP + "/member/exist/nickname/" + txtNickname.value);
+        const fetchResult = await fetch("/member/exist/nickname/" + txtNickname.value);
         console.log(fetchResult);
         const dataResult = await fetchResult.text(); // promise를 reutrn
         console.log(dataResult);
