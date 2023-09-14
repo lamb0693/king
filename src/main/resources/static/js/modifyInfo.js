@@ -73,20 +73,37 @@ const checkExistNick = (event) => {
         divExistNickname.innerHTML = "사용할 수 없는 Nickname입니다";
         return;
     }
-    const resultPromise = fetch("http://" + SERVER_IP + "/member/exist/nickname/" + txtNickname.value);
-    const dataPromise = resultPromise.then((res) => {
-        //throw new Error("My Error")
-        return res.text();
-    });
-    const errorPromise = dataPromise.then((result) => {
-        console.log(result);
-        if (result === 'true')
-            divExistNickname.innerHTML = "다른 사용자가 사용중인 nickname 입니다";
-        else
-            divExistNickname.innerHTML = "사용할 수 있는 nickname 입니다";
-    });
-    errorPromise.catch((err) => {
-        console.log(err);
-    });
+
+    const testExistNick = async () => {
+        try{
+            const response = await axios.get("/member/exist/nickname/" + txtNickname.value)
+
+            console.log(response.data)
+            if (response.data === true){
+                divExistNickname.innerHTML = "다른 사용자가 사용중인 nickname 입니다";
+            } else {
+                divExistNickname.innerHTML = "사용할 수 있는 nickname 입니다";
+            }
+        }catch (err){
+            console.log(err);
+        }
+    }
+    testExistNick()
+
+    // const resultPromise = fetch("/member/exist/nickname/" + txtNickname.value);
+    // const dataPromise = resultPromise.then((res) => {
+    //     //throw new Error("My Error")
+    //     return res.text();
+    // });
+    // const errorPromise = dataPromise.then((result) => {
+    //     console.log(result);
+    //     if (result === 'true')
+    //         divExistNickname.innerHTML = "다른 사용자가 사용중인 nickname 입니다";
+    //     else
+    //         divExistNickname.innerHTML = "사용할 수 있는 nickname 입니다";
+    // });
+    // errorPromise.catch((err) => {
+    //     console.log(err);
+    // });
 };
 txtNickname.addEventListener('input', checkExistNick);
